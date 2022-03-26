@@ -94,6 +94,8 @@ flutter:
           weight: 700
         - asset: assets/fonts/SFProDisplay-Semibold.ttf
           weight: 600
+        - asset: assets/fonts/SFProDisplay-Heavy.ttf
+          weight: 900
     - family: SFProText
       fonts:
         - asset: assets/fonts/SFProText-Regular.ttf
