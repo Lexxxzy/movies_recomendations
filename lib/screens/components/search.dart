@@ -19,7 +19,7 @@ class Search extends StatelessWidget {
           TextField(
             cursorColor: kTextLightColor,
             style: TextStyle(
-              fontSize: 14,
+              fontSize: 15,
               color: kTextColor,
               fontFamily: 'SFProDisplay',
               fontWeight: FontWeight.w500,
@@ -48,7 +48,7 @@ class Search extends StatelessWidget {
       ),
       hintText: 'Search movies',
       hintStyle: TextStyle(
-        fontSize: 14,
+        fontSize: 15,
         color: kTextLightColor,
         fontFamily: 'SFProDisplay',
         fontWeight: FontWeight.w500,
