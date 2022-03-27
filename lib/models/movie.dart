@@ -27,7 +27,7 @@ class Movie {
 // our demo data movie data
 List<Movie> movies = [
   Movie(
-      poster: "assets/images/koko.jpg",
+      poster: "assets/images/cocoposter.jpg",
       title: "Coco",
       id: 1,
       premiereWorld: "2017",
@@ -67,7 +67,7 @@ List<Movie> movies = [
   ),
   Movie(
       poster: "assets/images/spider.jfif",
-      title: "Spider-Man: No Way Home",
+      title: "Spider-Man",
       id: 3,
       premiereWorld: "2021",
       ratingKinopoisk: 8.2,

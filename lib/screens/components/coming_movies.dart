@@ -18,9 +18,9 @@ class ComingMovies extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.symmetric(
-        horizontal: kDefaultPadding,
+        horizontal: kDefaultPadding / 2,
       ),
-      height: 110,
+      height: 115,
       child: Stack(
         children: [
           buildSliderImage(),
@@ -40,25 +40,26 @@ class ComingMovies extends StatelessWidget {
               fit: StackFit.expand,
               children: [
                 Container(
-                    margin: const EdgeInsets.symmetric(
-                      horizontal: 10,
-                    ),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(15),
-                      child: Image.asset(slide, fit: BoxFit.cover),
-                    )),
+                  margin: const EdgeInsets.symmetric(
+                    horizontal: 10,
+                  ),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(15),
+                    child: Image.asset(slide, fit: BoxFit.cover),
+                  ),
+                ),
                 Container(
                   margin: const EdgeInsets.symmetric(
                     horizontal: 10,
                   ),
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15),
+                    borderRadius: BorderRadius.circular(12),
                     gradient: const LinearGradient(
                       begin: Alignment.centerLeft,
                       end: Alignment.centerRight,
                       colors: [
-                        Colors.black,
-                        Colors.black45,
+                        Colors.black26,
+                        Colors.black12,
                         Colors.black12,
                         Colors.transparent,
                       ],
@@ -120,8 +121,8 @@ class buildSliderIndicator extends StatelessWidget {
         count: upcomings.length,
         effect: const ExpandingDotsEffect(
           expansionFactor: 6,
-          dotWidth: 5,
-          dotHeight: 5,
+          dotWidth: 4,
+          dotHeight: 4,
           spacing: 4,
           activeDotColor: kTextColor,
         ),
@@ -129,7 +130,7 @@ class buildSliderIndicator extends StatelessWidget {
           _pageController.animateToPage(
             index,
             duration: const Duration(
-              microseconds: 600,
+              milliseconds: 300,
             ),
             curve: Curves.easeInOut,
           );

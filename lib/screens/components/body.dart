@@ -2,9 +2,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:movies_recomendations/screens/components/coming_movies.dart';
+import 'package:movies_recomendations/screens/components/recomendation_carousel.dart';
 import 'package:movies_recomendations/screens/components/search.dart';
 
-import '../../constants.dart';
 import 'categories_menu.dart';
 
 class Body extends StatelessWidget {
@@ -17,6 +17,7 @@ class Body extends StatelessWidget {
         const Search(),
         const CategotiesMenu(),
         ComingMovies(),
+        RecomendedMovieCarousel(),
       ],
     );
   }

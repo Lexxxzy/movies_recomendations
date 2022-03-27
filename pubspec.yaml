@@ -36,6 +36,7 @@ dependencies:
   flutter_svg: ^0.19.1 #Help us to use SVG in our  app
   animations: ^1.1.0 #Help us to use animation easily also develop by flutter team
   smooth_page_indicator: ^1.0.0+2
+  flutter_swiper: ^1.1.6
 
 dev_dependencies:
   flutter_test:

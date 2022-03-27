@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 
 import '../../constants.dart';
+
 class CategotiesMenu extends StatefulWidget {
   const CategotiesMenu({Key? key}) : super(key: key);
 
@@ -16,10 +17,11 @@ class _CategotiesMenuState extends State<CategotiesMenu> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 60,
+      height: 55,
       margin: const EdgeInsets.only(
         top: kDefaultPadding,
         left: kDefaultPadding,
+        right: kDefaultPadding,
       ),
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
@@ -31,7 +33,7 @@ class _CategotiesMenuState extends State<CategotiesMenu> {
 
   Padding buildCategory(int index) {
     return Padding(
-      padding: const EdgeInsets.only(right: kDefaultPadding),
+      padding: const EdgeInsets.only(right: kDefaultPadding + 4),
       child: GestureDetector(
         onTap: () {
           setState(() {

@@ -68,7 +68,7 @@ class Search extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
           color: Colors.transparent,
-          boxShadow: [
+          boxShadow: const [
             BoxShadow(
               color: Color.fromRGBO(241, 146, 119, 0.30),
               spreadRadius: 5,
