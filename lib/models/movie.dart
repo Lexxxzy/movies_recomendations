@@ -3,7 +3,8 @@ class Movie {
   final double ratingKinopoisk, ratingIMDb;
   final List<String> genre, countries, frames;
   final String description, title, poster, premiereWorld, dateTo;
-  final bool ifSeries, isFavourite;
+  final bool ifSeries;
+  bool isFavourite;
 
   Movie({
     required this.poster,
@@ -43,7 +44,7 @@ List<Movie> movies = [
         "https://avatars.mds.yandex.net/get-kinopoisk-image/1777765/f1b77e75-2bd6-4e5a-b580-679f8f2d8691/orig",
         "https://avatars.mds.yandex.net/get-kinopoisk-image/1777765/9bb3794b-c1f7-4200-9cbc-612e0133046e/orig"
       ],
-      isFavourite: false),
+      isFavourite: true),
   Movie(
     poster: "assets/images/alien.jfif",
     title: "Resident Alien",

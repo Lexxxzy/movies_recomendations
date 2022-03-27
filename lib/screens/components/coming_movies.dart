@@ -25,7 +25,9 @@ class ComingMovies extends StatelessWidget {
         children: [
           buildSliderImage(),
           buildSliderIndicator(
-              pageController: _pageController, upcomings: upcomings),
+            pageController: _pageController,
+            upcomings: upcomings,
+          ),
         ],
       ),
     );
