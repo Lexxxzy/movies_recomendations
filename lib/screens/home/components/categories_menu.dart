@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 
-import '../../constants.dart';
+import '../../../constants.dart';
 
 class CategotiesMenu extends StatefulWidget {
   const CategotiesMenu({Key? key}) : super(key: key);
@@ -13,7 +13,7 @@ class CategotiesMenu extends StatefulWidget {
 
 class _CategotiesMenuState extends State<CategotiesMenu> {
   int selectedCategory = 0;
-  List<String> categories = ["Popular", "You might like", "Categories"];
+  List<String> categories = ["Popular", "You might like", "Favourite"];
   @override
   Widget build(BuildContext context) {
     return Container(

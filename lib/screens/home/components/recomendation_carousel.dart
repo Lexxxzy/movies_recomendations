@@ -4,8 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import '/models/movie.dart';
 import '../../../constants.dart';
+import 'package:provider/provider.dart';
+import '../../favourites/movie_detail.dart';
+import '/providers/movies_provider.dart';
 
 class RecomendedMovieCarousel extends StatefulWidget {
   const RecomendedMovieCarousel({Key? key}) : super(key: key);
@@ -16,6 +18,8 @@ class RecomendedMovieCarousel extends StatefulWidget {
 }
 
 class _RecomendedMovieCarouselState extends State<RecomendedMovieCarousel> {
+  final movies = Movies().movies;
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -72,84 +76,92 @@ class _RecomendedMovieCarouselState extends State<RecomendedMovieCarousel> {
     );
   }
 
-  Column buildMovieCard(BuildContext context, int index) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: <Widget>[
-        Card(
-          elevation: 10,
-          shadowColor: const Color.fromRGBO(18, 33, 61, 0.58),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(15),
-          ),
-          color: const Color(0xFF26334A),
-          child: Column(
-            children: [
-              SizedBox(
-                height: 150,
-                width: MediaQuery.of(context).size.width - 2 * 64,
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(15),
-                  child: Image.asset(movies[index].poster, fit: BoxFit.cover),
+  GestureDetector buildMovieCard(BuildContext context, int index) {
+    return GestureDetector(
+      onTap: (() {
+        Navigator.of(context).pushNamed(
+          MovieDetailScreen.routeName,
+          arguments: movies[index].id,
+        );
+      }),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: <Widget>[
+          Card(
+            elevation: 10,
+            shadowColor: const Color.fromRGBO(18, 33, 61, 0.58),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15),
+            ),
+            color: const Color(0xFF26334A),
+            child: Column(
+              children: [
+                SizedBox(
+                  height: 150,
+                  width: MediaQuery.of(context).size.width - 2 * 64,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(15),
+                    child: Image.asset(movies[index].poster, fit: BoxFit.cover),
+                  ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(kDefaultPadding),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      movies[index].title,
-                      style: const TextStyle(
-                        fontFamily: 'SFProDisplay',
-                        fontSize: 20,
-                        color: kTextColor,
-                        fontWeight: FontWeight.w700,
-                      ),
-                      textAlign: TextAlign.left,
-                    ),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    Text(
-                      '${movies[index].genre[0]} | ${movies[index].age}+ ',
-                      style: const TextStyle(
-                        fontFamily: 'SFProDisplay',
-                        fontSize: 12,
-                        color: kTextLightColor,
-                        fontWeight: FontWeight.w400,
-                      ),
-                      textAlign: TextAlign.left,
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Row(
-                      children: const <Widget>[
-                        Text(
-                          'Details',
-                          style: TextStyle(
-                            fontFamily: 'SFProDisplay',
-                            fontSize: 14,
-                            color: kTextLightColor,
-                            fontWeight: FontWeight.w500,
-                          ),
-                          textAlign: TextAlign.center,
+                Padding(
+                  padding: const EdgeInsets.all(kDefaultPadding),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        movies[index].title,
+                        style: const TextStyle(
+                          fontFamily: 'SFProDisplay',
+                          fontSize: 20,
+                          color: kTextColor,
+                          fontWeight: FontWeight.w700,
                         ),
-                        Icon(
-                          Icons.arrow_forward,
+                        textAlign: TextAlign.left,
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      Text(
+                        '${movies[index].genre[0]} | ${movies[index].age}+ ',
+                        style: const TextStyle(
+                          fontFamily: 'SFProDisplay',
+                          fontSize: 12,
                           color: kTextLightColor,
-                          size: 14,
+                          fontWeight: FontWeight.w400,
                         ),
-                      ],
-                    ),
-                  ],
+                        textAlign: TextAlign.left,
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Row(
+                        children: const <Widget>[
+                          Text(
+                            'Details',
+                            style: TextStyle(
+                              fontFamily: 'SFProDisplay',
+                              fontSize: 14,
+                              color: kTextLightColor,
+                              fontWeight: FontWeight.w500,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                          Icon(
+                            Icons.arrow_forward,
+                            color: kTextLightColor,
+                            size: 14,
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
@@ -208,12 +220,13 @@ class _RecomendedMovieCarouselState extends State<RecomendedMovieCarousel> {
 }
 
 class buildSliderIndicator extends StatelessWidget {
-  const buildSliderIndicator({
+  buildSliderIndicator({
     Key? key,
     required SwiperPluginConfig config,
   })  : _config = config,
         super(key: key);
 
+  final movies = Movies().movies;
   final SwiperPluginConfig _config;
 
   @override

@@ -13,7 +13,7 @@ const kErrorColor = Color(0xFFF6565D);
 const kWarningColor = Color(0xFFD9D220);
 const kGreenColor = Color(0xFF85D920);
 
-const kButtomsGreyColor = Color(0xFF424652);
+const kButtomsGreyColor = Color.fromARGB(66, 253, 253, 253);
 
 const kDefaultPadding = 25.0;
 

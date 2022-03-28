@@ -1,10 +1,10 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:movies_recomendations/screens/components/coming_movies.dart';
-import 'package:movies_recomendations/screens/components/recomendation_carousel.dart';
-import 'package:movies_recomendations/screens/components/search.dart';
-import 'package:movies_recomendations/screens/components/trending.dart';
+import 'coming_movies.dart';
+import 'recomendation_carousel.dart';
+import 'search.dart';
+import 'trending.dart';
 
 import 'categories_menu.dart';
 

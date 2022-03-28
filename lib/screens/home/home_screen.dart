@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import '../screens/components/body.dart';
+import 'components/body.dart';
 import 'package:movies_recomendations/constants.dart';
 
 import 'components/app_bar.dart';
