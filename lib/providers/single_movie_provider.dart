@@ -1,5 +1,8 @@
+// ignore_for_file: unnecessary_this
 
-class Movie {
+import 'package:flutter/material.dart';
+
+class Movie with ChangeNotifier {
   final int? id, seasons, age;
   final double ratingKinopoisk, ratingIMDb;
   final List<String> genre, countries, frames;
@@ -22,6 +25,11 @@ class Movie {
     this.seasons,
     this.dateTo = "",
     required this.frames,
-    required this.isFavourite,
+    this.isFavourite = false,
   });
+
+  void toggleFavourite() {
+    this.isFavourite = !this.isFavourite;
+    notifyListeners();
+  }
 }

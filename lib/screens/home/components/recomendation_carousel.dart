@@ -5,7 +5,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import '../../../constants.dart';
-import 'package:provider/provider.dart';
 import '../../favourites/movie_detail.dart';
 import '/providers/movies_provider.dart';
 
@@ -93,7 +92,7 @@ class _RecomendedMovieCarouselState extends State<RecomendedMovieCarousel> {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(15),
             ),
-            color: const Color(0xFF26334A),
+            color: kSecondaryColor,
             child: Column(
               children: [
                 SizedBox(

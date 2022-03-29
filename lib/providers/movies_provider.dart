@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:movies_recomendations/constants.dart';
 
-import '../models/movie.dart';
+import './single_movie_provider.dart';
 
 class Movies with ChangeNotifier {
   String plotText = "";

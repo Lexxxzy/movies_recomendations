@@ -3,8 +3,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
+import 'package:movies_recomendations/screens/home/components/trending_favourite_movie.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import '/models/movie.dart';
+import '../../favourites/movie_detail.dart';
 import '../../../constants.dart';
 import 'package:provider/provider.dart';
 import '/providers/movies_provider.dart';
@@ -17,10 +18,9 @@ class TrendingList extends StatefulWidget {
 }
 
 class _TrendingListState extends State<TrendingList> {
-  
   @override
   Widget build(BuildContext context) {
-        final moviesData = Provider.of<Movies>(context, listen:false);
+    final moviesData = Provider.of<Movies>(context);
     final movies = moviesData.movies;
     return SafeArea(
       child: Column(
@@ -38,7 +38,10 @@ class _TrendingListState extends State<TrendingList> {
                     shrinkWrap: true,
                     itemCount: movies.length,
                     itemBuilder: (context, index) {
-                      return buildTrendingMovie(index);
+                      return ChangeNotifierProvider.value(
+                        value: movies[index],
+                        child: FavouriteMovie(),
+                      );
                     },
                   )
                 ],
@@ -46,107 +49,6 @@ class _TrendingListState extends State<TrendingList> {
             ),
           ),
         ],
-      ),
-    );
-  }
-
-  Padding buildTrendingMovie(int index) {
-    final moviesData = Provider.of<Movies>(context, listen:false);
-    final movies = moviesData.movies;
-    return Padding(
-      padding: const EdgeInsets.only(
-        top: kDefaultPadding,
-        left: kDefaultPadding,
-        right: kDefaultPadding,
-      ),
-      child: Container(
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            SizedBox(
-              height: 100,
-              width: 111,
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(15),
-                child: Image.asset(movies[index].poster, fit: BoxFit.cover),
-              ),
-            ),
-            const SizedBox(
-              width: 15,
-            ),
-            Container(
-              alignment: Alignment.center,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      Text(
-                        '${movies[index].ratingKinopoisk}',
-                        style: TextStyle(
-                            fontFamily: 'SFProDisplay',
-                            fontSize: 12,
-                            fontWeight: FontWeight.w600,
-                            color: movies[index].ratingKinopoisk >= 7.0
-                                ? kGreenColor
-                                : kWarningColor),
-                      ),
-                      Text(
-                        ' | ${movies[index].countries.join(", ")}',
-                        style: const TextStyle(
-                          fontFamily: 'SFProText',
-                          fontSize: 12,
-                          color: kTextLightColor,
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  Text(
-                    movies[index].title,
-                    style: const TextStyle(
-                      fontFamily: 'SFProDisplay',
-                      fontSize: 18,
-                      fontWeight: FontWeight.w700,
-                      color: kTextColor,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  Text(
-                    '${movies[index].premiereWorld}, ${movies[index].genre[0]}',
-                    style: const TextStyle(
-                      fontFamily: 'SFProText',
-                      fontSize: 14,
-                      color: kTextColor,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            const Spacer(),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 80),
-              child: GestureDetector(
-                onTap: () {
-                  setState(() {
-                    movies[index].isFavourite = !movies[index].isFavourite;
-                  });
-                },
-                child: SvgPicture.asset(
-                  movies[index].isFavourite == false
-                      ? 'assets/icons/HeartOutlined.svg'
-                      : 'assets/icons/Heart.svg',
-                  height: 20,
-                  alignment: Alignment.topRight,
-                ),
-              ),
-            ),
-          ],
-        ),
       ),
     );
   }

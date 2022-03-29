@@ -4,13 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:movies_recomendations/constants.dart';
+import 'package:provider/provider.dart';
 
-import '../../../models/movie.dart';
+import '../../../providers/movies_provider.dart';
+import '../../../providers/single_movie_provider.dart';
 import 'poster_rating.dart';
 
 class MovieDetailBody extends StatefulWidget {
-  MovieDetailBody(this.loadedMovie);
-  final Movie loadedMovie;
+  MovieDetailBody(this.id);
+  final int id;
 
   @override
   State<MovieDetailBody> createState() => _MovieDetailBodyState();
@@ -21,23 +23,33 @@ class _MovieDetailBodyState extends State<MovieDetailBody> {
 
   @override
   Widget build(BuildContext context) {
+    final Movie loadedMovie = Provider.of<Movies>(
+      context,
+    ).findById(widget.id);
+
     Size size = MediaQuery.of(context).size;
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        PosterAndRating(
-          size: size,
-          loadedMovie: widget.loadedMovie,
-        ),
-        buildMovieInfo(),
-        buildFrames(),
-        buildDescrition(),
-        buildFooter()
-      ],
+
+    return ChangeNotifierProvider(
+      create: (BuildContext context) {
+        loadedMovie;
+      },
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          PosterAndRating(
+            size: size,
+            loadedMovie: loadedMovie,
+          ),
+          buildMovieInfo(loadedMovie),
+          buildFrames(loadedMovie),
+          buildDescrition(loadedMovie),
+          buildFooter(loadedMovie)
+        ],
+      ),
     );
   }
 
-  Padding buildFooter() {
+  Padding buildFooter(loadedMovie) {
     return Padding(
       padding: EdgeInsets.symmetric(
         vertical: kDefaultPadding / 1.5,
@@ -57,8 +69,8 @@ class _MovieDetailBodyState extends State<MovieDetailBody> {
               buildRatingBox(
                 boxHeight: 35,
                 boxWidth: 35,
-                loadedMovie: widget.loadedMovie,
-                text: widget.loadedMovie.ratingKinopoisk.toString(),
+                loadedMovie: loadedMovie,
+                text: loadedMovie.ratingKinopoisk.toString(),
               ),
               SizedBox(
                 width: kDefaultPadding - 10,
@@ -73,8 +85,8 @@ class _MovieDetailBodyState extends State<MovieDetailBody> {
               buildRatingBox(
                 boxHeight: 35,
                 boxWidth: 35,
-                loadedMovie: widget.loadedMovie,
-                text: widget.loadedMovie.ratingIMDb.toString(),
+                loadedMovie: loadedMovie,
+                text: loadedMovie.ratingIMDb.toString(),
               ),
             ],
           ),
@@ -145,7 +157,7 @@ class _MovieDetailBodyState extends State<MovieDetailBody> {
     );
   }
 
-  Padding buildDescrition() {
+  Padding buildDescrition(Movie loadedMovie) {
     return Padding(
       padding: EdgeInsets.symmetric(
         vertical: kDefaultPadding / 1.5,
@@ -166,7 +178,7 @@ class _MovieDetailBodyState extends State<MovieDetailBody> {
           Padding(
             padding: const EdgeInsets.only(top: 10),
             child: Text(
-              widget.loadedMovie.description,
+              loadedMovie.description,
               style: TextStyle(
                 fontFamily: 'SFProText',
                 fontSize: 14,
@@ -180,7 +192,7 @@ class _MovieDetailBodyState extends State<MovieDetailBody> {
     );
   }
 
-  Padding buildFrames() {
+  Padding buildFrames(Movie loadedMovie) {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: kDefaultPadding / 1.5),
       child: Column(
@@ -204,7 +216,7 @@ class _MovieDetailBodyState extends State<MovieDetailBody> {
           SizedBox(
             height: 110,
             child: Swiper(
-              itemCount: widget.loadedMovie.frames.length,
+              itemCount: loadedMovie.frames.length,
               itemWidth: 170,
               viewportFraction: 0.50,
               scale: 0.6,
@@ -223,7 +235,7 @@ class _MovieDetailBodyState extends State<MovieDetailBody> {
                         ),
                       );*/
                   },
-                  child: buildFrameCard(index),
+                  child: buildFrameCard(index, loadedMovie),
                 );
               },
             ),
@@ -233,7 +245,7 @@ class _MovieDetailBodyState extends State<MovieDetailBody> {
     );
   }
 
-  Stack buildFrameCard(int index) {
+  Stack buildFrameCard(int index, Movie loadedMovie) {
     return Stack(
       children: <Widget>[
         Padding(
@@ -248,7 +260,7 @@ class _MovieDetailBodyState extends State<MovieDetailBody> {
               boxShadow: [kDefaultShadow],
               color: Colors.white12,
               image: DecorationImage(
-                image: NetworkImage(widget.loadedMovie.frames[index]),
+                image: NetworkImage(loadedMovie.frames[index]),
                 fit: BoxFit.cover,
               ),
             ),
@@ -258,7 +270,7 @@ class _MovieDetailBodyState extends State<MovieDetailBody> {
     );
   }
 
-  Padding buildMovieInfo() {
+  Padding buildMovieInfo(Movie loadedMovie) {
     return Padding(
       padding: EdgeInsets.symmetric(
           horizontal: kDefaultPadding, vertical: kDefaultPadding / 3),
@@ -269,7 +281,7 @@ class _MovieDetailBodyState extends State<MovieDetailBody> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  widget.loadedMovie.countries.join(', '),
+                  loadedMovie.countries.join(', '),
                   style: TextStyle(
                     fontFamily: 'SFProText',
                     fontSize: 14,
@@ -277,7 +289,7 @@ class _MovieDetailBodyState extends State<MovieDetailBody> {
                   ),
                 ),
                 Text(
-                  widget.loadedMovie.title,
+                  loadedMovie.title,
                   style: TextStyle(
                     fontFamily: 'SFProDisplay',
                     fontSize: 32,
@@ -287,7 +299,7 @@ class _MovieDetailBodyState extends State<MovieDetailBody> {
                 ),
                 SizedBox(height: 6),
                 Text(
-                  '${widget.loadedMovie.premiereWorld} | ${widget.loadedMovie.age}+${ifSerial(widget.loadedMovie)} | ${widget.loadedMovie.genre.join(', ')}',
+                  '${loadedMovie.premiereWorld} | ${loadedMovie.age}+${ifSerial(loadedMovie)} | ${loadedMovie.genre.join(', ')}',
                   style: TextStyle(
                     fontFamily: 'SFProText',
                     fontSize: 14,
@@ -297,21 +309,28 @@ class _MovieDetailBodyState extends State<MovieDetailBody> {
               ],
             ),
           ),
-          Container(
-            height: 30,
-            width: 30,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(
-                Radius.circular(8),
+          GestureDetector(
+            onTap: () {
+              setState(() {
+                loadedMovie.toggleFavourite();
+              });
+            },
+            child: Container(
+              height: 30,
+              width: 30,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(8),
+                ),
+                color: Colors.white24,
               ),
-              color: Colors.white24,
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(6),
-              child: SvgPicture.asset(
-                widget.loadedMovie.isFavourite == true
-                    ? 'assets/icons/Heart.svg'
-                    : 'assets/icons/HeartOutlined.svg',
+              child: Padding(
+                padding: const EdgeInsets.all(6),
+                child: SvgPicture.asset(
+                  loadedMovie.isFavourite == true
+                      ? 'assets/icons/Heart.svg'
+                      : 'assets/icons/HeartOutlined.svg',
+                ),
               ),
             ),
           )
