@@ -5,7 +5,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:movies_recomendations/screens/home/components/trending_favourite_movie.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import '../../favourites/movie_detail.dart';
+import '../../movie_detail/movie_detail.dart';
 import '../../../constants.dart';
 import 'package:provider/provider.dart';
 import '/providers/movies_provider.dart';

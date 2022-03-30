@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 
 import '../../../constants.dart';
 import '../../../providers/single_movie_provider.dart';
-import '../../favourites/movie_detail.dart';
+import '../../movie_detail/movie_detail.dart';
 
 class FavouriteMovie extends StatefulWidget {
   const FavouriteMovie({Key? key}) : super(key: key);
@@ -17,9 +17,8 @@ class _FavouriteMovieState extends State<FavouriteMovie> {
   @override
   Widget build(BuildContext context) {
     final movieData = Provider.of<Movie>(context);
-    
+
     return GestureDetector(
-  
       onTap: (() {
         Navigator.of(context).pushNamed(
           MovieDetailScreen.routeName,
@@ -41,7 +40,7 @@ class _FavouriteMovieState extends State<FavouriteMovie> {
                 width: 111,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(15),
-                  child: Image.asset(movieData.poster, fit: BoxFit.cover),
+                  child: Image.network(movieData.poster, fit: BoxFit.cover),
                 ),
               ),
               const SizedBox(
@@ -65,7 +64,7 @@ class _FavouriteMovieState extends State<FavouriteMovie> {
                                   : kWarningColor),
                         ),
                         Text(
-                          ' | ${movieData.countries.join(", ")}',
+                          ' | ${MediaQuery.of(context).size.width < 380 ? movieData.countries.take(2).join(", ") : movieData.countries.take(3).join(", ")}',
                           style: const TextStyle(
                             fontFamily: 'SFProText',
                             fontSize: 12,
@@ -125,4 +124,3 @@ class _FavouriteMovieState extends State<FavouriteMovie> {
     );
   }
 }
-

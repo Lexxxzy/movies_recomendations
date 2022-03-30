@@ -10,8 +10,10 @@ class Search extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(
-        horizontal: kDefaultPadding,
+      padding: EdgeInsets.only(
+        bottom: kDefaultPadding,
+        left: kDefaultPadding,
+        right: kDefaultPadding,
       ),
       child: Stack(
         // ignore: prefer_const_literals_to_create_immutables

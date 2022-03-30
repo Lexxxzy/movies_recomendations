@@ -5,7 +5,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import '../../../constants.dart';
-import '../../favourites/movie_detail.dart';
+import '../../movie_detail/movie_detail.dart';
 import '/providers/movies_provider.dart';
 
 class RecomendedMovieCarousel extends StatefulWidget {
@@ -41,8 +41,6 @@ class _RecomendedMovieCarouselState extends State<RecomendedMovieCarousel> {
         viewportFraction: 0.55,
         scale: 0.8,
         itemHeight: 300,
-        index: 0,
-        autoplayDelay: kDefaultAutoplayDelayMs * 2,
         itemBuilder: (context, index) {
           return InkWell(
             onTap: () {
@@ -100,7 +98,8 @@ class _RecomendedMovieCarouselState extends State<RecomendedMovieCarousel> {
                   width: MediaQuery.of(context).size.width - 2 * 64,
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(15),
-                    child: Image.asset(movies[index].poster, fit: BoxFit.cover),
+                    child:
+                        Image.network(movies[index].poster, fit: BoxFit.cover),
                   ),
                 ),
                 Padding(
@@ -177,42 +176,46 @@ class _RecomendedMovieCarouselState extends State<RecomendedMovieCarousel> {
         top: kDefaultPadding,
         right: kDefaultPadding,
       ),
-      child: Row(
-        children: <Widget>[
-          const Text(
-            'Top 3 Recomendations',
-            style: TextStyle(
-              fontFamily: 'SFProDisplay',
-              fontSize: 20,
-              color: Color(0xffffffff),
-              fontWeight: FontWeight.w700,
-            ),
-            textAlign: TextAlign.left,
-          ),
-          const SizedBox(
-            width: 15,
-          ),
-          SvgPicture.asset(
-            'assets/icons/Recomedations.svg',
-          ),
-          const Spacer(),
-          TextButton(
-            style: TextButton.styleFrom(
-              textStyle: const TextStyle(
-                fontSize: 14,
-                fontFamily: 'SFProDisplay',
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-            onPressed: () {},
-            child: const Text(
-              'See All',
+      child: SingleChildScrollView(
+        child: Row(
+          children: <Widget>[
+            const Text(
+              'Top 3 Recomendations',
               style: TextStyle(
-                color: Color(0xFF75BBED),
+                fontFamily: 'SFProDisplay',
+                fontSize: 20,
+                color: Color(0xffffffff),
+                fontWeight: FontWeight.w700,
               ),
+              textAlign: TextAlign.left,
             ),
-          ),
-        ],
+            const SizedBox(
+              width: 15,
+            ),
+            SvgPicture.asset(
+              'assets/icons/Recomedations.svg',
+            ),
+            const Spacer(),
+            MediaQuery.of(context).size.width < 400
+                ? const Spacer()
+                : TextButton(
+                    style: TextButton.styleFrom(
+                      textStyle: const TextStyle(
+                        fontSize: 14,
+                        fontFamily: 'SFProDisplay',
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    onPressed: () {},
+                    child: const Text(
+                      'See All',
+                      style: TextStyle(
+                        color: Color(0xFF75BBED),
+                      ),
+                    ),
+                  ),
+          ],
+        ),
       ),
     );
   }

@@ -8,7 +8,8 @@ class Movies with ChangeNotifier {
 
   final List<Movie> _movies = [
     Movie(
-        poster: "assets/images/cocoposter.jpg",
+        poster:
+            "https://www.youloveit.ru/uploads/posts/2017-09/1506175508_youloveit_ru_taina_koko_postery05.jpg",
         title: "Coco",
         id: 1,
         premiereWorld: "2017",
@@ -27,7 +28,8 @@ class Movies with ChangeNotifier {
         ],
         isFavourite: true),
     Movie(
-      poster: "assets/images/alien.jfif",
+      poster:
+          "https://avatars.mds.yandex.net/get-kinopoisk-image/1704946/dd874cff-2698-44c5-8fd1-4667ebaa685b/3840x",
       title: "Resident Alien",
       id: 2,
       premiereWorld: "2021",
@@ -49,7 +51,8 @@ class Movies with ChangeNotifier {
       dateTo: "now",
     ),
     Movie(
-        poster: "assets/images/spider.jfif",
+        poster:
+            "https://avatars.mds.yandex.net/get-zen_doc/1780598/pub_6149919a8e59ec5c3e0cc70e_614991deee9b3e50d2e73b0c/scale_1200",
         title: "Spider-Man",
         id: 3,
         premiereWorld: "2021",

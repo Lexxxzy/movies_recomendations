@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:movies_recomendations/providers/movies_provider.dart';
-import 'package:movies_recomendations/providers/single_movie_provider.dart';
 import 'package:movies_recomendations/screens/home/home_screen.dart';
 import 'package:provider/provider.dart';
-import 'screens/favourites/movie_detail.dart';
+import 'screens/movie_detail/movie_detail.dart';
+import 'screens/recomendations/recomendations.dart';
 
 void main() {
   runApp(const MyApp());
@@ -30,6 +30,7 @@ class MyApp extends StatelessWidget {
         home: HomeScreen(),
         routes: {
           MovieDetailScreen.routeName: (ctx) => MovieDetailScreen(),
+          RecomendationsScreen.routeName: (ctx) => RecomendationsScreen(),
         },
       ),
     );

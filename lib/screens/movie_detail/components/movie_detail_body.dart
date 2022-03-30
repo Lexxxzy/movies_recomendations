@@ -29,22 +29,28 @@ class _MovieDetailBodyState extends State<MovieDetailBody> {
 
     Size size = MediaQuery.of(context).size;
 
-    return ChangeNotifierProvider(
-      create: (BuildContext context) {
-        loadedMovie;
+    return GestureDetector(
+      onHorizontalDragUpdate: (details) {
+        details.globalPosition.dx;
+        Navigator.maybePop(context);
       },
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          PosterAndRating(
-            size: size,
-            loadedMovie: loadedMovie,
-          ),
-          buildMovieInfo(loadedMovie),
-          buildFrames(loadedMovie),
-          buildDescrition(loadedMovie),
-          buildFooter(loadedMovie)
-        ],
+      child: ChangeNotifierProvider(
+        create: (BuildContext context) {
+          loadedMovie;
+        },
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            PosterAndRating(
+              size: size,
+              loadedMovie: loadedMovie,
+            ),
+            buildMovieInfo(loadedMovie),
+            buildFrames(loadedMovie),
+            buildDescrition(loadedMovie),
+            buildFooter(loadedMovie)
+          ],
+        ),
       ),
     );
   }
@@ -93,7 +99,7 @@ class _MovieDetailBodyState extends State<MovieDetailBody> {
           SizedBox(
             width: 15,
           ),
-          buildButton()
+          MediaQuery.of(context).size.width > 380 ? buildButton() : Spacer(),
         ]),
       ),
     );
@@ -258,7 +264,7 @@ class _MovieDetailBodyState extends State<MovieDetailBody> {
                 Radius.circular(20),
               ),
               boxShadow: [kDefaultShadow],
-              color: Colors.white12,
+              color: Color.fromARGB(8, 255, 255, 255),
               image: DecorationImage(
                 image: NetworkImage(loadedMovie.frames[index]),
                 fit: BoxFit.cover,

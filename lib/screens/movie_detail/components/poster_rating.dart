@@ -26,7 +26,7 @@ class PosterAndRating extends StatelessWidget {
               ),
               image: DecorationImage(
                 fit: BoxFit.cover,
-                image: AssetImage(loadedMovie.poster),
+                image: NetworkImage(loadedMovie.poster),
               ),
             ),
           ),
@@ -108,4 +108,3 @@ class PosterAndRating extends StatelessWidget {
     );
   }
 }
-
