@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:movies_recomendations/screens/recomendations/recomendations.dart';
 
 import '../constants.dart';
+import '../screens/favourite/favourite_screen.dart';
 import '../screens/home/components/body.dart';
 import '../screens/home/components/coming_movies.dart';
 import '../screens/home/components/recomendation_carousel.dart';
@@ -110,13 +111,10 @@ class _CategotiesMenuState extends State<CategotiesMenu>
               children: [
                 MainScreenWidgets(),
                 Container(
-                    height: MediaQuery.of(context).size.height,
-                    child: RecomendationsScreen()),
-                Center(
-                    child: Text(
-                  "${MediaQuery.of(context).size.width}",
-                  style: TextStyle(color: kTextColor),
-                )),
+                  height: MediaQuery.of(context).size.height,
+                  child: RecomendationsScreen(),
+                ),
+                FavouritesScreen(),
               ],
             ),
           ),

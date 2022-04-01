@@ -11,9 +11,12 @@ class MovieDetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final movieId =
         ModalRoute.of(context)?.settings.arguments as int; // is the id!
-    return Scaffold(
-      backgroundColor: kBackgroundColor,
-      body: SingleChildScrollView(child: MovieDetailBody(movieId)),
+    return Hero(
+      tag: 'poster_image',
+      child: Scaffold(
+        backgroundColor: kBackgroundColor,
+        body: SingleChildScrollView(child: MovieDetailBody(movieId)),
+      ),
     );
   }
 }

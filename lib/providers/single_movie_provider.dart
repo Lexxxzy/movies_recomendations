@@ -1,6 +1,8 @@
 // ignore_for_file: unnecessary_this
 
 import 'package:flutter/material.dart';
+import 'package:movies_recomendations/components/trending_favourite_movie.dart';
+import 'movies_provider.dart';
 
 class Movie with ChangeNotifier {
   final int? id, seasons, age;
@@ -32,4 +34,7 @@ class Movie with ChangeNotifier {
     this.isFavourite = !this.isFavourite;
     notifyListeners();
   }
+  
+
+
 }

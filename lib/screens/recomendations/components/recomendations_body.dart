@@ -1,203 +1,170 @@
-// ignore_for_file: prefer_const_constructors
-
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:movies_recomendations/constants.dart';
-import 'package:movies_recomendations/screens/movie_detail/components/movie_detail_body.dart';
-
-import '../../../components/categories_menu.dart';
-import '../../../providers/single_movie_provider.dart';
+import '../../../blocs/swipe_block.dart';
+import '../../../blocs/swipe_state.dart';
 import '../../../providers/movies_provider.dart';
+import 'choice_button.dart';
+import 'movie_card_recomendations.dart';
+import 'package:animated_text_kit/animated_text_kit.dart';
 
-class RecomendationsBody extends StatelessWidget {
+class RecomendationsBody extends StatefulWidget {
   const RecomendationsBody({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return MovieCardRecomendations(
-      movie: Movies().movies[2],
-    );
-  }
+  State<RecomendationsBody> createState() => _RecomendationsBodyState();
 }
 
-class MovieCardRecomendations extends StatelessWidget {
-  final Movie movie;
-  const MovieCardRecomendations({Key? key, required this.movie})
-      : super(key: key);
+class _RecomendationsBodyState extends State<RecomendationsBody> {
+  double _opacity = 0.0;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _opacity = 0;
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(
-        left: kDefaultPadding,
-        right: kDefaultPadding,
-      ),
-      child: SizedBox(
-        height: MediaQuery.of(context).size.height / 1.6,
-        width: MediaQuery.of(context).size.width,
-        child: Stack(children: [
-          /*
-          Container(
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage(movie.poster),
-              ),
-              borderRadius: BorderRadius.circular(15),
-            ),
-            child: BackdropFilter(
-              filter: ImageFilter.blur(
-                  sigmaX: 20, sigmaY: 20, tileMode: TileMode.mirror),
-              child: Container(
-                color: Colors.black.withOpacity(0.0),
-              ),
-            ),
-          ),*/
-          Container(
-            decoration: BoxDecoration(
-              color: Color.fromARGB(106, 255, 255, 255),
-              image: DecorationImage(
-                fit: BoxFit.cover,
-                image: NetworkImage(movie.poster),
-              ),
-              borderRadius: BorderRadius.circular(38),
-              boxShadow: [kDefaultShadow],
-            ),
-          ),
-          Container(
-            decoration: BoxDecoration(
-              color: Color.fromARGB(90, 182, 182, 182),
-              image: DecorationImage(
-                fit: BoxFit.cover,
-                image: NetworkImage(movie.poster),
-              ),
-              borderRadius: BorderRadius.circular(38),
-              boxShadow: [kDefaultShadow],
-              gradient: LinearGradient(
-                colors: const [
-                  Color.fromARGB(136, 0, 0, 0),
-                  Colors.transparent
-                ],
-                begin: Alignment.bottomCenter,
-                end: Alignment.center,
-              ),
-            ),
-            child: Container(
-              decoration: BoxDecoration(
-                backgroundBlendMode: BlendMode.darken,
-                borderRadius: BorderRadius.circular(32),
-                gradient: LinearGradient(
-                  colors: const [
-                    Color.fromARGB(143, 0, 0, 0),
-                    Colors.transparent
+    return BlocBuilder<SwipeBloc, SwipeState>(
+      builder: (context, state) {
+        if (state is SwipeLoading) {
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        } else if (state is SwipeLoaded) {
+          return state.movies.length >= 1
+              ? Column(
+                  children: [
+                    Draggable(
+                      child: MovieCardRecomendations(movie: state.movies[0]),
+                      feedback: MovieCardRecomendations(movie: state.movies[0]),
+                      childWhenDragging: state.movies[0].id !=
+                              Movies().movies.length
+                          ? MovieCardRecomendations(movie: state.movies[1])
+                          : Container(
+                              height: MediaQuery.of(context).size.height / 1.6),
+                      onDragEnd: (drag) {
+                        if (drag.velocity.pixelsPerSecond.dx < -200) {
+                          context.read<SwipeBloc>().add(
+                                SwipeLeftEvent(movie: state.movies[0]),
+                              );
+                          print(drag.velocity.pixelsPerSecond.dx);
+                        } else if (drag.velocity.pixelsPerSecond.dx > 200) {
+                          context.read<SwipeBloc>().add(
+                                SwipeRightEvent(
+                                  movie: state.movies[0],
+                                ),
+                              );
+                        }
+                      },
+                    ),
+                    buildChoiceButtons(context, state),
                   ],
-                  begin: Alignment.bottomCenter,
-                  end: Alignment.topCenter,
-                ),
-              ),
+                )
+              : buildThatWasAllRecomendations(context);
+        } else {
+          return Text('Something went wrong');
+        }
+      },
+    );
+  }
+
+  Padding buildChoiceButtons(BuildContext context, SwipeLoaded state) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+          horizontal: kDefaultPadding * 5 + 10, vertical: kDefaultPadding),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          GestureDetector(
+            onTap: () {
+              context.read<SwipeBloc>()
+                ..add(
+                  SwipeLeftEvent(movie: state.movies[0]),
+                );
+            },
+            child: ChoiceButton(
+              assetPath: 'assets/icons/Cross.svg',
+              backColor: Color(0xFFF5F5FA),
+              color: Color.fromARGB(255, 0, 0, 0),
+              size: 20,
+              width: 53,
+              height: 53,
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(
-                horizontal: kDefaultPadding, vertical: kDefaultPadding),
-            child: Align(
-              alignment: Alignment.bottomCenter,
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(24),
-                child: SizedBox(
-                  height: MediaQuery.of(context).size.height / 9,
-                  child: BackdropFilter(
-                    filter: ImageFilter.blur(
-                      sigmaX: 7,
-                      sigmaY: 7,
-                    ),
-                    child: Container(
-                      color: Color.fromARGB(96, 255, 255, 255),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: kDefaultPadding - 5),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  movie.title,
-                                  style: TextStyle(
-                                    fontFamily: 'SFProDisplay',
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 20,
-                                  ),
-                                ),
-                                SizedBox(height: 5),
-                                Row(
-                                  children: [
-                                    Text(
-                                      movie.ratingKinopoisk.toString(),
-                                      style: TextStyle(
-                                        fontFamily: 'SFProDisplay',
-                                        color: ratingColor(movie),
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 15,
-                                      ),
-                                    ),
-                                    Text(
-                                      ' | ${movie.premiereWorld}',
-                                      style: TextStyle(
-                                        fontFamily: 'SFProText',
-                                        color: kTextLightColor,
-                                        fontSize: 15,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                            Spacer(),
-                            Stack(
-                              alignment: Alignment.center,
-                              children: [
-                                SvgPicture.asset(
-                                  'assets/icons/GoTo.svg',
-                                  color: Colors.white,
-                                  height: 16,
-                                ),
-                                Container(
-                                  height:
-                                      MediaQuery.of(context).size.height / 18,
-                                  width:
-                                      MediaQuery.of(context).size.height / 18,
-                                  decoration: BoxDecoration(
-                                    color: Color.fromARGB(117, 247, 247, 247),
-                                    shape: BoxShape.circle,
-                                  ),
-                                )
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
+          GestureDetector(
+            onTap: () {
+              context.read<SwipeBloc>()
+                ..add(
+                  SwipeRightEvent(
+                    movie: state.movies[0],
                   ),
-                ),
-              ),
+                );
+            },
+            child: ChoiceButton(
+              assetPath: 'assets/icons/lilHeart.svg',
+              backColor: kMainColorWithOpacity,
+              color: Color(0xFFEE896C),
+              size: 20,
+              width: 53,
+              height: 53,
             ),
-          ), /*
-          Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(32),
-              gradient: LinearGradient(colors: const [
-                Color.fromARGB(108, 0, 0, 0),
-                Colors.transparent
-              ], begin: Alignment.bottomCenter, end: Alignment.center),
-            ),
-          ),*/
-        ]),
+          ),
+        ],
       ),
+    );
+  }
+
+  Stack buildThatWasAllRecomendations(BuildContext context) {
+    return Stack(
+      children: [
+        Positioned(
+          top: 0,
+          child: Padding(
+            padding: const EdgeInsets.only(left: kDefaultPadding),
+            child: SizedBox(
+              width: 270,
+              child: DefaultTextStyle(
+                  style: const TextStyle(
+                    color: kTextColor,
+                    fontFamily: 'SFProDisplay',
+                    fontSize: 32,
+                    fontWeight: FontWeight.w900,
+                  ),
+                  child: AnimatedTextKit(
+                    isRepeatingAnimation: false,
+                    onNext: (g, n) => setState(() {
+                      _opacity = 1;
+                    }),
+                    pause: Duration(milliseconds: 300),
+                    animatedTexts: [
+                      TyperAnimatedText(
+                        "",
+                      ),
+                      TyperAnimatedText(
+                        "That was all your recomedations for today",
+                      ),
+                    ],
+                  )),
+            ),
+          ),
+        ),
+        Positioned(
+          top: 80,
+          child: AnimatedOpacity(
+            duration: Duration(milliseconds: 2000),
+            opacity: _opacity,
+            child: SvgPicture.asset(
+              'assets/images/allRecomedationForToday.svg',
+              width: MediaQuery.of(context).size.width,
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

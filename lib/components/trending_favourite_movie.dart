@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 
-import '../../../constants.dart';
-import '../../../providers/single_movie_provider.dart';
-import '../../movie_detail/movie_detail.dart';
+import '../constants.dart';
+import '../providers/single_movie_provider.dart';
+import '../screens/movie_detail/movie_detail.dart';
 
 class FavouriteMovie extends StatefulWidget {
   const FavouriteMovie({Key? key}) : super(key: key);
@@ -27,11 +27,12 @@ class _FavouriteMovieState extends State<FavouriteMovie> {
       }),
       child: Padding(
         padding: const EdgeInsets.only(
-          top: kDefaultPadding,
+          bottom: kDefaultPadding,
           left: kDefaultPadding,
           right: kDefaultPadding,
         ),
         child: Container(
+          decoration: BoxDecoration(borderRadius: BorderRadius.circular(32)),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -107,6 +108,10 @@ class _FavouriteMovieState extends State<FavouriteMovie> {
                     setState(() {
                       movieData.toggleFavourite();
                     });
+                    final snackBar = movieData.isFavourite == true
+                        ? buildAddToFavouriteSnackBox()
+                        : buildRemovedFromFavouriteSnackBox(movieData);
+                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
                   },
                   child: SvgPicture.asset(
                     movieData.isFavourite == false
@@ -120,6 +125,67 @@ class _FavouriteMovieState extends State<FavouriteMovie> {
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  SnackBar buildAddToFavouriteSnackBox() {
+    return SnackBar(
+      elevation: 0,
+      margin: const EdgeInsets.only(
+        bottom: kDefaultPadding,
+        left: kDefaultPadding * 3,
+        right: kDefaultPadding * 3,
+      ),
+      behavior: SnackBarBehavior.floating,
+      dismissDirection: DismissDirection.endToStart,
+      content: const Text(
+        'Added to favourite',
+        textAlign: TextAlign.center,
+        style: TextStyle(
+          fontFamily: 'SFProDisplay',
+          fontSize: 13,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+      backgroundColor: kGreenColor.withOpacity(0.9),
+      duration: Duration(milliseconds: 1200),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16),
+      ),
+    );
+  }
+
+  SnackBar buildRemovedFromFavouriteSnackBox(Movie movieData) {
+    return SnackBar(
+      elevation: 0,
+      action: SnackBarAction(
+        label: 'Undo',
+        textColor: Color.fromARGB(255, 255, 153, 85),
+        onPressed: () {
+          movieData.toggleFavourite();
+        },
+      ),
+      margin: const EdgeInsets.only(
+        bottom: kDefaultPadding,
+        left: kDefaultPadding * 3,
+        right: kDefaultPadding * 3,
+      ),
+      behavior: SnackBarBehavior.floating,
+      dismissDirection: DismissDirection.endToStart,
+      content: const Text(
+        'Removed from favourite',
+        textAlign: TextAlign.center,
+        style: TextStyle(
+          fontFamily: 'SFProDisplay',
+          fontSize: 12,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+      backgroundColor: kErrorColor.withOpacity(0.9),
+      duration: Duration(milliseconds: 2000),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16),
       ),
     );
   }

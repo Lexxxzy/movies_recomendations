@@ -29,7 +29,7 @@ class Movies with ChangeNotifier {
         isFavourite: true),
     Movie(
       poster:
-          "https://avatars.mds.yandex.net/get-kinopoisk-image/1704946/dd874cff-2698-44c5-8fd1-4667ebaa685b/3840x",
+          "https://01streaming.tv/wp-content/uploads/resident-alien-95904-poster-scaled.jpg",
       title: "Resident Alien",
       id: 2,
       premiereWorld: "2021",
@@ -52,7 +52,7 @@ class Movies with ChangeNotifier {
     ),
     Movie(
         poster:
-            "https://avatars.mds.yandex.net/get-zen_doc/1780598/pub_6149919a8e59ec5c3e0cc70e_614991deee9b3e50d2e73b0c/scale_1200",
+            "https://i.pinimg.com/originals/45/89/f8/4589f8a22cb947a1a46eef64ee7f5cca.jpg",
         title: "Spider-Man",
         id: 3,
         premiereWorld: "2021",
@@ -65,9 +65,10 @@ class Movies with ChangeNotifier {
         age: 12,
         ifSeries: false,
         frames: [
-          "https://avatars.mds.yandex.net/get-kinopoisk-image/1600647/a88e4348-829d-4ed2-b578-17bbb0a2ab5c/orig",
-          "https://avatars.mds.yandex.net/get-kinopoisk-image/1777765/f1b77e75-2bd6-4e5a-b580-679f8f2d8691/orig",
-          "https://avatars.mds.yandex.net/get-kinopoisk-image/1777765/9bb3794b-c1f7-4200-9cbc-612e0133046e/orig"
+          "https://avatars.mds.yandex.net/get-kinopoisk-image/6201401/8b67471d-6c54-40f1-bfe8-8db989c06ce9/3840x",
+          "https://avatars.mds.yandex.net/get-kinopoisk-image/4303601/e9d8a0a2-4026-4961-bf17-cb1a4b57e624/3840x",
+          "https://avatars.mds.yandex.net/get-kinopoisk-image/4303601/6cb822bd-684a-46c5-8e52-7691bac00c82/3840x",
+          "https://avatars.mds.yandex.net/get-kinopoisk-image/4303601/f54c4c52-a230-46da-8f75-19ad79895840/3840x"
         ],
         isFavourite: false),
   ];
@@ -78,6 +79,18 @@ class Movies with ChangeNotifier {
 
   Movie findById(int id) {
     return _movies.firstWhere((element) => element.id == id);
+  }
+
+  List<Movie> get favouriteMovies {
+    List<Movie> favMovies = <Movie>[..._movies]
+        .where((element) => element.isFavourite == true)
+        .toList();
+    return favMovies;
+  }
+
+  void removeItem(movieId) {
+    favouriteMovies.remove(findById(movieId));
+    notifyListeners();
   }
 
   void addMovie(Movie movie) {

@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
-import 'package:movies_recomendations/screens/home/components/trending_favourite_movie.dart';
+import 'package:movies_recomendations/components/trending_favourite_movie.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import '../../movie_detail/movie_detail.dart';
 import '../../../constants.dart';
@@ -48,6 +48,7 @@ class _TrendingListState extends State<TrendingList> {
               ),
             ),
           ),
+          
         ],
       ),
     );
@@ -56,6 +57,7 @@ class _TrendingListState extends State<TrendingList> {
   Padding buildRecomendationsHeader() {
     return Padding(
       padding: const EdgeInsets.only(
+        bottom: kDefaultPadding,
         left: kDefaultPadding,
         right: kDefaultPadding,
       ),

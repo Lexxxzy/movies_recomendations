@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 // Colos that use in our app
 const kMainColor = Color(0xFFDC7C59);
+const kMainColorWithOpacity = Color.fromARGB(45, 238, 136, 108);
 const kTextColor = Color(0xFFFFFDFA);
 const kTextLightColor = Color(0xFFD2D5D9);
 const kTextGreyColor = Color(0xFF4D525E);

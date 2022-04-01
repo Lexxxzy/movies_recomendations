@@ -39,6 +39,9 @@ dependencies:
   flutter_swiper: ^1.1.6
   provider: ^6.0.2
   simple_animations: ^4.0.1
+  flutter_bloc: ^7.0.0
+  equatable: ^2.0.3
+  animated_text_kit: ^4.2.1
 
 dev_dependencies:
   flutter_test:

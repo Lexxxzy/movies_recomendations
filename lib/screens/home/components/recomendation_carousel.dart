@@ -175,6 +175,7 @@ class _RecomendedMovieCarouselState extends State<RecomendedMovieCarousel> {
         left: kDefaultPadding,
         top: kDefaultPadding,
         right: kDefaultPadding,
+        bottom: kDefaultPadding / 2,
       ),
       child: SingleChildScrollView(
         child: Row(
