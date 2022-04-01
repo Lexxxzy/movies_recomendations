@@ -15,23 +15,8 @@ class CategotiesMenu extends StatefulWidget {
 class _CategotiesMenuState extends State<CategotiesMenu>
     with TickerProviderStateMixin {
   late TabController _tabController;
-  
 
   int currentIndex = 0;
-  List categories = <Map>[
-    {
-      "text": "Popular",
-      "route": "/home",
-    },
-    {
-      "text": "You might like",
-      "route": RecomendationsScreen.routeName,
-    },
-    {
-      "text": "Favourite",
-      "route": "/favourites",
-    },
-  ];
 
   @override
   void dispose() {
@@ -49,7 +34,7 @@ class _CategotiesMenuState extends State<CategotiesMenu>
   void initState() {
     // TODO: implement initState
     super.initState();
-    _tabController = TabController(length: 3, vsync: this);
+    _tabController = TabController(length: 4, vsync: this);
   }
 
   @override
@@ -91,6 +76,9 @@ class _CategotiesMenuState extends State<CategotiesMenu>
                   Tab(
                     text: "Favourite",
                   ),
+                  Tab(
+                    text: "Loved",
+                  ),
                 ],
               ),
             ),
@@ -107,12 +95,13 @@ class _CategotiesMenuState extends State<CategotiesMenu>
             child: TabBarView(
               controller: _tabController,
               children: [
-                MainScreenWidgets(),
+                MainScreenWidgets(_tabController),
                 Container(
                   height: MediaQuery.of(context).size.height,
                   child: RecomendationsScreen(),
                 ),
                 FavouritesScreen(_tabController),
+                Container()
               ],
             ),
           ),

@@ -10,7 +10,7 @@ import 'trending.dart';
 import '../../../components/categories_menu.dart';
 
 class Body extends StatelessWidget {
-  const Body({Key? key}) : super(key: key);
+  Body({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +23,10 @@ class Body extends StatelessWidget {
 }
 
 class MainScreenWidgets extends StatelessWidget {
-  const MainScreenWidgets({Key? key}) : super(key: key);
+  late TabController tabController;
+  MainScreenWidgets(TabController tabController, {Key? key}) : super(key: key) {
+    this.tabController = tabController;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +36,7 @@ class MainScreenWidgets extends StatelessWidget {
         child: Column(children: [
           const Search(),
           ComingMovies(),
-          RecomendedMovieCarousel(),
+          RecomendedMovieCarousel(tabController),
           Padding(
             padding: const EdgeInsets.only(bottom: kDefaultPadding * 2),
             child: TrendingList(),

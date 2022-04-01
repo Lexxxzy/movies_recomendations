@@ -1,10 +1,15 @@
+// @dart=2.11
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movies_recomendations/providers/movies_provider.dart';
+import 'package:movies_recomendations/providers/user.dart';
 import 'package:movies_recomendations/screens/home/home_screen.dart';
 import 'package:provider/provider.dart';
 import 'blocs/swipe_block.dart';
 import 'screens/movie_detail/movie_detail.dart';
+import 'screens/profile/profile_screen.dart';
 import 'screens/recomendations/recomendations.dart';
 
 void main() {
@@ -18,7 +23,7 @@ void main() {
                 ),
               ),*/
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({Key key}) : super(key: key);
 
   // This widget is the root of your application.
   @override
@@ -39,6 +44,9 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider.value(
             value: Movies(),
           ),
+          ChangeNotifierProvider.value(
+            value: User(),
+          ),
         ],
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
@@ -50,6 +58,7 @@ class MyApp extends StatelessWidget {
           routes: {
             MovieDetailScreen.routeName: (ctx) => MovieDetailScreen(),
             RecomendationsScreen.routeName: (ctx) => RecomendationsScreen(),
+            ProfileScreen.routeName: (ctx) => ProfileScreen(),
           },
         ),
       ),

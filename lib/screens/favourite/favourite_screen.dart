@@ -72,7 +72,7 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
 
   Container buildNoFavouritesScreen(BuildContext context) {
     return Container(
-      height: 600,
+      height: MediaQuery.of(context).size.height / 1.3,
       child: Stack(
         children: [
           Positioned(
@@ -121,7 +121,8 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
           Container(
             alignment: Alignment.bottomCenter,
             child: Padding(
-              padding: EdgeInsets.only(bottom: kDefaultPadding * 2 - 10),
+              padding: EdgeInsets.only(
+                  top: kDefaultPadding / 2, bottom: kDefaultPadding * 2 - 10),
               child: greyButton(
                 content: 'Explore new movies',
                 onPress: () => {

@@ -9,7 +9,11 @@ import '../../movie_detail/movie_detail.dart';
 import '/providers/movies_provider.dart';
 
 class RecomendedMovieCarousel extends StatefulWidget {
-  const RecomendedMovieCarousel({Key? key}) : super(key: key);
+  late TabController tabController;
+  RecomendedMovieCarousel(TabController tabController, {Key? key})
+      : super(key: key) {
+    this.tabController = tabController;
+  }
 
   @override
   State<RecomendedMovieCarousel> createState() =>
@@ -18,6 +22,12 @@ class RecomendedMovieCarousel extends StatefulWidget {
 
 class _RecomendedMovieCarouselState extends State<RecomendedMovieCarousel> {
   final movies = Movies().movies;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,6 +51,7 @@ class _RecomendedMovieCarouselState extends State<RecomendedMovieCarousel> {
         viewportFraction: 0.55,
         scale: 0.8,
         itemHeight: 300,
+        index: 0,
         itemBuilder: (context, index) {
           return InkWell(
             onTap: () {
@@ -66,6 +77,7 @@ class _RecomendedMovieCarouselState extends State<RecomendedMovieCarousel> {
         },
         pagination: SwiperCustomPagination(
           builder: (BuildContext context, SwiperPluginConfig config) {
+            print(config.activeIndex);
             return buildCustomPagination(config);
           },
         ),
@@ -207,7 +219,10 @@ class _RecomendedMovieCarouselState extends State<RecomendedMovieCarousel> {
                         fontWeight: FontWeight.w600,
                       ),
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      widget.tabController
+                          .animateTo((widget.tabController.index + 1) % 2);
+                    },
                     child: const Text(
                       'See All',
                       style: TextStyle(
@@ -230,7 +245,7 @@ class buildSliderIndicator extends StatelessWidget {
         super(key: key);
 
   final movies = Movies().movies;
-  final SwiperPluginConfig _config;
+  SwiperPluginConfig _config;
 
   @override
   Widget build(BuildContext context) {
@@ -239,14 +254,14 @@ class buildSliderIndicator extends StatelessWidget {
       alignment: Alignment.bottomCenter,
       child: SmoothPageIndicator(
         controller: _config.pageController,
-        count: movies.length,
-        effect: const ExpandingDotsEffect(
-          expansionFactor: 8,
-          dotWidth: 6,
-          dotHeight: 6,
-          spacing: 7,
+        count: _config.itemCount,
+        effect: WormEffect(
+          dotWidth: 8,
+          dotHeight: 8,
+          spacing: 9,
           activeDotColor: kTextColor,
         ),
+        axisDirection: Axis.horizontal,
         onDotClicked: (index) {
           _config.pageController.animateToPage(
             index,
