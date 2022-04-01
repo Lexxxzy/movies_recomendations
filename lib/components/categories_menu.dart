@@ -6,10 +6,6 @@ import 'package:movies_recomendations/screens/recomendations/recomendations.dart
 import '../constants.dart';
 import '../screens/favourite/favourite_screen.dart';
 import '../screens/home/components/body.dart';
-import '../screens/home/components/coming_movies.dart';
-import '../screens/home/components/recomendation_carousel.dart';
-import '../screens/home/components/search.dart';
-import '../screens/home/components/trending.dart';
 
 class CategotiesMenu extends StatefulWidget {
   @override
@@ -19,6 +15,8 @@ class CategotiesMenu extends StatefulWidget {
 class _CategotiesMenuState extends State<CategotiesMenu>
     with TickerProviderStateMixin {
   late TabController _tabController;
+  
+
   int currentIndex = 0;
   List categories = <Map>[
     {
@@ -114,7 +112,7 @@ class _CategotiesMenuState extends State<CategotiesMenu>
                   height: MediaQuery.of(context).size.height,
                   child: RecomendationsScreen(),
                 ),
-                FavouritesScreen(),
+                FavouritesScreen(_tabController),
               ],
             ),
           ),

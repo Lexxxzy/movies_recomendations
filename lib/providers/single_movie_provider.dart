@@ -35,6 +35,10 @@ class Movie with ChangeNotifier {
     notifyListeners();
   }
   
+    void removeFavourite() {
+    this.isFavourite =false;
+    notifyListeners();
+  }
 
 
 }

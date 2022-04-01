@@ -1,19 +1,43 @@
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:movies_recomendations/components/greyButton.dart';
 import 'package:movies_recomendations/constants.dart';
 import 'package:movies_recomendations/providers/single_movie_provider.dart';
+import 'package:movies_recomendations/screens/recomendations/recomendations.dart';
 import 'package:provider/provider.dart';
 
 import '../../components/trending_favourite_movie.dart';
 import '../../providers/movies_provider.dart';
 
-class FavouritesScreen extends StatelessWidget {
-  const FavouritesScreen({Key? key}) : super(key: key);
+import '/components/categories_menu.dart';
+
+class FavouritesScreen extends StatefulWidget {
+  late TabController tabController;
+  FavouritesScreen(TabController tabController, {Key? key}) {
+    this.tabController = tabController;
+  }
+
+  @override
+  State<FavouritesScreen> createState() => _FavouritesScreenState();
+}
+
+class _FavouritesScreenState extends State<FavouritesScreen> {
+  double _opacity = 0.0;
+  bool isAllRemoved = false;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _opacity = 0;
+  }
 
   @override
   Widget build(BuildContext context) {
     final moviesData = Provider.of<Movies>(context);
     final movies = moviesData.favouriteMovies;
+    int numOfFavs = movies.length;
     return SafeArea(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -30,37 +54,13 @@ class FavouritesScreen extends StatelessWidget {
                     itemCount: movies.length,
                     itemBuilder: (context, index) {
                       return ChangeNotifierProvider.value(
-                        value: movies[index],
-                        child: Dismissible(
-                          key: ValueKey(movies[index].id),
-                          background: Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(16),
-                              color: kErrorColor,
-                            ),
-                            child: Padding(
-                              padding:
-                                  const EdgeInsets.only(right: kDefaultPadding),
-                              child: const Icon(
-                                CupertinoIcons.delete,
-                                color: kTextColor,
-                                size: 32,
-                              ),
-                            ),
-                            alignment: Alignment.centerRight,
-                            margin: const EdgeInsets.symmetric(
-                              horizontal: kDefaultPadding,
-                            ),
-                          ),
-                          direction: DismissDirection.endToStart,
-                          onDismissed: (direction) {
-                            movies[index].toggleFavourite();
-                          },
-                          child: FavouriteMovie(),
-                        ),
-                      );
+                          value: movies[index],
+                          child: buildFavouriteCards(movies, index, numOfFavs));
                     },
-                  )
+                  ),
+                  isAllRemoved || movies.isEmpty
+                      ? buildNoFavouritesScreen(context)
+                      : Container()
                 ],
               ),
             ),
@@ -69,16 +69,110 @@ class FavouritesScreen extends StatelessWidget {
       ),
     );
   }
-}
 
-final snackBar = (movieData) => movieData.isFavourite == false
-    ? SnackBar(
-        content: Text('Added To Favourite'),
-        backgroundColor: kGreenColor,
-        duration: Duration(milliseconds: 200),
-      )
-    : SnackBar(
-        content: Text('Added To Favourite'),
-        backgroundColor: kGreenColor,
-        duration: Duration(milliseconds: 200),
-      );
+  Container buildNoFavouritesScreen(BuildContext context) {
+    return Container(
+      height: 600,
+      child: Stack(
+        children: [
+          Positioned(
+            top: 0,
+            child: Padding(
+              padding: const EdgeInsets.only(left: kDefaultPadding),
+              child: SizedBox(
+                width: 270,
+                child: DefaultTextStyle(
+                    style: const TextStyle(
+                      color: kTextColor,
+                      fontFamily: 'SFProDisplay',
+                      fontSize: 32,
+                      fontWeight: FontWeight.w900,
+                    ),
+                    child: AnimatedTextKit(
+                      isRepeatingAnimation: false,
+                      onNext: (g, n) => setState(() {
+                        _opacity = 1;
+                      }),
+                      pause: Duration(milliseconds: 300),
+                      animatedTexts: [
+                        TyperAnimatedText(
+                          "",
+                        ),
+                        TyperAnimatedText(
+                          "You don’t have favorites yet...",
+                        ),
+                      ],
+                    )),
+              ),
+            ),
+          ),
+          Positioned(
+            child: Container(
+              margin: EdgeInsets.all(kDefaultPadding),
+              child: AnimatedOpacity(
+                duration: Duration(milliseconds: 2000),
+                opacity: _opacity,
+                child: SvgPicture.asset('assets/images/noFavourites.svg',
+                    alignment: Alignment.topCenter,
+                    width: MediaQuery.of(context).size.width),
+              ),
+            ),
+          ),
+          Container(
+            alignment: Alignment.bottomCenter,
+            child: Padding(
+              padding: EdgeInsets.only(bottom: kDefaultPadding * 2 - 10),
+              child: greyButton(
+                content: 'Explore new movies',
+                onPress: () => {
+                  widget.tabController
+                      .animateTo((widget.tabController.index + 1) % 2)
+                },
+                fontSize: 15,
+                width: 50,
+                height: 14,
+              ),
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
+  Dismissible buildFavouriteCards(List<Movie> movies, int index, numOfFavs) {
+    return Dismissible(
+      key: ValueKey(movies[index].id),
+      background: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(16),
+          color: kErrorColor,
+        ),
+        child: Padding(
+          padding: const EdgeInsets.only(right: kDefaultPadding),
+          child: const Icon(
+            CupertinoIcons.delete,
+            color: kTextColor,
+            size: 32,
+          ),
+        ),
+        alignment: Alignment.centerRight,
+        margin: const EdgeInsets.symmetric(
+          horizontal: kDefaultPadding,
+        ),
+      ),
+      direction: DismissDirection.endToStart,
+      onDismissed: (direction) {
+        movies[index].removeFavourite();
+        setState(() {
+          numOfFavs -= 1;
+        });
+        if (movies.length == 1) {
+          setState(() {
+            isAllRemoved = !isAllRemoved;
+          });
+        }
+      },
+      child: FavouriteMovie(),
+    );
+  }
+}

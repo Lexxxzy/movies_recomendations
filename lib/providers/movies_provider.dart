@@ -3,6 +3,7 @@ import 'package:movies_recomendations/constants.dart';
 
 import './single_movie_provider.dart';
 
+
 class Movies with ChangeNotifier {
   String plotText = "";
 
@@ -92,6 +93,7 @@ class Movies with ChangeNotifier {
     favouriteMovies.remove(findById(movieId));
     notifyListeners();
   }
+
 
   void addMovie(Movie movie) {
     /*_movies.add(movie);*/

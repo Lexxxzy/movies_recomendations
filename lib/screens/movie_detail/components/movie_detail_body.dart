@@ -6,6 +6,7 @@ import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:movies_recomendations/constants.dart';
 import 'package:provider/provider.dart';
 
+import '../../../components/greyButton.dart';
 import '../../../providers/movies_provider.dart';
 import '../../../providers/single_movie_provider.dart';
 import 'poster_rating.dart';
@@ -99,34 +100,16 @@ class _MovieDetailBodyState extends State<MovieDetailBody> {
           SizedBox(
             width: 15,
           ),
-          MediaQuery.of(context).size.width > 380 ? buildButton() : Spacer(),
+          MediaQuery.of(context).size.width > 380
+              ? buildButton('ADD TO FAVOURITES')
+              : Spacer(),
         ]),
       ),
     );
   }
 
-  ElevatedButton buildButton() {
-    return ElevatedButton(
-      onPressed: () {},
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 7),
-        child: Text(
-          'ADD TO FAVOURITES',
-          style: TextStyle(
-            fontFamily: 'SFProText',
-            fontWeight: FontWeight.w600,
-            color: Colors.white,
-            fontSize: 12,
-          ),
-        ),
-      ),
-      style: ElevatedButton.styleFrom(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
-        ),
-        primary: kButtomsGreyColor,
-      ),
-    );
+  greyButton buildButton(String content) {
+    return greyButton(content: content, onPress: () => {});
   }
 
   Container buildRatingBox({
