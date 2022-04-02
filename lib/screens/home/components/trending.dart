@@ -48,7 +48,6 @@ class _TrendingListState extends State<TrendingList> {
               ),
             ),
           ),
-          
         ],
       ),
     );

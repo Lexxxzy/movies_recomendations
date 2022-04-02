@@ -50,7 +50,7 @@ class _RecomendedMovieCarouselState extends State<RecomendedMovieCarousel> {
         itemWidth: MediaQuery.of(context).size.width - 2 * 84,
         viewportFraction: 0.55,
         scale: 0.8,
-        itemHeight: 300,
+        itemHeight: 150,
         index: 0,
         itemBuilder: (context, index) {
           return InkWell(
@@ -250,7 +250,7 @@ class buildSliderIndicator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.only(bottom: 20),
+      padding: const EdgeInsets.only(bottom: 15),
       alignment: Alignment.bottomCenter,
       child: SmoothPageIndicator(
         controller: _config.pageController,

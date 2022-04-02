@@ -2,9 +2,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:movies_recomendations/constants.dart';
+import 'package:movies_recomendations/screens/genres/genres_screen.dart';
 import 'coming_movies.dart';
 import 'recomendation_carousel.dart';
-import 'search.dart';
+import '../../../components/search.dart';
 import 'trending.dart';
 
 import '../../../components/categories_menu.dart';
@@ -34,7 +35,23 @@ class MainScreenWidgets extends StatelessWidget {
       height: 100,
       child: SingleChildScrollView(
         child: Column(children: [
-          const Search(),
+          GestureDetector(
+            onTap: () {
+              Navigator.of(context).pushNamed(
+                GenresScreen.routeName,
+              );
+            },
+            child: Padding(
+              padding: EdgeInsets.only(
+                bottom: kDefaultPadding,
+                left: kDefaultPadding,
+                right: kDefaultPadding,
+              ),
+              child: Search(
+                isEnabled: false,
+              ),
+            ),
+          ),
           ComingMovies(),
           RecomendedMovieCarousel(tabController),
           Padding(

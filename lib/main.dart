@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movies_recomendations/providers/movies_provider.dart';
 import 'package:movies_recomendations/providers/user.dart';
+import 'package:movies_recomendations/screens/genres/genres_screen.dart';
 import 'package:movies_recomendations/screens/home/home_screen.dart';
 import 'package:provider/provider.dart';
 import 'blocs/swipe_block.dart';
@@ -16,16 +17,9 @@ void main() {
   runApp(const MyApp());
 }
 
-/*create: (_) => SwipeBloc()
-              ..add(
-                LoadMoviesEvent(
-                  movies: Movies().movies.where((user) => user.id != 1).toList(),
-                ),
-              ),*/
 class MyApp extends StatelessWidget {
   const MyApp({Key key}) : super(key: key);
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
@@ -59,6 +53,7 @@ class MyApp extends StatelessWidget {
             MovieDetailScreen.routeName: (ctx) => MovieDetailScreen(),
             RecomendationsScreen.routeName: (ctx) => RecomendationsScreen(),
             ProfileScreen.routeName: (ctx) => ProfileScreen(),
+            GenresScreen.routeName: (ctx) => GenresScreen(),
           },
         ),
       ),

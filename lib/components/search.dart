@@ -5,20 +5,17 @@ import 'package:flutter_svg/svg.dart';
 import 'package:movies_recomendations/constants.dart';
 
 class Search extends StatelessWidget {
-  const Search({Key? key}) : super(key: key);
+  bool isEnabled;
+  Search({Key? key, required this.isEnabled}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(
-        bottom: kDefaultPadding,
-        left: kDefaultPadding,
-        right: kDefaultPadding,
-      ),
       child: Stack(
         // ignore: prefer_const_literals_to_create_immutables
         children: [
           TextField(
+            enabled: isEnabled,
             cursorColor: kTextLightColor,
             style: TextStyle(
               fontSize: 15,

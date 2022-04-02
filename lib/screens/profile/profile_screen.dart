@@ -3,9 +3,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:movies_recomendations/components/greyButton.dart';
+import 'package:movies_recomendations/components/redButton.dart';
 import 'package:movies_recomendations/screens/home/components/body.dart';
 import 'package:provider/provider.dart';
 
+import '../../components/backButton.dart';
 import '../../constants.dart';
 import '../../providers/movies_provider.dart';
 import '../../providers/user.dart';
@@ -39,126 +41,118 @@ class bodyProfile extends StatelessWidget {
         children: [
           Padding(
             padding: const EdgeInsets.all(kDefaultPadding),
-            child: Container(
-              alignment: Alignment.topLeft,
-              height: 45,
-              width: 45,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.all(
-                  Radius.circular(30),
-                ),
-                color: Color.fromARGB(59, 255, 255, 255),
-              ),
-              child: Container(
-                padding: EdgeInsets.only(right: 3),
-                child: IconButton(
-                    icon: SvgPicture.asset(
-                      'assets/icons/Back.svg',
-                      height: 18,
-                      color: Colors.white,
-                    ),
-                    tooltip:
-                        MaterialLocalizations.of(context).backButtonTooltip,
-                    onPressed: () {
-                      Navigator.maybePop(context);
-                    }),
-              ),
+            child: backButton(
+              buttonForm: buttonForms.circle,
             ),
           ),
-          Container(
-            height: MediaQuery.of(context).size.height / 1.5,
-            width: MediaQuery.of(context).size.width,
-            margin: const EdgeInsets.symmetric(horizontal: kDefaultPadding * 3),
-            //color: Colors.white10,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                CircleAvatar(
-                  backgroundImage: NetworkImage(userData.avatar),
-                  radius: 100,
-                ),
-                const SizedBox(height: kDefaultPadding),
-                Text(
-                  userData.name,
-                  style: const TextStyle(
-                    color: kTextColor,
-                    fontFamily: 'SFProDispay',
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const SizedBox(
-                  height: 5,
-                ),
-                Text(
-                  userData.nickName,
-                  style: const TextStyle(
-                    color: kTextLightColor,
-                    fontFamily: 'SFProDispay',
-                    fontSize: 12,
-                  ),
-                ),
-                const SizedBox(
-                  height: kDefaultPadding * 2,
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    const Text(
-                      'Email',
-                      style: TextStyle(
-                        color: kTextLightColor,
-                        fontFamily: 'SFProDispay',
-                        fontSize: 12,
-                      ),
-                    ),
-                    const SizedBox(
-                      height: kDefaultPadding - 15,
-                    ),
-                    Text(
-                      userData.email,
-                      style: const TextStyle(
-                        color: kTextColor,
-                        fontFamily: 'SFProText',
-                        fontSize: 14,
-                      ),
-                    ),
-                    const SizedBox(
-                      height: kDefaultPadding,
-                    ),
-                    buildUserCategory(
-                      amount: userData.favourites.length.toString(),
-                      content: 'Favourites',
-                      asset: 'assets/icons/boockmark.svg',
-                      height: 14,
-                    ),
-                    buildUserCategory(
-                      amount: userData.loved.length.toString(),
-                      content: 'Loved',
-                      asset: 'assets/icons/Heart.svg',
-                      height: 11,
-                    ),
-                    buildUserCategory(
-                      amount: userData.disliked.length.toString(),
-                      content: 'Disliked',
-                      asset: 'assets/icons/redCross.svg',
-                      height: 11,
-                    ),
-                  ],
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: kDefaultPadding),
-                  child: greyButton(
-                    content: 'EDIT PROFILE',
-                    onPress: () {},
-                    fontSize: 14,
-                    height: 16,
-                    width: 60,
-                  ),
-                )
-              ],
+          buildProfileBody(context, userData),
+        ],
+      ),
+    );
+  }
+
+  Container buildProfileBody(BuildContext context, User userData) {
+    return Container(
+      height: MediaQuery.of(context).size.height / 1.3,
+      width: MediaQuery.of(context).size.width,
+      margin: const EdgeInsets.symmetric(horizontal: kDefaultPadding * 3),
+      //color: Colors.white10,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          CircleAvatar(
+            backgroundImage: NetworkImage(userData.avatar),
+            radius: 100,
+          ),
+          const SizedBox(height: kDefaultPadding),
+          Text(
+            userData.name,
+            style: const TextStyle(
+              color: kTextColor,
+              fontFamily: 'SFProDispay',
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
             ),
           ),
+          const SizedBox(
+            height: 5,
+          ),
+          Text(
+            userData.nickName,
+            style: const TextStyle(
+              color: kTextLightColor,
+              fontFamily: 'SFProDispay',
+              fontSize: 12,
+            ),
+          ),
+          const SizedBox(
+            height: kDefaultPadding * 2,
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              const Text(
+                'Email',
+                style: TextStyle(
+                  color: kTextLightColor,
+                  fontFamily: 'SFProDispay',
+                  fontSize: 12,
+                ),
+              ),
+              const SizedBox(
+                height: kDefaultPadding - 15,
+              ),
+              Text(
+                userData.email,
+                style: const TextStyle(
+                  color: kTextColor,
+                  fontFamily: 'SFProText',
+                  fontSize: 14,
+                ),
+              ),
+              const SizedBox(
+                height: kDefaultPadding,
+              ),
+              buildUserCategory(
+                amount: userData.favourites.length.toString(),
+                content: 'Favourites',
+                asset: 'assets/icons/boockmark.svg',
+                height: 14,
+              ),
+              buildUserCategory(
+                amount: userData.loved.length.toString(),
+                content: 'Loved',
+                asset: 'assets/icons/Heart.svg',
+                height: 11,
+              ),
+              buildUserCategory(
+                amount: userData.disliked.length.toString(),
+                content: 'Disliked',
+                asset: 'assets/icons/redCross.svg',
+                height: 11,
+              ),
+            ],
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: kDefaultPadding),
+            child: greyButton(
+              content: 'EDIT PROFILE',
+              onPress: () {},
+              fontSize: 14,
+              height: 16,
+              width: 60,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: kDefaultPadding / 2),
+            child: redButton(
+              content: 'SIGN OUT',
+              onPress: () {},
+              fontSize: 14,
+              height: 16,
+              width: 73,
+            ),
+          )
         ],
       ),
     );
