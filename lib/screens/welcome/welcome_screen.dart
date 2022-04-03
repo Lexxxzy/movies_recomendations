@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:movies_recomendations/components/greyButton.dart';
 import '../../constants.dart';
+import 'components/description.dart';
 import 'components/movies_list_view.dart';
 import 'package:flutter/scheduler.dart';
 
@@ -69,7 +70,7 @@ class _WelcomScreenState extends State<WelcomScreen> {
     return Scaffold(
       backgroundColor: kBackgroundColor,
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           image: DecorationImage(
             image: AssetImage("assets/images/backgroundWelcome.png"),
             fit: BoxFit.cover,
@@ -92,32 +93,8 @@ class _WelcomScreenState extends State<WelcomScreen> {
             SizedBox(
               height: MediaQuery.of(context).size.height / 8,
             ),
-            Padding(
-              padding: const EdgeInsets.all(kDefaultPadding),
-              child: RichText(
-                text: const TextSpan(
-                  text: 'Discover new movies, TV shows and more',
-                  style: TextStyle(
-                    fontFamily: 'SFProDisplay',
-                    fontSize: 36,
-                    fontWeight: FontWeight.w700,
-                    color: kTextColor,
-                  ),
-                  children: [
-                    TextSpan(
-                      text: '.',
-                      style: TextStyle(
-                        fontFamily: 'SFProDisplay',
-                        fontSize: 38,
-                        fontWeight: FontWeight.w700,
-                        color: kMainColor,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            Padding(
+            const buildDescription(),
+            const Padding(
               padding: const EdgeInsets.only(left: kDefaultPadding),
               child: Text(
                 'Personal recomendations.',

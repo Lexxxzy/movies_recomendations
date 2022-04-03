@@ -1,51 +1,10 @@
-import 'dart:ui';
+
 
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:movies_recomendations/screens/movie_detail/components/movie_detail_body.dart';
 
 import '../../../constants.dart';
 import '../../../providers/single_movie_provider.dart';
-import '../../movie_detail/movie_detail.dart';
-import 'movie_card_description.dart';
 
-class MovieCardRecomendations extends StatelessWidget {
-  final Movie movie;
-  const MovieCardRecomendations({Key? key, required this.movie})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      constraints: BoxConstraints.expand(
-        width: MediaQuery.of(context).size.width.toDouble(),
-        height: MediaQuery.of(context).size.height.toDouble() / 1.6,
-      ),
-      child: Padding(
-        padding: const EdgeInsets.only(
-          left: kDefaultPadding,
-          right: kDefaultPadding,
-        ),
-        child: GestureDetector(
-          onTap: (() {
-            Navigator.of(context).pushNamed(
-              MovieDetailScreen.routeName,
-              arguments: movie.id,
-            );
-          }),
-          child: SizedBox(
-            height: MediaQuery.of(context).size.height / 1.6,
-            width: MediaQuery.of(context).size.width,
-            child: Stack(children: [
-              MovieCardPoster(movie: movie),
-              MovieCardDescription(movie: movie),
-            ]),
-          ),
-        ),
-      ),
-    );
-  }
-}
 
 class MovieCardPoster extends StatelessWidget {
   const MovieCardPoster({
