@@ -7,6 +7,8 @@ import 'package:movies_recomendations/providers/movies_provider.dart';
 import 'package:movies_recomendations/providers/user.dart';
 import 'package:movies_recomendations/screens/genres/genres_screen.dart';
 import 'package:movies_recomendations/screens/home/home_screen.dart';
+import 'package:movies_recomendations/screens/sign_in/sign_in_screen.dart';
+import 'package:movies_recomendations/screens/welcome/welcome_screen.dart';
 import 'package:provider/provider.dart';
 import 'blocs/swipe_block.dart';
 import 'screens/movie_detail/movie_detail.dart';
@@ -48,12 +50,13 @@ class MyApp extends StatelessWidget {
           theme: ThemeData(
             visualDensity: VisualDensity.adaptivePlatformDensity,
           ),
-          home: HomeScreen(),
+          home: WelcomScreen(),
           routes: {
             MovieDetailScreen.routeName: (ctx) => MovieDetailScreen(),
             RecomendationsScreen.routeName: (ctx) => RecomendationsScreen(),
             ProfileScreen.routeName: (ctx) => ProfileScreen(),
             GenresScreen.routeName: (ctx) => GenresScreen(),
+            SignInScreen.routeName: (ctx) => SignInScreen(),
           },
         ),
       ),

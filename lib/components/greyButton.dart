@@ -42,6 +42,8 @@ class greyButton extends StatelessWidget {
         ),
       ),
       style: ElevatedButton.styleFrom(
+        elevation: 0,
+        shadowColor: Colors.transparent,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),
         ),
