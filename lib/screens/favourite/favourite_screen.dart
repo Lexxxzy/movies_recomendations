@@ -2,10 +2,9 @@ import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:movies_recomendations/components/greyButton.dart';
+import 'package:movies_recomendations/components/button.dart';
 import 'package:movies_recomendations/constants.dart';
 import 'package:movies_recomendations/providers/single_movie_provider.dart';
-import 'package:movies_recomendations/screens/recomendations/recomendations.dart';
 import 'package:provider/provider.dart';
 
 import '../../components/trending_favourite_movie.dart';

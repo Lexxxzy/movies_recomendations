@@ -1,8 +1,6 @@
-
 import 'package:flutter/material.dart';
 
 import '../../../constants.dart';
-
 
 class buildDescription extends StatelessWidget {
   const buildDescription({
@@ -12,7 +10,8 @@ class buildDescription extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(kDefaultPadding),
+      padding: const EdgeInsets.only(
+          left: kDefaultPadding, bottom: kDefaultPadding / 1.5),
       child: RichText(
         text: const TextSpan(
           text: 'Discover new movies, TV shows and more',

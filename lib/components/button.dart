@@ -7,6 +7,7 @@ class greyButton extends StatelessWidget {
   late double fontSize;
   late double width;
   late double height;
+  late Color mainColor;
 
   greyButton(
       {required String content,
@@ -14,6 +15,7 @@ class greyButton extends StatelessWidget {
       double fontSize = 12,
       double width = 7,
       double height = 0,
+      Color mainColor = kButtomsGreyColor,
       Key? key})
       : super(key: key) {
     this.content = content;
@@ -21,6 +23,7 @@ class greyButton extends StatelessWidget {
     this.fontSize = fontSize;
     this.width = width;
     this.height = height;
+    this.mainColor = mainColor;
   }
 
   @override
@@ -47,7 +50,7 @@ class greyButton extends StatelessWidget {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),
         ),
-        primary: kButtomsGreyColor,
+        primary: mainColor,
       ),
     );
   }

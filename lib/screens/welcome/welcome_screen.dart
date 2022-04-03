@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:movies_recomendations/components/greyButton.dart';
+import 'package:movies_recomendations/components/button.dart';
+import 'package:movies_recomendations/screens/sign_in/sign_in_screen.dart';
 import '../../constants.dart';
 import 'components/description.dart';
 import 'components/movies_list_view.dart';
@@ -47,9 +48,9 @@ class _WelcomScreenState extends State<WelcomScreen> {
       double minScrollExtent2 = _scrollController2.position.minScrollExtent;
       double maxScrollExtent2 = _scrollController2.position.maxScrollExtent;
       //
-      animateToMaxMin(maxScrollExtent1, minScrollExtent1, maxScrollExtent1, 25,
+      animateToMaxMin(maxScrollExtent1, minScrollExtent1, maxScrollExtent1, 95,
           _scrollController1);
-      animateToMaxMin(maxScrollExtent2, minScrollExtent2, maxScrollExtent2, 15,
+      animateToMaxMin(maxScrollExtent2, minScrollExtent2, maxScrollExtent2, 45,
           _scrollController2);
     });
   }
@@ -95,7 +96,7 @@ class _WelcomScreenState extends State<WelcomScreen> {
             ),
             const buildDescription(),
             const Padding(
-              padding: const EdgeInsets.only(left: kDefaultPadding),
+              padding: EdgeInsets.only(left: kDefaultPadding),
               child: Text(
                 'Personal recomendations.',
                 style: TextStyle(
@@ -109,11 +110,13 @@ class _WelcomScreenState extends State<WelcomScreen> {
               alignment: Alignment.center,
               child: Padding(
                 padding: const EdgeInsets.only(
-                  top: kDefaultPadding,
+                  top: kDefaultPadding * 2,
                 ),
                 child: greyButton(
                   content: 'Get Started',
-                  onPress: () {},
+                  onPress: () {
+                    Navigator.of(context).pushNamed(SignInScreen.routeName);
+                  },
                   fontSize: 16,
                   width: MediaQuery.of(context).size.width / 3.5,
                   height: 20,

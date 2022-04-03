@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:movies_recomendations/components/greyButton.dart';
+import 'package:movies_recomendations/components/button.dart';
 import 'package:movies_recomendations/components/redButton.dart';
 import 'package:movies_recomendations/screens/home/components/body.dart';
 import 'package:provider/provider.dart';

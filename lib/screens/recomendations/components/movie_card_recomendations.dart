@@ -1,8 +1,5 @@
-import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:movies_recomendations/screens/movie_detail/components/movie_detail_body.dart';
 
 import '../../../constants.dart';
 import '../../../providers/single_movie_provider.dart';

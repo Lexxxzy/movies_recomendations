@@ -6,7 +6,7 @@ import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:movies_recomendations/constants.dart';
 import 'package:provider/provider.dart';
 
-import '../../../components/greyButton.dart';
+import '../../../components/button.dart';
 import '../../../providers/movies_provider.dart';
 import '../../../providers/single_movie_provider.dart';
 import 'poster_rating.dart';

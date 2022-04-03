@@ -12,6 +12,8 @@ const kBackgroundColor = Color(0xFF10141b);
 //const kSecondaryColor = Color(0xFF26334A);
 const kSecondaryColor = Color.fromARGB(20, 255, 255, 255);
 
+const kThirdColor = Color.fromARGB(11, 105, 158, 255);
+
 const kErrorColor = Color(0xFFF6565D);
 const kWarningColor = Color(0xFFD9D220);
 const kGreenColor = Color(0xFF85D920);
