@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:form_validator/form_validator.dart';
 
 import 'package:movies_recomendations/components/button.dart';
 import 'package:movies_recomendations/screens/authentication/components/form_error.dart';

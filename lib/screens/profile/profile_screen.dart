@@ -1,9 +1,13 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables
 
+import 'dart:io';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:movies_recomendations/components/button.dart';
 import 'package:movies_recomendations/components/redButton.dart';
+import 'package:movies_recomendations/screens/authentication/sign_in/sign_in_screen.dart';
 import 'package:movies_recomendations/screens/home/components/body.dart';
 import 'package:provider/provider.dart';
 
@@ -147,7 +151,9 @@ class bodyProfile extends StatelessWidget {
             padding: const EdgeInsets.only(top: kDefaultPadding / 2),
             child: redButton(
               content: 'SIGN OUT',
-              onPress: () {},
+              onPress: () {
+                Platform.isIOS ? iosDialog(context) : androidDialog(context);
+              },
               fontSize: 14,
               height: 16,
               width: 73,
@@ -155,6 +161,73 @@ class bodyProfile extends StatelessWidget {
           )
         ],
       ),
+    );
+  }
+
+  void iosDialog(context) {
+    showCupertinoDialog(
+      context: context,
+      builder: (context) {
+        return CupertinoAlertDialog(
+          title: Text("Sign out"),
+          content: Text("Are you sure you want to sign out?"),
+          actions: [
+            CupertinoDialogAction(
+                child: Text(
+                  "YES",
+                  style: TextStyle(
+                    fontFamily: 'SFProText',
+                  ),
+                ),
+                onPressed: () {
+                  Navigator.of(context).pushNamed(SignInScreen.routeName);
+                }),
+            CupertinoDialogAction(
+              child: Text(
+                "NO",
+                style: TextStyle(
+                  fontFamily: 'SFProText',
+                  color: kErrorColor,
+                ),
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            )
+          ],
+        );
+      },
+    );
+  }
+
+  androidDialog(BuildContext context) {
+    // set up the buttons
+    Widget cancelButton = TextButton(
+      child: Text("Cancel"),
+      onPressed: () {},
+    );
+    Widget continueButton = TextButton(
+      child: Text("Continue"),
+      onPressed: () {},
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("AlertDialog"),
+      content: Text(
+          "Would you like to continue learning how to use Flutter alerts?"),
+      actions: [
+        cancelButton,
+        continueButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
     );
   }
 }

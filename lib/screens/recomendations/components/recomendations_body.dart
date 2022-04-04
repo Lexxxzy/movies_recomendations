@@ -32,7 +32,7 @@ class _RecomendationsBodyState extends State<RecomendationsBody> {
     return BlocBuilder<SwipeBloc, SwipeState>(
       builder: (context, state) {
         if (state is SwipeLoading) {
-          return Center(
+          return const Center(
             child: CircularProgressIndicator(),
           );
         } else if (state is SwipeLoaded) {
@@ -67,7 +67,7 @@ class _RecomendationsBodyState extends State<RecomendationsBody> {
                 )
               : buildThatWasAllRecomendations(context);
         } else {
-          return Text('Something went wrong');
+          return const Text('Something went wrong');
         }
       },
     );
@@ -82,12 +82,11 @@ class _RecomendationsBodyState extends State<RecomendationsBody> {
         children: [
           GestureDetector(
             onTap: () {
-              context.read<SwipeBloc>()
-                ..add(
-                  SwipeLeftEvent(movie: state.movies[0]),
-                );
+              context.read<SwipeBloc>().add(
+                    SwipeLeftEvent(movie: state.movies[0]),
+                  );
             },
-            child: ChoiceButton(
+            child: const ChoiceButton(
               assetPath: 'assets/icons/Cross.svg',
               backColor: Color(0xFFF5F5FA),
               color: Color.fromARGB(255, 0, 0, 0),
@@ -98,14 +97,13 @@ class _RecomendationsBodyState extends State<RecomendationsBody> {
           ),
           GestureDetector(
             onTap: () {
-              context.read<SwipeBloc>()
-                ..add(
-                  SwipeRightEvent(
-                    movie: state.movies[0],
-                  ),
-                );
+              context.read<SwipeBloc>().add(
+                    SwipeRightEvent(
+                      movie: state.movies[0],
+                    ),
+                  );
             },
-            child: ChoiceButton(
+            child: const ChoiceButton(
               assetPath: 'assets/icons/lilHeart.svg',
               backColor: kMainColorWithOpacity,
               color: Color(0xFFEE896C),
@@ -140,7 +138,7 @@ class _RecomendationsBodyState extends State<RecomendationsBody> {
                     onNext: (g, n) => setState(() {
                       _opacity = 1;
                     }),
-                    pause: Duration(milliseconds: 300),
+                    pause: const Duration(milliseconds: 300),
                     animatedTexts: [
                       TyperAnimatedText(
                         "",
@@ -156,7 +154,7 @@ class _RecomendationsBodyState extends State<RecomendationsBody> {
         Positioned(
           top: 80,
           child: AnimatedOpacity(
-            duration: Duration(milliseconds: 2000),
+            duration: const Duration(milliseconds: 2000),
             opacity: _opacity,
             child: SvgPicture.asset(
               'assets/images/allRecomedationForToday.svg',
