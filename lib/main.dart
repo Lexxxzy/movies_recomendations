@@ -7,10 +7,11 @@ import 'package:movies_recomendations/providers/movies_provider.dart';
 import 'package:movies_recomendations/providers/user.dart';
 import 'package:movies_recomendations/screens/genres/genres_screen.dart';
 import 'package:movies_recomendations/screens/home/home_screen.dart';
-import 'package:movies_recomendations/screens/sign_in/sign_in_screen.dart';
 import 'package:movies_recomendations/screens/welcome/welcome_screen.dart';
 import 'package:provider/provider.dart';
 import 'blocs/swipe_block.dart';
+import 'screens/authentication/sign_in/sign_in_screen.dart';
+import 'screens/authentication/sign_up/sign_up_screen.dart';
 import 'screens/movie_detail/movie_detail.dart';
 import 'screens/profile/profile_screen.dart';
 import 'screens/recomendations/recomendations.dart';
@@ -51,12 +52,13 @@ class MyApp extends StatelessWidget {
             visualDensity: VisualDensity.adaptivePlatformDensity,
           ),
           home: WelcomScreen(),
-          routes: {
+          routes: {HomeScreen.routeName: (ctx) => HomeScreen(),
             MovieDetailScreen.routeName: (ctx) => MovieDetailScreen(),
             RecomendationsScreen.routeName: (ctx) => RecomendationsScreen(),
             ProfileScreen.routeName: (ctx) => ProfileScreen(),
             GenresScreen.routeName: (ctx) => GenresScreen(),
             SignInScreen.routeName: (ctx) => SignInScreen(),
+            SignUpScreen.routeName: (ctx) => SignUpScreen(),
           },
         ),
       ),

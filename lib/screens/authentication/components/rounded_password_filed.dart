@@ -1,13 +1,22 @@
 import 'package:flutter/material.dart';
 
-import '../../../constants.dart';
+import '../../../../constants.dart';
 import 'text_field_container.dart';
+import 'package:form_validator/form_validator.dart';
 
 class RoundedPasswordField extends StatefulWidget {
   final ValueChanged<String> onChanged;
-  const RoundedPasswordField({
+  late String hintText;
+  BuildContext ctx;
+  bool ifLast;
+  final Function(String) validFunc;
+  RoundedPasswordField({
     Key? key,
     required this.onChanged,
+    this.hintText = 'Password',
+    required this.ctx,
+    this.ifLast = true,
+    required this.validFunc,
   }) : super(key: key);
 
   @override
@@ -18,9 +27,10 @@ class _RoundedPasswordFieldState extends State<RoundedPasswordField> {
   bool isFocused = false;
   bool isVisible = false;
   @override
-  Widget build(BuildContext context) {
+  Widget build(ctx) {
     return TextFieldContainer(
-      child: TextField(
+      child: TextFormField(
+        validator: (value) => widget.validFunc(value!),
         style: const TextStyle(
           fontFamily: 'SFProText',
           fontSize: 13,
@@ -35,7 +45,8 @@ class _RoundedPasswordFieldState extends State<RoundedPasswordField> {
               fontSize: 13,
               color: kTextGreyColor,
               height: 1.5),
-          hintText: "Password",
+          hintText: widget.hintText,
+          errorStyle: const TextStyle(fontSize: 0.01),
           icon: Icon(
             Icons.lock,
             color: isFocused ? kTextLightColor : kTextGreyColor,
@@ -66,8 +77,11 @@ class _RoundedPasswordFieldState extends State<RoundedPasswordField> {
               isFocused = false;
             },
           );
-          FocusManager.instance.primaryFocus?.unfocus();
+          widget.ifLast ? FocusManager.instance.primaryFocus?.unfocus() : () {};
+          widget.ifLast ? () {} : FocusScope.of(ctx).nextFocus();
         },
+        textInputAction:
+            widget.ifLast ? TextInputAction.done : TextInputAction.next,
       ),
     );
   }

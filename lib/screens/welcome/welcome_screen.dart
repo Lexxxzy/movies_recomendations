@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:movies_recomendations/components/button.dart';
-import 'package:movies_recomendations/screens/sign_in/sign_in_screen.dart';
 import '../../constants.dart';
+import '../authentication/sign_in/sign_in_screen.dart';
 import 'components/description.dart';
 import 'components/movies_list_view.dart';
 import 'package:flutter/scheduler.dart';
@@ -115,7 +115,8 @@ class _WelcomScreenState extends State<WelcomScreen> {
                 child: greyButton(
                   content: 'Get Started',
                   onPress: () {
-                    Navigator.of(context).pushNamed(SignInScreen.routeName);
+                    Navigator.of(context)
+                        .pushReplacementNamed(SignInScreen.routeName);
                   },
                   fontSize: 16,
                   width: MediaQuery.of(context).size.width / 3.5,

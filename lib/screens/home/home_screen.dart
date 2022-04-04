@@ -8,6 +8,7 @@ import 'package:movies_recomendations/constants.dart';
 import 'components/app_bar.dart';
 
 class HomeScreen extends StatelessWidget {
+  static final routeName = '/home';
   const HomeScreen({Key? key}) : super(key: key);
 
   @override

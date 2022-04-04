@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 
 import 'package:movies_recomendations/components/button.dart';
-import 'package:movies_recomendations/screens/sign_in/components/rounded_input_field.dart';
-import 'package:movies_recomendations/screens/sign_in/components/rounded_password_filed.dart';
 
-import '../../../constants.dart';
+import '../../../../constants.dart';
 
 class CreateOrLogIn extends StatelessWidget {
-  const CreateOrLogIn({
+  late Function onPressTextButton;
+  bool ifLogin;
+  CreateOrLogIn({
     Key? key,
+    required this.onPressTextButton,
+    this.ifLogin = true,
   }) : super(key: key);
 
   @override
@@ -29,8 +31,8 @@ class CreateOrLogIn extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
-            'Don\'t have account?',
-            style: TextStyle(
+            ifLogin ? 'Don\'t have account?' : 'I already have an account.',
+            style: const TextStyle(
               fontSize: 11,
               fontFamily: 'SFProText',
               color: kTextGreyColor,
@@ -38,10 +40,12 @@ class CreateOrLogIn extends StatelessWidget {
             ),
           ),
           TextButton(
-            onPressed: () {},
-            child: const Text(
-              'Create new account',
-              style: TextStyle(
+            onPressed: () {
+              onPressTextButton();
+            },
+            child: Text(
+              ifLogin ? 'Create new account' : 'Sign In',
+              style: const TextStyle(
                 fontSize: 11,
                 fontFamily: 'SFProText',
                 color: kMainColor,
@@ -53,4 +57,3 @@ class CreateOrLogIn extends StatelessWidget {
     );
   }
 }
-

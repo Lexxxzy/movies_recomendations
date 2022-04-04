@@ -147,9 +147,9 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
           borderRadius: BorderRadius.circular(16),
           color: kErrorColor,
         ),
-        child: Padding(
-          padding: const EdgeInsets.only(right: kDefaultPadding),
-          child: const Icon(
+        child: const Padding(
+          padding:  EdgeInsets.only(right: kDefaultPadding),
+          child: Icon(
             CupertinoIcons.delete,
             color: kTextColor,
             size: 32,

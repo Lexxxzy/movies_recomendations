@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:movies_recomendations/components/button.dart';
-import 'package:movies_recomendations/screens/sign_in/components/rounded_input_field.dart';
-import 'package:movies_recomendations/screens/sign_in/components/rounded_password_filed.dart';
 
-import '../../constants.dart';
-import 'components/main_form.dart';
-import 'components/create_login_hint.dart';
-import 'components/services_sign_in.dart';
+import '../../../constants.dart';
+import '../components/create_login_hint.dart';
+import 'widgets/main_form.dart';
+import '../components/services_sign_in.dart';
+import '../sign_up/sign_up_screen.dart';
 
 class SignInScreen extends StatelessWidget {
   static String routeName = '/sign_in';
@@ -32,7 +30,11 @@ class SignInScreen extends StatelessWidget {
                   ),
                 ),
                 MainForm(formKey: _formKey),
-                CreateOrLogIn(),
+                CreateOrLogIn(
+                  onPressTextButton: () {
+                    Navigator.of(context).pushNamed(SignUpScreen.routeName);
+                  },
+                ),
                 buildGoogleButton()
               ],
             ),
@@ -44,19 +46,19 @@ class SignInScreen extends StatelessWidget {
 
   Padding buildGoogleButton() {
     return Padding(
-                padding: const EdgeInsets.only(
-                  left: kDefaultPadding,
-                  right: kDefaultPadding,
-                  top: kDefaultPadding * 2,
-                ),
-                child: ServicesSignOnButton(
-                  assetName: 'assets/icons/Google.svg',
-                  content: 'Sign in with Google',
-                  onPress: () {},
-                  mainColor: Color.fromARGB(9, 147, 172, 255),
-                  fontSize: 18,
-                  height: kDefaultPadding - 5,
-                ),
-              );
+      padding: const EdgeInsets.only(
+        left: kDefaultPadding,
+        right: kDefaultPadding,
+        top: kDefaultPadding * 2,
+      ),
+      child: ServicesSignOnButton(
+        assetName: 'assets/icons/Google.svg',
+        content: 'Sign in with Google',
+        onPress: () {},
+        mainColor: Color.fromARGB(9, 147, 172, 255),
+        fontSize: 18,
+        height: kDefaultPadding - 5,
+      ),
+    );
   }
 }
