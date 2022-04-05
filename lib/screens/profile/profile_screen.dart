@@ -42,20 +42,22 @@ class bodyProfile extends StatelessWidget {
     userData.favourites =
         List.from(moviesData.favouriteMovies.map((e) => e.id.toString()));
 
-    
     return SafeArea(
       child: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(kDefaultPadding),
-              child: backButton(
-                buttonForm: buttonForms.circle,
+        child: SizedBox(
+          height: MediaQuery.of(context).size.height,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(kDefaultPadding),
+                child: backButton(
+                  buttonForm: buttonForms.circle,
+                ),
               ),
-            ),
-            buildProfileBody(context, userData),
-          ],
+              buildProfileBody(context, userData),
+            ],
+          ),
         ),
       ),
     );
@@ -178,6 +180,18 @@ class bodyProfile extends StatelessWidget {
           content: const Text("Are you sure you want to sign out?"),
           actions: [
             CupertinoDialogAction(
+              child: const Text(
+                "NO",
+                style: TextStyle(
+                  fontFamily: 'SFProText',
+                  color: kErrorColor,
+                ),
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            CupertinoDialogAction(
                 child: const Text(
                   "YES",
                   style: TextStyle(
@@ -191,18 +205,6 @@ class bodyProfile extends StatelessWidget {
 
                   // Navigator.of(context).pushNamed(SignInScreen.routeName);
                 }),
-            CupertinoDialogAction(
-              child: const Text(
-                "NO",
-                style: TextStyle(
-                  fontFamily: 'SFProText',
-                  color: kErrorColor,
-                ),
-              ),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            )
           ],
         );
       },

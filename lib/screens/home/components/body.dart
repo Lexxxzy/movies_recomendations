@@ -3,6 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:movies_recomendations/constants.dart';
 import 'package:movies_recomendations/screens/genres/genres_screen.dart';
+import 'package:provider/provider.dart';
+import '../../../providers/movies_provider.dart';
 import 'coming_movies.dart';
 import 'recomendation_carousel.dart';
 import '../../../components/search.dart';
@@ -23,10 +25,23 @@ class Body extends StatelessWidget {
   }
 }
 
-class MainScreenWidgets extends StatelessWidget {
+class MainScreenWidgets extends StatefulWidget {
   late TabController tabController;
   MainScreenWidgets(TabController tabController, {Key? key}) : super(key: key) {
     this.tabController = tabController;
+  }
+
+  @override
+  State<MainScreenWidgets> createState() => _MainScreenWidgetsState();
+}
+
+class _MainScreenWidgetsState extends State<MainScreenWidgets> {
+  var _isInit = true;
+  @override
+  void didChangeDependencies() {
+    if (_isInit) Provider.of<Movies>(context).fetchAndSetMovies();
+    _isInit = false;
+    super.didChangeDependencies();
   }
 
   @override
@@ -53,7 +68,7 @@ class MainScreenWidgets extends StatelessWidget {
             ),
           ),
           ComingMovies(),
-          RecomendedMovieCarousel(tabController),
+          RecomendedMovieCarousel(widget.tabController),
           Padding(
             padding: const EdgeInsets.only(bottom: kDefaultPadding * 2),
             child: TrendingList(),

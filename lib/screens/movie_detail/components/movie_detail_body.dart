@@ -63,47 +63,50 @@ class _MovieDetailBodyState extends State<MovieDetailBody> {
         horizontal: kDefaultPadding,
       ),
       child: SingleChildScrollView(
-        child: Row(children: [
-          Row(
-            children: [
-              SvgPicture.asset(
-                'assets/icons/Kinopoisk.svg',
-                height: 16,
-              ),
-              SizedBox(
-                width: 10,
-              ),
-              buildRatingBox(
-                boxHeight: 35,
-                boxWidth: 35,
-                loadedMovie: loadedMovie,
-                text: loadedMovie.ratingKinopoisk.toString(),
-              ),
-              SizedBox(
-                width: kDefaultPadding - 10,
-              ),
-              SvgPicture.asset(
-                'assets/icons/IMDb.svg',
-                height: 13,
-              ),
-              SizedBox(
-                width: 10,
-              ),
-              buildRatingBox(
-                boxHeight: 35,
-                boxWidth: 35,
-                loadedMovie: loadedMovie,
-                text: loadedMovie.ratingIMDb.toString(),
-              ),
-            ],
-          ),
-          SizedBox(
-            width: 15,
-          ),
-          MediaQuery.of(context).size.width > 380
-              ? buildButton('ADD TO FAVOURITES')
-              : Spacer(),
-        ]),
+        child: Padding(
+          padding: const EdgeInsets.only(bottom: kDefaultPadding * 1.5),
+          child: Row(children: [
+            Row(
+              children: [
+                SvgPicture.asset(
+                  'assets/icons/Kinopoisk.svg',
+                  height: 16,
+                ),
+                SizedBox(
+                  width: 10,
+                ),
+                buildRatingBox(
+                  boxHeight: 35,
+                  boxWidth: 35,
+                  loadedMovie: loadedMovie,
+                  text: loadedMovie.ratingKinopoisk.toString(),
+                ),
+                SizedBox(
+                  width: kDefaultPadding - 10,
+                ),
+                SvgPicture.asset(
+                  'assets/icons/IMDb.svg',
+                  height: 13,
+                ),
+                SizedBox(
+                  width: 10,
+                ),
+                buildRatingBox(
+                  boxHeight: 35,
+                  boxWidth: 35,
+                  loadedMovie: loadedMovie,
+                  text: loadedMovie.ratingIMDb.toString(),
+                ),
+              ],
+            ),
+            SizedBox(
+              width: 15,
+            ),
+            MediaQuery.of(context).size.width > 380
+                ? buildButton('ADD TO FAVOURITES')
+                : Spacer(),
+          ]),
+        ),
       ),
     );
   }

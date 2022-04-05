@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
+import 'package:provider/provider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import '../../../constants.dart';
 import '../../movie_detail/movie_detail.dart';
@@ -25,7 +26,6 @@ class _RecomendedMovieCarouselState extends State<RecomendedMovieCarousel> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
   }
 
@@ -77,7 +77,6 @@ class _RecomendedMovieCarouselState extends State<RecomendedMovieCarousel> {
         },
         pagination: SwiperCustomPagination(
           builder: (BuildContext context, SwiperPluginConfig config) {
-            print(config.activeIndex);
             return buildCustomPagination(config);
           },
         ),

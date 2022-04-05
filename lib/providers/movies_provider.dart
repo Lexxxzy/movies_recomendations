@@ -1,8 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:movies_recomendations/constants.dart';
+import 'package:http/http.dart' as http;
 
 import './single_movie_provider.dart';
-
 
 class Movies with ChangeNotifier {
   String plotText = "";
@@ -94,9 +96,19 @@ class Movies with ChangeNotifier {
     notifyListeners();
   }
 
-
   void addMovie(Movie movie) {
     /*_movies.add(movie);*/
     notifyListeners();
+  }
+
+  Future<void> fetchAndSetMovies() async {
+    const url = 'http://192.168.1.131:5000/WTW/favourite/id/1';
+
+    try {
+      final response = await http.get(Uri.parse(url));
+      print(json.decode(response.body));
+    } on Exception catch (e) {
+      print(e.toString());
+    }
   }
 }
