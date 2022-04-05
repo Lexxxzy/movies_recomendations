@@ -1,9 +1,14 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:movies_recomendations/components/button.dart';
 import 'package:movies_recomendations/screens/authentication/components/form_error.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../../constants.dart';
+import '../../../../models/http_exception.dart';
+import '../../../../providers/auth.dart';
+import '../../components/my_snack_bar.dart';
 import '../../components/rounded_input_field.dart';
 import '../../components/rounded_password_filed.dart';
 
@@ -26,6 +31,7 @@ class _MainFormState extends State<MainForm> {
   String? password;
   String? conformPassword;
   String? nickName;
+  bool _isloading = false;
 
   void addError({String? error}) {
     if (!errors.contains(error))
@@ -130,26 +136,19 @@ class _MainFormState extends State<MainForm> {
       padding: const EdgeInsets.only(top: kDefaultPadding),
       child: Column(
         children: [
-          greyButton(
-            content: 'Create account',
-            onPress: () {
-              if (widget._formKey.currentState!.validate()) {
-                // If the form is valid, display a snackbar. In the real world,
-                // you'd often call a server or save the information in a database.
-                ScaffoldMessenger.of(context).showSnackBar(
-                  buildSuccessSnackBar(),
-                );
-                print('e-mail: $email\nname: $nickName\npassword: $password');
-              Navigator.of(context).maybePop();
-              }
-              
-            },
-            mainColor: kBackgroundColor,
-            width: 80,
-            height: kDefaultPadding / 1.3,
-            fontSize: 16,
-          ),
-          SizedBox(
+          _isloading == false
+              ? greyButton(
+                  content: 'Create account',
+                  onPress: () {
+                    onSubmitSignUp(context);
+                  },
+                  mainColor: kBackgroundColor,
+                  width: 80,
+                  height: kDefaultPadding / 1.3,
+                  fontSize: 16,
+                )
+              : const CupertinoActivityIndicator(),
+          const SizedBox(
             height: 3,
           ),
           FormError(errors: errors),
@@ -158,31 +157,46 @@ class _MainFormState extends State<MainForm> {
     );
   }
 
-  SnackBar buildSuccessSnackBar() {
-    return SnackBar(
-      elevation: 0,
-      margin: const EdgeInsets.only(
-        bottom: kDefaultPadding,
-        left: kDefaultPadding * 3,
-        right: kDefaultPadding * 3,
-      ),
-      behavior: SnackBarBehavior.floating,
-      dismissDirection: DismissDirection.endToStart,
-      content: const Text(
-        'Success!',
-        textAlign: TextAlign.center,
-        style: TextStyle(
-          fontFamily: 'SFProDisplay',
-          fontSize: 13,
-          fontWeight: FontWeight.bold,
-        ),
-      ),
-      backgroundColor: kGreenColor.withOpacity(0.7),
-      duration: Duration(milliseconds: 2000),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
-      ),
-    );
+  Future<void> onSubmitSignUp(BuildContext context) async {
+    if (!widget._formKey.currentState!.validate()) {
+      // Invalid!
+      return;
+    }
+    widget._formKey.currentState!.save();
+    setState(() {
+      _isloading = true;
+    });
+    try {
+      // if all are valid then go to success screen
+
+      //print('e-mail: $email\npassword: $password');
+
+      await Provider.of<Auth>(context, listen: false).signUp(email!, password!);
+
+      Navigator.of(context).maybePop();
+
+      ScaffoldMessenger.of(context).showSnackBar(
+          const mySnackBar(message: 'Successful registration!', isError: false)
+              .build(context));
+    } on HttpException catch (err) {
+      var errorMesage = 'Authentiaction failed';
+      if (err.toString().contains('EMAIL_EXISTS')) {
+        errorMesage = 'This e-mail address is already in use.';
+      } else if (err.toString().contains('WEAK_PASSWORD')) {
+        errorMesage = 'Password is too weak';
+      } else if (err.toString().contains('EMAIL_NOT_FOUND')) {
+        errorMesage = 'Email is not found.';
+      }
+      ScaffoldMessenger.of(context).showSnackBar(
+          mySnackBar(message: errorMesage, isError: true).build(context));
+    } catch (err) {
+      const errorMesage = 'Some Error occured';
+      ScaffoldMessenger.of(context).showSnackBar(
+          const mySnackBar(message: errorMesage, isError: true).build(context));
+    }
+    setState(() {
+      _isloading = false;
+    });
   }
 
   RoundedPasswordField buildConfirmPasswordField(BuildContext context) {

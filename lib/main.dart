@@ -3,6 +3,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:movies_recomendations/providers/auth.dart';
 import 'package:movies_recomendations/providers/movies_provider.dart';
 import 'package:movies_recomendations/providers/user.dart';
 import 'package:movies_recomendations/screens/genres/genres_screen.dart';
@@ -44,6 +45,9 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider.value(
             value: User(),
           ),
+          ChangeNotifierProvider.value(
+            value: Auth(),
+          ),
         ],
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
@@ -52,7 +56,8 @@ class MyApp extends StatelessWidget {
             visualDensity: VisualDensity.adaptivePlatformDensity,
           ),
           home: WelcomScreen(),
-          routes: {HomeScreen.routeName: (ctx) => HomeScreen(),
+          routes: {
+            HomeScreen.routeName: (ctx) => HomeScreen(),
             MovieDetailScreen.routeName: (ctx) => MovieDetailScreen(),
             RecomendationsScreen.routeName: (ctx) => RecomendationsScreen(),
             ProfileScreen.routeName: (ctx) => ProfileScreen(),

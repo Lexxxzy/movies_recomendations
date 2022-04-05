@@ -76,7 +76,7 @@ class _RecomendationsBodyState extends State<RecomendationsBody> {
   Padding buildChoiceButtons(BuildContext context, SwipeLoaded state) {
     return Padding(
       padding: const EdgeInsets.symmetric(
-          horizontal: kDefaultPadding * 5 + 10, vertical: kDefaultPadding),
+          horizontal: kDefaultPadding * 5, vertical: kDefaultPadding),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [

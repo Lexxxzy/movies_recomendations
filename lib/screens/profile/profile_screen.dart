@@ -40,24 +40,25 @@ class bodyProfile extends StatelessWidget {
     userData.favourites =
         List.from(moviesData.favouriteMovies.map((e) => e.id.toString()));
     return SafeArea(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(kDefaultPadding),
-            child: backButton(
-              buttonForm: buttonForms.circle,
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(kDefaultPadding),
+              child: backButton(
+                buttonForm: buttonForms.circle,
+              ),
             ),
-          ),
-          buildProfileBody(context, userData),
-        ],
+            buildProfileBody(context, userData),
+          ],
+        ),
       ),
     );
   }
 
   Container buildProfileBody(BuildContext context, User userData) {
     return Container(
-      height: MediaQuery.of(context).size.height / 1.3,
       width: MediaQuery.of(context).size.width,
       margin: const EdgeInsets.symmetric(horizontal: kDefaultPadding * 3),
       //color: Colors.white10,

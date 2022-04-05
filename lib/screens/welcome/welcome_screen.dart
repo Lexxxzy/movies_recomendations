@@ -70,61 +70,64 @@ class _WelcomScreenState extends State<WelcomScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: kBackgroundColor,
-      body: Container(
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage("assets/images/backgroundWelcome.png"),
-            fit: BoxFit.cover,
+      body: SingleChildScrollView(
+        child: Container(
+          height: MediaQuery.of(context).size.height,
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage("assets/images/backgroundWelcome.png"),
+              fit: BoxFit.cover,
+            ),
           ),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(
-              height: MediaQuery.of(context).size.height / 6,
-            ),
-            MoviesListView(
-              scrollController: _scrollController1,
-              images: posters1,
-            ),
-            MoviesListView(
-              scrollController: _scrollController2,
-              images: posters2,
-            ),
-            SizedBox(
-              height: MediaQuery.of(context).size.height / 8,
-            ),
-            const buildDescription(),
-            const Padding(
-              padding: EdgeInsets.only(left: kDefaultPadding),
-              child: Text(
-                'Personal recomendations.',
-                style: TextStyle(
-                  fontFamily: 'SFProText',
-                  fontSize: 17,
-                  color: kTextLightColor,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(
+                height: MediaQuery.of(context).size.height / 6,
+              ),
+              MoviesListView(
+                scrollController: _scrollController1,
+                images: posters1,
+              ),
+              MoviesListView(
+                scrollController: _scrollController2,
+                images: posters2,
+              ),
+              SizedBox(
+                height: MediaQuery.of(context).size.height / 8,
+              ),
+              const buildDescription(),
+              const Padding(
+                padding: EdgeInsets.only(left: kDefaultPadding),
+                child: Text(
+                  'Personal recomendations.',
+                  style: TextStyle(
+                    fontFamily: 'SFProText',
+                    fontSize: 17,
+                    color: kTextLightColor,
+                  ),
                 ),
               ),
-            ),
-            Align(
-              alignment: Alignment.center,
-              child: Padding(
-                padding: const EdgeInsets.only(
-                  top: kDefaultPadding * 2,
+              Align(
+                alignment: Alignment.center,
+                child: Padding(
+                  padding: const EdgeInsets.only(
+                    top: kDefaultPadding * 2,
+                  ),
+                  child: greyButton(
+                    content: 'Get Started',
+                    onPress: () {
+                      Navigator.of(context)
+                          .pushReplacementNamed(SignInScreen.routeName);
+                    },
+                    fontSize: 16,
+                    width: MediaQuery.of(context).size.width / 3.5,
+                    height: 20,
+                  ),
                 ),
-                child: greyButton(
-                  content: 'Get Started',
-                  onPress: () {
-                    Navigator.of(context)
-                        .pushReplacementNamed(SignInScreen.routeName);
-                  },
-                  fontSize: 16,
-                  width: MediaQuery.of(context).size.width / 3.5,
-                  height: 20,
-                ),
-              ),
-            )
-          ],
+              )
+            ],
+          ),
         ),
       ),
     );

@@ -1,10 +1,15 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:movies_recomendations/components/button.dart';
 import 'package:movies_recomendations/screens/authentication/components/form_error.dart';
 import 'package:movies_recomendations/screens/home/home_screen.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../../constants.dart';
+import '../../../../models/http_exception.dart';
+import '../../../../providers/auth.dart';
+import '../../components/my_snack_bar.dart';
 import '../../components/rounded_input_field.dart';
 import '../../components/rounded_password_filed.dart';
 
@@ -25,6 +30,7 @@ class _MainFormState extends State<MainForm> {
   List<String?> errors = [];
   String? email;
   String? password;
+  bool _isloading = false;
 
   void addError({String? error}) {
     if (!errors.contains(error)) {
@@ -118,24 +124,21 @@ class _MainFormState extends State<MainForm> {
       children: [
         Padding(
           padding: const EdgeInsets.only(top: kDefaultPadding),
-          child: greyButton(
-            content: 'Log In',
-            onPress: () {
-              if (widget._formKey.currentState!.validate()) {
-                widget._formKey.currentState!.save();
-                // if all are valid then go to success screen
-                ScaffoldMessenger.of(context).showSnackBar(
-                  buildSuccessSnackBar(),
-                );
-                print('e-mail: $email\npassword: $password');
-                Navigator.pushReplacementNamed(context, HomeScreen.routeName);
-              }
-            },
-            mainColor: kBackgroundColor,
-            width: MediaQuery.of(context).size.width / 3.6,
-            height: kDefaultPadding / 1.3,
-            fontSize: 16,
-          ),
+          child: _isloading == false
+              ? greyButton(
+                  content: 'Log In',
+                  onPress: () {
+                    submitLogIn(context);
+                  },
+                  mainColor: kBackgroundColor,
+                  width: MediaQuery.of(context).size.width / 3.6,
+                  height: kDefaultPadding / 1.3,
+                  fontSize: 16,
+                )
+              : const CupertinoActivityIndicator(
+                  radius: 12,
+                  color: kMainColor,
+                ),
         ),
         const SizedBox(
           height: 8,
@@ -143,6 +146,47 @@ class _MainFormState extends State<MainForm> {
         FormError(errors: errors),
       ],
     );
+  }
+
+  Future<void> submitLogIn(BuildContext context) async {
+    if (!widget._formKey.currentState!.validate()) {
+      // Invalid!
+      return;
+    }
+    widget._formKey.currentState!.save();
+    setState(() {
+      _isloading = true;
+    });
+    try {
+      // if all are valid then go to success screen
+
+      //print('e-mail: $email\npassword: $password');
+
+      await Provider.of<Auth>(context, listen: false).login(email!, password!);
+
+      Navigator.pushReplacementNamed(context, HomeScreen.routeName);
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const mySnackBar(message: 'Successful authorization!', isError: false)
+            .build(context),
+      );
+    } on HttpException catch (err) {
+      var errorMesage = 'Authentiaction failed';
+      if (err.toString().contains('EMAIL_NOT_FOUND')) {
+        errorMesage = 'Email is not found.';
+      } else if (err.toString().contains('INVALID_PASSWORD')) {
+        errorMesage = 'Invalid password.';
+      }
+      ScaffoldMessenger.of(context).showSnackBar(
+          mySnackBar(message: errorMesage, isError: true).build(context));
+    } catch (err) {
+      const errorMesage = 'Some Error occured';
+      ScaffoldMessenger.of(context).showSnackBar(
+          const mySnackBar(message: errorMesage, isError: true).build(context));
+    }
+    setState(() {
+      _isloading = false;
+    });
   }
 
   RoundedPasswordField buildPasswordTextField(BuildContext context) {
@@ -166,33 +210,6 @@ class _MainFormState extends State<MainForm> {
         return null;
       },
       ctx: context,
-    );
-  }
-
-  SnackBar buildSuccessSnackBar() {
-    return SnackBar(
-      elevation: 0,
-      margin: const EdgeInsets.only(
-        bottom: kDefaultPadding,
-        left: kDefaultPadding * 3,
-        right: kDefaultPadding * 3,
-      ),
-      behavior: SnackBarBehavior.floating,
-      dismissDirection: DismissDirection.endToStart,
-      content: const Text(
-        'Successful authorization!',
-        textAlign: TextAlign.center,
-        style: TextStyle(
-          fontFamily: 'SFProDisplay',
-          fontSize: 12,
-          fontWeight: FontWeight.bold,
-        ),
-      ),
-      backgroundColor: kGreenColor.withOpacity(0.7),
-      duration: Duration(milliseconds: 2000),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
-      ),
     );
   }
 
