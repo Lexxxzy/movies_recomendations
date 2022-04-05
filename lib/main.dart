@@ -3,13 +3,13 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:movies_recomendations/components/splash_screen.dart';
-import 'package:movies_recomendations/providers/auth.dart';
-import 'package:movies_recomendations/providers/movies_provider.dart';
-import 'package:movies_recomendations/providers/user.dart';
-import 'package:movies_recomendations/screens/genres/genres_screen.dart';
-import 'package:movies_recomendations/screens/home/home_screen.dart';
-import 'package:movies_recomendations/screens/welcome/welcome_screen.dart';
+import '/components/splash_screen.dart';
+import '/providers/auth.dart';
+import 'providers/movies_provider.dart';
+import '/providers/user.dart';
+import '/screens/genres/genres_screen.dart';
+import '/screens/home/home_screen.dart';
+import '/screens/welcome/welcome_screen.dart';
 import 'package:provider/provider.dart';
 import 'blocs/swipe_block.dart';
 import 'screens/authentication/sign_in/sign_in_screen.dart';
@@ -57,6 +57,13 @@ class MyApp extends StatelessWidget {
             theme: ThemeData(
               visualDensity: VisualDensity.adaptivePlatformDensity,
             ),
+            /*
+              Виджет пересобирается каждый раз, когда осуществляется переход
+              на домашнюю страницу. Соответсвенно каждый раз проверяется
+              авторизован ли пользователь, пока это проверяется
+              показывается SplashScreen. Если пользователь авторизирован 
+              и токен не истек то показывается HomeScreen.
+            */
             home: auth.isAuth
                 ? HomeScreen()
                 : FutureBuilder(

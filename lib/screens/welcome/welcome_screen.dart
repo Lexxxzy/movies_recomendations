@@ -6,6 +6,8 @@ import 'components/description.dart';
 import 'components/movies_list_view.dart';
 import 'package:flutter/scheduler.dart';
 
+import 'components/welcome_body.dart';
+
 class WelcomScreen extends StatefulWidget {
   static String routeName = '/welcome_screen';
 
@@ -43,6 +45,8 @@ class _WelcomScreenState extends State<WelcomScreen> {
   void initState() {
     super.initState();
     SchedulerBinding.instance!.addPostFrameCallback((_) {
+      _scrollController1.hasClients;
+      _scrollController2.hasClients;
       double minScrollExtent1 = _scrollController1.position.minScrollExtent;
       double maxScrollExtent1 = _scrollController1.position.maxScrollExtent;
       double minScrollExtent2 = _scrollController2.position.minScrollExtent;
@@ -57,13 +61,15 @@ class _WelcomScreenState extends State<WelcomScreen> {
 
   animateToMaxMin(double max, double min, double direction, int seconds,
       ScrollController scrollController) {
-    scrollController
-        .animateTo(direction,
-            duration: Duration(seconds: seconds), curve: Curves.linear)
-        .then((value) {
-      direction = direction == max ? min : max;
-      animateToMaxMin(max, min, direction, seconds, scrollController);
-    });
+    if (scrollController.hasClients) {
+      scrollController
+          .animateTo(direction,
+              duration: Duration(seconds: seconds), curve: Curves.linear)
+          .then((value) {
+        direction = direction == max ? min : max;
+        animateToMaxMin(max, min, direction, seconds, scrollController);
+      });
+    }
   }
 
   @override
@@ -79,54 +85,11 @@ class _WelcomScreenState extends State<WelcomScreen> {
               fit: BoxFit.cover,
             ),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(
-                height: MediaQuery.of(context).size.height / 6,
-              ),
-              MoviesListView(
-                scrollController: _scrollController1,
-                images: posters1,
-              ),
-              MoviesListView(
-                scrollController: _scrollController2,
-                images: posters2,
-              ),
-              SizedBox(
-                height: MediaQuery.of(context).size.height / 8,
-              ),
-              const buildDescription(),
-              const Padding(
-                padding: EdgeInsets.only(left: kDefaultPadding),
-                child: Text(
-                  'Personal recomendations.',
-                  style: TextStyle(
-                    fontFamily: 'SFProText',
-                    fontSize: 17,
-                    color: kTextLightColor,
-                  ),
-                ),
-              ),
-              Align(
-                alignment: Alignment.center,
-                child: Padding(
-                  padding: const EdgeInsets.only(
-                    top: kDefaultPadding * 2,
-                  ),
-                  child: greyButton(
-                    content: 'Get Started',
-                    onPress: () {
-                      Navigator.of(context)
-                          .pushReplacementNamed(SignInScreen.routeName);
-                    },
-                    fontSize: 16,
-                    width: MediaQuery.of(context).size.width / 3.5,
-                    height: 20,
-                  ),
-                ),
-              )
-            ],
+          child: WelcomeBody(
+            scrollController1: _scrollController1,
+            posters1: posters1,
+            scrollController2: _scrollController2,
+            posters2: posters2,
           ),
         ),
       ),

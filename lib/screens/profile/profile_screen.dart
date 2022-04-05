@@ -16,6 +16,7 @@ import '../../constants.dart';
 import '../../providers/auth.dart';
 import '../../providers/movies_provider.dart';
 import '../../providers/user.dart';
+import 'components/user_categories_stat.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -40,6 +41,8 @@ class bodyProfile extends StatelessWidget {
     final User userData = Provider.of<User>(context).user;
     userData.favourites =
         List.from(moviesData.favouriteMovies.map((e) => e.id.toString()));
+
+    
     return SafeArea(
       child: SingleChildScrollView(
         child: Column(
@@ -254,55 +257,6 @@ class bodyProfile extends StatelessWidget {
       builder: (BuildContext context) {
         return alert;
       },
-    );
-  }
-}
-
-class buildUserCategory extends StatelessWidget {
-  String content;
-  String asset;
-  String amount;
-  double height;
-
-  buildUserCategory({
-    required this.content,
-    required this.asset,
-    required this.amount,
-    required this.height,
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 8.0),
-      child: Row(
-        children: [
-          SvgPicture.asset(
-            asset,
-            height: height,
-          ),
-          const SizedBox(width: 10),
-          Text(
-            '${content}  —  ',
-            style: const TextStyle(
-              color: kTextColor,
-              fontFamily: 'SFProDispay',
-              fontSize: 18,
-              fontWeight: FontWeight.w500,
-            ),
-          ),
-          Text(
-            amount,
-            style: const TextStyle(
-              color: kTextColor,
-              fontFamily: 'SFProDispay',
-              fontSize: 18,
-              fontWeight: FontWeight.w500,
-            ),
-          ),
-        ],
-      ),
     );
   }
 }

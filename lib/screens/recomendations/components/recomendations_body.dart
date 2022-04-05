@@ -48,12 +48,16 @@ class _RecomendationsBodyState extends State<RecomendationsBody> {
                           : Container(
                               height: MediaQuery.of(context).size.height / 1.6),
                       onDragEnd: (drag) {
-                        if (drag.velocity.pixelsPerSecond.dx < -200) {
+                        if (drag.velocity.pixelsPerSecond.dx <
+                            -200) //if drag to the left
+                        {
                           context.read<SwipeBloc>().add(
                                 SwipeLeftEvent(movie: state.movies[0]),
                               );
                           print(drag.velocity.pixelsPerSecond.dx);
-                        } else if (drag.velocity.pixelsPerSecond.dx > 200) {
+                        } else if (drag.velocity.pixelsPerSecond.dx >
+                            200) //if drag to the right
+                        {
                           context.read<SwipeBloc>().add(
                                 SwipeRightEvent(
                                   movie: state.movies[0],
