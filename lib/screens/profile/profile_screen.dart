@@ -13,6 +13,7 @@ import 'package:provider/provider.dart';
 
 import '../../components/backButton.dart';
 import '../../constants.dart';
+import '../../providers/auth.dart';
 import '../../providers/movies_provider.dart';
 import '../../providers/user.dart';
 
@@ -170,21 +171,25 @@ class bodyProfile extends StatelessWidget {
       context: context,
       builder: (context) {
         return CupertinoAlertDialog(
-          title: Text("Sign out"),
-          content: Text("Are you sure you want to sign out?"),
+          title: const Text("Sign out"),
+          content: const Text("Are you sure you want to sign out?"),
           actions: [
             CupertinoDialogAction(
-                child: Text(
+                child: const Text(
                   "YES",
                   style: TextStyle(
                     fontFamily: 'SFProText',
                   ),
                 ),
                 onPressed: () {
-                  Navigator.of(context).pushNamed(SignInScreen.routeName);
+                  Navigator.of(context).pop();
+                  Navigator.of(context).pushReplacementNamed('/');
+                  Provider.of<Auth>(context, listen: false).logout();
+
+                  // Navigator.of(context).pushNamed(SignInScreen.routeName);
                 }),
             CupertinoDialogAction(
-              child: Text(
+              child: const Text(
                 "NO",
                 style: TextStyle(
                   fontFamily: 'SFProText',
@@ -204,19 +209,39 @@ class bodyProfile extends StatelessWidget {
   androidDialog(BuildContext context) {
     // set up the buttons
     Widget cancelButton = TextButton(
-      child: Text("Cancel"),
-      onPressed: () {},
+      child: const Text(
+        "Cancel",
+        style: const TextStyle(
+          fontFamily: 'SFProText',
+          color: kMainColor,
+        ),
+      ),
+      onPressed: () {
+        Navigator.of(context).pop();
+      },
     );
     Widget continueButton = TextButton(
-      child: Text("Continue"),
+      child: const Text(
+        "Continue",
+        style: TextStyle(
+          fontFamily: 'SFProText',
+          color: kTextColor,
+        ),
+      ),
       onPressed: () {},
     );
 
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
-      title: Text("AlertDialog"),
-      content: Text(
-          "Would you like to continue learning how to use Flutter alerts?"),
+      title: const Text(
+        "AlertDialog",
+        style: const TextStyle(
+          fontFamily: 'SFProText',
+          color: kErrorColor,
+        ),
+      ),
+      backgroundColor: kSecondaryColor,
+      content: const Text("Are you sure you want to sign out?"),
       actions: [
         cancelButton,
         continueButton,
@@ -257,10 +282,10 @@ class buildUserCategory extends StatelessWidget {
             asset,
             height: height,
           ),
-          SizedBox(width: 10),
+          const SizedBox(width: 10),
           Text(
             '${content}  —  ',
-            style: TextStyle(
+            style: const TextStyle(
               color: kTextColor,
               fontFamily: 'SFProDispay',
               fontSize: 18,
@@ -269,7 +294,7 @@ class buildUserCategory extends StatelessWidget {
           ),
           Text(
             amount,
-            style: TextStyle(
+            style: const TextStyle(
               color: kTextColor,
               fontFamily: 'SFProDispay',
               fontSize: 18,
