@@ -3,6 +3,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:movies_recomendations/components/splash_screen.dart';
 import 'package:movies_recomendations/providers/auth.dart';
 import 'package:movies_recomendations/providers/movies_provider.dart';
 import 'package:movies_recomendations/providers/user.dart';
@@ -49,22 +50,33 @@ class MyApp extends StatelessWidget {
             value: Auth(),
           ),
         ],
-        child: MaterialApp(
-          debugShowCheckedModeBanner: false,
-          title: 'WTW',
-          theme: ThemeData(
-            visualDensity: VisualDensity.adaptivePlatformDensity,
+        child: Consumer<Auth>(
+          builder: (ctx, auth, _) => MaterialApp(
+            debugShowCheckedModeBanner: false,
+            title: 'WTW',
+            theme: ThemeData(
+              visualDensity: VisualDensity.adaptivePlatformDensity,
+            ),
+            home: auth.isAuth
+                ? HomeScreen()
+                : FutureBuilder(
+                    future: auth.tryAutoLogin(),
+                    builder: (ctx, authResultSnapshot) =>
+                        authResultSnapshot.connectionState ==
+                                ConnectionState.waiting
+                            ? SplashScreen()
+                            : WelcomScreen(),
+                  ),
+            routes: {
+              HomeScreen.routeName: (ctx) => HomeScreen(),
+              MovieDetailScreen.routeName: (ctx) => MovieDetailScreen(),
+              RecomendationsScreen.routeName: (ctx) => RecomendationsScreen(),
+              ProfileScreen.routeName: (ctx) => ProfileScreen(),
+              GenresScreen.routeName: (ctx) => GenresScreen(),
+              SignInScreen.routeName: (ctx) => SignInScreen(),
+              SignUpScreen.routeName: (ctx) => SignUpScreen(),
+            },
           ),
-          home: WelcomScreen(),
-          routes: {
-            HomeScreen.routeName: (ctx) => HomeScreen(),
-            MovieDetailScreen.routeName: (ctx) => MovieDetailScreen(),
-            RecomendationsScreen.routeName: (ctx) => RecomendationsScreen(),
-            ProfileScreen.routeName: (ctx) => ProfileScreen(),
-            GenresScreen.routeName: (ctx) => GenresScreen(),
-            SignInScreen.routeName: (ctx) => SignInScreen(),
-            SignUpScreen.routeName: (ctx) => SignUpScreen(),
-          },
         ),
       ),
     );
