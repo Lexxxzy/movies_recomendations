@@ -24,9 +24,11 @@ class _MovieDetailBodyState extends State<MovieDetailBody> {
 
   @override
   Widget build(BuildContext context) {
-    final Movie loadedMovie = Provider.of<Movies>(
+    Movie loadedMovie = Provider.of<Movies>(
       context,
     ).findById(widget.id);
+
+    print(loadedMovie.title);
 
     Size size = MediaQuery.of(context).size;
 

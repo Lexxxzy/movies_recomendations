@@ -8,7 +8,7 @@ abstract class SwipeEvent extends Equatable {
 }
 
 class LoadMoviesEvent extends SwipeEvent {
-  final List<Movie> movies;
+  final List<Movie> movies ;
 
   LoadMoviesEvent({
     required this.movies,

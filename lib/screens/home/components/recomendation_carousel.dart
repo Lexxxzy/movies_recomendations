@@ -6,6 +6,7 @@ import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:provider/provider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import '../../../constants.dart';
+import '../../../providers/single_movie_provider.dart';
 import '../../movie_detail/movie_detail.dart';
 import '/providers/movies_provider.dart';
 
@@ -22,31 +23,25 @@ class RecomendedMovieCarousel extends StatefulWidget {
 }
 
 class _RecomendedMovieCarouselState extends State<RecomendedMovieCarousel> {
-  final movies = Movies().movies;
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
+    final movies = Provider.of<Movies>(context).movies;
     return SafeArea(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
           buildRecomendationsHeader(),
-          buildCarousel(context),
+          buildCarousel(context, movies),
         ],
       ),
     );
   }
 
-  SizedBox buildCarousel(BuildContext context) {
+  SizedBox buildCarousel(BuildContext context, List<Movie> movies) {
     return SizedBox(
       height: 340,
       child: Swiper(
-        itemCount: movies.length,
+        itemCount: 3,
         itemWidth: MediaQuery.of(context).size.width - 2 * 84,
         viewportFraction: 0.55,
         scale: 0.8,
@@ -69,7 +64,7 @@ class _RecomendedMovieCarouselState extends State<RecomendedMovieCarousel> {
                 Padding(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                  child: buildMovieCard(context, index),
+                  child: buildMovieCard(context, index, movies),
                 ),
               ],
             ),
@@ -84,7 +79,8 @@ class _RecomendedMovieCarouselState extends State<RecomendedMovieCarousel> {
     );
   }
 
-  GestureDetector buildMovieCard(BuildContext context, int index) {
+  GestureDetector buildMovieCard(
+      BuildContext context, int index, List<Movie> movies) {
     return GestureDetector(
       onTap: (() {
         Navigator.of(context).pushNamed(

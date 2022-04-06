@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:movies_recomendations/components/splash_screen.dart';
 import 'package:movies_recomendations/constants.dart';
 import 'package:movies_recomendations/screens/genres/genres_screen.dart';
 import 'package:provider/provider.dart';
@@ -37,44 +38,56 @@ class MainScreenWidgets extends StatefulWidget {
 
 class _MainScreenWidgetsState extends State<MainScreenWidgets> {
   var _isInit = true;
+  var _isLoading = false;
   @override
   void didChangeDependencies() {
-    if (_isInit) Provider.of<Movies>(context).fetchAndSetMovies();
+    if (_isInit) {
+      setState(() {
+        _isLoading = true;
+      });
+      Provider.of<Movies>(context).fetchAndSetMovies().then((_) {
+        setState(() {
+          _isLoading = false;
+        });
+      });
+    }
     _isInit = false;
     super.didChangeDependencies();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 100,
-      child: SingleChildScrollView(
-        child: Column(children: [
-          GestureDetector(
-            onTap: () {
-              Navigator.of(context).pushNamed(
-                GenresScreen.routeName,
-              );
-            },
-            child: Padding(
-              padding: EdgeInsets.only(
-                bottom: kDefaultPadding,
-                left: kDefaultPadding,
-                right: kDefaultPadding,
-              ),
-              child: Search(
-                isEnabled: false,
-              ),
+    return _isLoading
+        ? SplashScreen()
+        : Container(
+            height: 100,
+            child: SingleChildScrollView(
+              child: Column(children: [
+                GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).pushNamed(
+                      GenresScreen.routeName,
+                    );
+                  },
+                  child: Padding(
+                    padding: EdgeInsets.only(
+                      bottom: kDefaultPadding,
+                      left: kDefaultPadding,
+                      right: kDefaultPadding,
+                    ),
+                    child: Search(
+                      isEnabled: false,
+                    ),
+                  ),
+                ),
+                ComingMovies(),
+                RecomendedMovieCarousel(widget.tabController),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: kDefaultPadding * 2),
+                  child: TrendingList(),
+                ),
+              ]),
             ),
-          ),
-          ComingMovies(),
-          RecomendedMovieCarousel(widget.tabController),
-          Padding(
-            padding: const EdgeInsets.only(bottom: kDefaultPadding * 2),
-            child: TrendingList(),
-          ),
-        ]),
-      ),
-    );
+          );
   }
 }

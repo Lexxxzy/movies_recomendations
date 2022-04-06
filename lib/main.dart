@@ -27,18 +27,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider(
-          create: (_) => SwipeBloc()
-            ..add(
-              LoadMoviesEvent(
-                movies: Movies().movies,
-              ),
-            ),
-        )
-      ],
-      child: MultiProvider(
+    return MultiProvider(
         providers: [
           ChangeNotifierProvider.value(
             value: Movies(),
@@ -85,7 +74,6 @@ class MyApp extends StatelessWidget {
             },
           ),
         ),
-      ),
     );
   }
 }

@@ -5,9 +5,9 @@ import 'package:movies_recomendations/components/trending_favourite_movie.dart';
 import 'movies_provider.dart';
 
 class Movie with ChangeNotifier {
-  final int? id, seasons, age;
+  final int id, seasons, age;
   final double ratingKinopoisk, ratingIMDb;
-  final List<String> genre, countries, frames;
+  final List<dynamic> genre, countries, frames;
   final String description, title, poster, premiereWorld, dateTo;
   final bool ifSeries;
   bool isFavourite;
@@ -24,7 +24,7 @@ class Movie with ChangeNotifier {
     required this.countries,
     required this.age,
     required this.ifSeries,
-    this.seasons,
+    this.seasons = 0,
     this.dateTo = "",
     required this.frames,
     this.isFavourite = false,
@@ -34,11 +34,9 @@ class Movie with ChangeNotifier {
     this.isFavourite = !this.isFavourite;
     notifyListeners();
   }
-  
-    void removeFavourite() {
-    this.isFavourite =false;
+
+  void removeFavourite() {
+    this.isFavourite = false;
     notifyListeners();
   }
-
-
 }

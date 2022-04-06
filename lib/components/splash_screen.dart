@@ -9,18 +9,20 @@ class SplashScreen extends StatelessWidget {
       backgroundColor: kBackgroundColor,
       body: Center(
         child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: const [
             Text(
               'Loading...',
               style: TextStyle(
                 fontFamily: 'SFProDispay',
-                fontSize: 16,
-                fontWeight: FontWeight.w600,
+                fontSize: 18,
+                fontWeight: FontWeight.w700,
                 color: kTextColor,
               ),
             ),
             SizedBox(width: 16),
-            CupertinoActivityIndicator(),
+            CupertinoActivityIndicator(color: kMainColor),
           ],
         ),
       ),

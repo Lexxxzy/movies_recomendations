@@ -42,6 +42,7 @@ class _RecomendationsBodyState extends State<RecomendationsBody> {
                     Draggable(
                       child: MovieCardRecomendations(movie: state.movies[0]),
                       feedback: MovieCardRecomendations(movie: state.movies[0]),
+                      //TODO: В API сделать отдельный route с recomendations, который возвращает 15 рекомендаций и у которых есть параментр listID от 0 до 14
                       childWhenDragging: state.movies[0].id !=
                               Movies().movies.length
                           ? MovieCardRecomendations(movie: state.movies[1])
@@ -54,7 +55,7 @@ class _RecomendationsBodyState extends State<RecomendationsBody> {
                           context.read<SwipeBloc>().add(
                                 SwipeLeftEvent(movie: state.movies[0]),
                               );
-                          print(drag.velocity.pixelsPerSecond.dx);
+                          print(state.movies.length);
                         } else if (drag.velocity.pixelsPerSecond.dx >
                             200) //if drag to the right
                         {
