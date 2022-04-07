@@ -78,7 +78,9 @@ class _FavouriteMovieState extends State<FavouriteMovie> {
                       height: 5,
                     ),
                     Text(
-                      movieData.title,
+                      movieData.title.length > 20
+                          ? '${movieData.title.substring(0, 20)}...'
+                          : movieData.title,
                       style: const TextStyle(
                         fontFamily: 'SFProDisplay',
                         fontSize: 18,

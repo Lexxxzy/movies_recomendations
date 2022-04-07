@@ -114,15 +114,19 @@ class _RecomendedMovieCarouselState extends State<RecomendedMovieCarousel> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Text(
-                        movies[index].title,
-                        style: const TextStyle(
-                          fontFamily: 'SFProDisplay',
-                          fontSize: 20,
-                          color: kTextColor,
-                          fontWeight: FontWeight.w700,
+                      FittedBox(
+                        child: Text(
+                          movies[index].title.length > 15
+                              ? '${movies[index].title.substring(0, 15)}...'
+                              : movies[index].title,
+                          style: const TextStyle(
+                            fontFamily: 'SFProDisplay',
+                            fontSize: 20,
+                            color: kTextColor,
+                            fontWeight: FontWeight.w700,
+                          ),
+                          textAlign: TextAlign.left,
                         ),
-                        textAlign: TextAlign.left,
                       ),
                       const SizedBox(
                         height: 5,

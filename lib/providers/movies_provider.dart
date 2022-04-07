@@ -127,7 +127,7 @@ class Movies with ChangeNotifier {
                 premiereWorld: movieInfo['date'].toString(),
                 ratingIMDb: movieInfo['ratingIMDb'],
                 ratingKinopoisk: movieInfo['ratingKinopoisk'],
-                title: movieInfo['title'][1],
+                title: movieInfo['title'][0],
                 ifSeries: movieInfo['ifSeries'],
                 dateTo: movieInfo['dateTo'].toString(),
                 isFavourite: true,
