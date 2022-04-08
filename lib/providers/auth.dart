@@ -30,25 +30,33 @@ class Auth with ChangeNotifier {
     String password,
     String urlSigment,
   ) async {
-    final url =
-        'https://identitytoolkit.googleapis.com/v1/accounts:$urlSigment?key=AIzaSyALjs5p96Yf3hyolb-ZbebmMCp5cFT7pjY';
+    final url = 'http://192.168.1.142:5000/api/v1/auth/$urlSigment';
     try {
+      print(
+        json.encode(
+          {
+            'email': email,
+            'password': password,
+          },
+        ),
+      );
       final response = await http.post(
         Uri.parse(url),
+        headers: {'Content-Type': 'application/json'},
         body: json.encode(
           {
             'email': email,
             'password': password,
-            'returnSecureToken': true,
           },
         ),
       );
       final responseData = json.decode(response.body);
+
       if (responseData['error'] != null) {
-        throw HttpException(responseData['error']['message']);
+        throw HttpException(responseData['error']);
       }
       _token = responseData['idToken'];
-      _userId = responseData['localId'];
+      _userId = responseData['username'];
       _expiryDate = DateTime.now().add(
         Duration(
           seconds: int.parse(
@@ -76,9 +84,10 @@ class Auth with ChangeNotifier {
     if (!prefs.containsKey('userData')) {
       return false;
     }
-    final extractedUserData =
-        json.decode(prefs.getString('userData').toString()) as Map<String, Object>;
-    final expiryDate = DateTime.parse(extractedUserData['expiryDate'].toString());
+    final extractedUserData = json
+        .decode(prefs.getString('userData').toString()) as Map<String, Object>;
+    final expiryDate =
+        DateTime.parse(extractedUserData['expiryDate'].toString());
 
     if (expiryDate.isBefore(DateTime.now())) {
       return false;
@@ -94,17 +103,17 @@ class Auth with ChangeNotifier {
     String email,
     String password,
   ) async {
-    return _authenticate(email, password, 'signUp');
+    return _authenticate(email, password, 'register');
   }
 
   Future<void> login(
     String email,
     String password,
   ) async {
-    return _authenticate(email, password, 'signInWithPassword');
+    return _authenticate(email, password, 'login');
   }
 
-    Future<void> logout() async {
+  Future<void> logout() async {
     _token = null;
     _userId = null;
     _expiryDate = null;

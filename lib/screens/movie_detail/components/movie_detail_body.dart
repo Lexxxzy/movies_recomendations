@@ -282,13 +282,19 @@ class _MovieDetailBodyState extends State<MovieDetailBody> {
                     color: kTextLightColor,
                   ),
                 ),
-                Text(
-                  loadedMovie.title,
-                  style: TextStyle(
-                    fontFamily: 'SFProDisplay',
-                    fontSize: 32,
-                    fontWeight: FontWeight.w900,
-                    color: Colors.white,
+                Container(
+                  padding: EdgeInsets.only(
+                      right: kDefaultPadding / 4,
+                      bottom: kDefaultPadding / 2,
+                      top: kDefaultPadding / 2),
+                  child: Text(
+                    loadedMovie.title,
+                    style: TextStyle(
+                        fontFamily: 'SFProDisplay',
+                        fontSize: 32,
+                        fontWeight: FontWeight.w900,
+                        color: Colors.white,
+                        height: 1),
                   ),
                 ),
                 SizedBox(height: 6),

@@ -132,7 +132,7 @@ class _RecomendedMovieCarouselState extends State<RecomendedMovieCarousel> {
                         height: 5,
                       ),
                       Text(
-                        '${movies[index].genre[0]} | ${movies[index].age}+ ',
+                        '${capitalizeFirstLetter(movies[index].genre[0])} | ${movies[index].age}+ ',
                         style: const TextStyle(
                           fontFamily: 'SFProDisplay',
                           fontSize: 12,
@@ -274,3 +274,5 @@ class buildSliderIndicator extends StatelessWidget {
     );
   }
 }
+
+String capitalizeFirstLetter(String s) => s[0].toUpperCase() + s.substring(1);

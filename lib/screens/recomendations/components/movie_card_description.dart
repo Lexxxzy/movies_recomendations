@@ -8,7 +8,6 @@ import 'package:movies_recomendations/constants.dart';
 import '../../../providers/single_movie_provider.dart';
 import '../../movie_detail/components/movie_detail_body.dart';
 
-
 class MovieCardDescription extends StatelessWidget {
   const MovieCardDescription({
     Key? key,
@@ -46,7 +45,9 @@ class MovieCardDescription extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            movie.title,
+                            movie.title.length > 19
+                                ? '${movie.title.substring(0, 19)}...'
+                                : movie.title,
                             style: const TextStyle(
                               fontFamily: 'SFProDisplay',
                               color: Colors.white,
@@ -88,15 +89,10 @@ class MovieCardDescription extends StatelessWidget {
                             height: 16,
                           ),
                           Container(
-                            height:
-                                MediaQuery.of(context).size.height /
-                                    18,
-                            width:
-                                MediaQuery.of(context).size.height /
-                                    18,
+                            height: MediaQuery.of(context).size.height / 18,
+                            width: MediaQuery.of(context).size.height / 18,
                             decoration: BoxDecoration(
-                              color:
-                                  Color.fromARGB(117, 247, 247, 247),
+                              color: Color.fromARGB(117, 247, 247, 247),
                               shape: BoxShape.circle,
                             ),
                           )

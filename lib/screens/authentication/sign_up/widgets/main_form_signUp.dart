@@ -184,8 +184,6 @@ class _MainFormState extends State<MainForm> {
         errorMesage = 'This e-mail address is already in use.';
       } else if (err.toString().contains('WEAK_PASSWORD')) {
         errorMesage = 'Password is too weak';
-      } else if (err.toString().contains('EMAIL_NOT_FOUND')) {
-        errorMesage = 'Email is not found.';
       }
       ScaffoldMessenger.of(context).showSnackBar(
           mySnackBar(message: errorMesage, isError: true).build(context));

@@ -118,7 +118,7 @@ class Movies with ChangeNotifier {
         ((movieInfo) => {
               loadedMovies.add(Movie(
                 id: movieInfo['id'],
-                age: 12,
+                age: movieInfo['age'],
                 countries: List<String>.from(movieInfo['country']),
                 description: movieInfo['descriprion'],
                 frames: movieInfo['frames'],
