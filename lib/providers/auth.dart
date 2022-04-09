@@ -28,52 +28,48 @@ class Auth with ChangeNotifier {
   Future<void> _authenticate(
     String email,
     String password,
+    String? username,
     String urlSigment,
   ) async {
     final url = 'http://192.168.1.142:5000/api/v1/auth/$urlSigment';
     try {
-      print(
-        json.encode(
-          {
-            'email': email,
-            'password': password,
-          },
-        ),
-      );
       final response = await http.post(
         Uri.parse(url),
         headers: {'Content-Type': 'application/json'},
         body: json.encode(
           {
+            if (username != null) 'username': username,
             'email': email,
             'password': password,
           },
         ),
       );
+
       final responseData = json.decode(response.body);
 
       if (responseData['error'] != null) {
         throw HttpException(responseData['error']);
       }
-      _token = responseData['idToken'];
-      _userId = responseData['username'];
-      _expiryDate = DateTime.now().add(
-        Duration(
-          seconds: int.parse(
-            responseData['expiresIn'],
+
+      if (urlSigment == 'login') {
+        _token = responseData['idToken'];
+        _userId = responseData['username'];
+        _expiryDate = DateTime.now().add(
+          Duration(
+            seconds: responseData['expiresIn'],
           ),
-        ),
-      );
-      notifyListeners();
-      final prefs = await SharedPreferences.getInstance();
-      final userData = json.encode(
-        {
-          'token': _token,
-          'userId': _userId,
-          'expiryDate': _expiryDate!.toIso8601String(),
-        },
-      );
-      prefs.setString('userData', userData);
+        );
+        notifyListeners();
+        final prefs = await SharedPreferences.getInstance();
+        final userData = json.encode(
+          {
+            'token': _token,
+            'userId': _userId,
+            'expiryDate': _expiryDate!.toIso8601String(),
+          },
+        );
+        prefs.setString('userData', userData);
+      }
     } catch (error) {
       rethrow;
     }
@@ -99,18 +95,15 @@ class Auth with ChangeNotifier {
     return true;
   }
 
-  Future<void> signUp(
-    String email,
-    String password,
-  ) async {
-    return _authenticate(email, password, 'register');
+  Future<void> signUp(String email, String password, String username) async {
+    return _authenticate(email, password, username, 'register');
   }
 
   Future<void> login(
     String email,
     String password,
   ) async {
-    return _authenticate(email, password, 'login');
+    return _authenticate(email, password, null, 'login');
   }
 
   Future<void> logout() async {

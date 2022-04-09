@@ -169,9 +169,10 @@ class _MainFormState extends State<MainForm> {
     try {
       // if all are valid then go to success screen
 
-      //print('e-mail: $email\npassword: $password');
+      print('e-mail: $email\npassword: $password\n $nickName');
 
-      await Provider.of<Auth>(context, listen: false).signUp(email!, password!);
+      await Provider.of<Auth>(context, listen: false)
+          .signUp(email!, password!, nickName!);
 
       Navigator.of(context).maybePop();
 
