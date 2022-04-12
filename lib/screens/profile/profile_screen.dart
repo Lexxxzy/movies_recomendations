@@ -7,9 +7,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:movies_recomendations/components/button.dart';
 import 'package:movies_recomendations/components/redButton.dart';
+import 'package:movies_recomendations/screens/authentication/components/my_snack_bar.dart';
 import 'package:movies_recomendations/screens/authentication/sign_in/sign_in_screen.dart';
 import 'package:movies_recomendations/screens/home/components/body.dart';
 import 'package:provider/provider.dart';
+import 'package:http/http.dart' as http;
 
 import '../../components/backButton.dart';
 import '../../constants.dart';
@@ -17,6 +19,7 @@ import '../../providers/auth.dart';
 import '../../providers/movies_provider.dart';
 import '../../providers/user.dart';
 import 'components/user_categories_stat.dart';
+import 'package:image_picker/image_picker.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -30,10 +33,17 @@ class ProfileScreen extends StatelessWidget {
   }
 }
 
-class bodyProfile extends StatelessWidget {
+class bodyProfile extends StatefulWidget {
   bodyProfile({
     Key? key,
   }) : super(key: key);
+
+  @override
+  State<bodyProfile> createState() => _bodyProfileState();
+}
+
+class _bodyProfileState extends State<bodyProfile> {
+  File? selectedImage;
 
   @override
   Widget build(BuildContext context) {
@@ -71,9 +81,16 @@ class bodyProfile extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          CircleAvatar(
-            backgroundImage: NetworkImage(userData.avatar),
-            radius: 100,
+          GestureDetector(
+            onTap: () {
+              getImage();
+            },
+            child: CircleAvatar(
+              backgroundImage: selectedImage == null
+                  ? NetworkImage(userData.avatar)
+                  : AssetImage(selectedImage!.path) as ImageProvider,
+              radius: 100,
+            ),
           ),
           const SizedBox(height: kDefaultPadding),
           Text(
@@ -148,7 +165,9 @@ class bodyProfile extends StatelessWidget {
             padding: const EdgeInsets.only(top: kDefaultPadding),
             child: greyButton(
               content: 'EDIT PROFILE',
-              onPress: () {},
+              onPress: () {
+                uploadImage();
+              },
               fontSize: 14,
               height: 16,
               width: 60,
@@ -260,5 +279,44 @@ class bodyProfile extends StatelessWidget {
         return alert;
       },
     );
+  }
+
+  Future getImage() async {
+    try {
+      final pickedImage =
+          await ImagePicker().pickImage(source: ImageSource.gallery);
+
+      setState(() {
+        selectedImage = File(pickedImage!.path);
+      });
+    } on Exception catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+          const mySnackBar(message: 'Something went wrong', isError: true)
+              .build(context));
+    }
+  }
+
+  Future uploadImage() async {
+    try {
+      final request = http.MultipartRequest(
+          "POST", Uri.parse('http://192.168.1.142:5000/api/v1/auth/setavatar'));
+      
+      final header = {'Content-type': 'multipart/form-data'};
+      
+      request.files.add(
+        http.MultipartFile('image', selectedImage!.readAsBytes().asStream(),
+            selectedImage!.lengthSync(),
+            filename: selectedImage!.path.split('/').last),
+      );
+      
+      request.headers.addAll(header);
+      final response = await request.send();
+      
+      http.Response res = await http.Response.fromStream(response);
+    } on Exception catch (e) {
+            ScaffoldMessenger.of(context).showSnackBar(
+          const mySnackBar(message: 'Something went wrong', isError: true)
+              .build(context));
+    }
   }
 }
