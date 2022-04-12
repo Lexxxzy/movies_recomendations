@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 import '../../../constants.dart';
@@ -27,7 +26,7 @@ class MovieCardRecomendations extends StatelessWidget {
           onTap: (() {
             Navigator.of(context).pushNamed(
               MovieDetailScreen.routeName,
-              arguments: movie.id,
+              arguments: movie,
             );
           }),
           child: SizedBox(
@@ -65,11 +64,8 @@ class MovieCardPoster extends StatelessWidget {
           ),
           borderRadius: BorderRadius.circular(38),
           boxShadow: [kDefaultShadow],
-          gradient:const LinearGradient(
-            colors: [
-              Color.fromARGB(136, 0, 0, 0),
-              Colors.transparent
-            ],
+          gradient: const LinearGradient(
+            colors: [Color.fromARGB(136, 0, 0, 0), Colors.transparent],
             begin: Alignment.bottomCenter,
             end: Alignment.center,
           ),
@@ -78,11 +74,8 @@ class MovieCardPoster extends StatelessWidget {
           decoration: BoxDecoration(
             backgroundBlendMode: BlendMode.darken,
             borderRadius: BorderRadius.circular(32),
-            gradient:const LinearGradient(
-              colors: [
-                Color.fromARGB(143, 0, 0, 0),
-                Colors.transparent
-              ],
+            gradient: const LinearGradient(
+              colors: [Color.fromARGB(143, 0, 0, 0), Colors.transparent],
               begin: Alignment.bottomCenter,
               end: Alignment.topCenter,
             ),

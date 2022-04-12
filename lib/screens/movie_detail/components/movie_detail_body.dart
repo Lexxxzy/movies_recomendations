@@ -9,11 +9,12 @@ import 'package:provider/provider.dart';
 import '../../../components/button.dart';
 import '../../../providers/movies_provider.dart';
 import '../../../providers/single_movie_provider.dart';
+import '../../../providers/trending_movies_provider.dart';
 import 'poster_rating.dart';
 
 class MovieDetailBody extends StatefulWidget {
-  MovieDetailBody(this.id);
-  final int id;
+  MovieDetailBody(this.movie);
+  final Movie movie;
 
   @override
   State<MovieDetailBody> createState() => _MovieDetailBodyState();
@@ -24,10 +25,7 @@ class _MovieDetailBodyState extends State<MovieDetailBody> {
 
   @override
   Widget build(BuildContext context) {
-    Movie loadedMovie = Provider.of<Movies>(
-      context,
-    ).findById(widget.id);
-
+    Movie loadedMovie = widget.movie;
 
     Size size = MediaQuery.of(context).size;
 
@@ -345,6 +343,8 @@ Color ratingColor(Movie movie) {
     return kGreenColor;
   } else if (rating < 7.1 && rating >= 5) {
     return kWarningColor;
+  } else if (rating == 0.0) {
+    return kTextGreyColor;
   } else {
     return kErrorColor;
   }

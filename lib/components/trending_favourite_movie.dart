@@ -6,8 +6,18 @@ import '../constants.dart';
 import '../providers/single_movie_provider.dart';
 import '../screens/movie_detail/movie_detail.dart';
 
+enum ListTypes {
+  trending,
+  recomendations,
+  favourites,
+  upcomings,
+  topNetflix,
+}
+
 class FavouriteMovie extends StatefulWidget {
-  const FavouriteMovie({Key? key}) : super(key: key);
+  ListTypes listType;
+  FavouriteMovie({Key? key, this.listType = ListTypes.favourites})
+      : super(key: key);
 
   @override
   State<FavouriteMovie> createState() => _FavouriteMovieState();
@@ -16,13 +26,18 @@ class FavouriteMovie extends StatefulWidget {
 class _FavouriteMovieState extends State<FavouriteMovie> {
   @override
   Widget build(BuildContext context) {
-    final movieData = Provider.of<Movie>(context);
+    var movieData = Provider.of<Movie>(context);
 
+    switch (widget.listType) {
+      case ListTypes.trending:
+        break;
+      default:
+    }
     return GestureDetector(
       onTap: (() {
         Navigator.of(context).pushNamed(
           MovieDetailScreen.routeName,
-          arguments: movieData.id,
+          arguments: movieData,
         );
       }),
       child: Padding(
@@ -54,24 +69,23 @@ class _FavouriteMovieState extends State<FavouriteMovie> {
                   children: [
                     Row(
                       children: [
+                        // Text(
+                        //   '0.0',
+                        //   style: TextStyle(
+                        //     fontFamily: 'SFProDisplay',
+                        //     fontSize: 12,
+                        //     fontWeight: FontWeight.w600,
+                        //     color: ratingColor(movieData),
+                        //   ),
+                        // ),
                         Text(
-                          '${movieData.ratingKinopoisk}',
-                          style: TextStyle(
-                              fontFamily: 'SFProDisplay',
-                              fontSize: 12,
-                              fontWeight: FontWeight.w600,
-                              color: movieData.ratingKinopoisk >= 7.0
-                                  ? kGreenColor
-                                  : kWarningColor),
-                        ),
-                        Text(
-                            ' | ${MediaQuery.of(context).size.width < 380 ? movieData.countries.take(2).join(", ") : movieData.countries.take(2).join(", ")}',
-                            style: const TextStyle(
-                              fontFamily: 'SFProText',
-                              fontSize: 12,
-                              color: kTextLightColor,
-                            ),
+                          '${MediaQuery.of(context).size.width < 380 ? movieData.countries.take(2).join(", ") : movieData.countries.take(2).join(", ")}',
+                          style: const TextStyle(
+                            fontFamily: 'SFProText',
+                            fontSize: 12,
+                            color: kTextLightColor,
                           ),
+                        ),
                       ],
                     ),
                     const SizedBox(
@@ -190,5 +204,18 @@ class _FavouriteMovieState extends State<FavouriteMovie> {
         borderRadius: BorderRadius.circular(16),
       ),
     );
+  }
+}
+
+Color ratingColor(Movie movie) {
+  double rating = movie.ratingKinopoisk;
+  if (rating >= 7.1) {
+    return kGreenColor;
+  } else if (rating < 7.1 && rating >= 5) {
+    return kWarningColor;
+  } else if (rating == 0.0) {
+    return kTextGreyColor;
+  } else {
+    return kErrorColor;
   }
 }

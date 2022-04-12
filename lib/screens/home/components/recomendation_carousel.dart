@@ -85,7 +85,7 @@ class _RecomendedMovieCarouselState extends State<RecomendedMovieCarousel> {
       onTap: (() {
         Navigator.of(context).pushNamed(
           MovieDetailScreen.routeName,
-          arguments: movies[index].id,
+          arguments: movies[index],
         );
       }),
       child: Column(
@@ -243,12 +243,10 @@ class buildSliderIndicator extends StatelessWidget {
   })  : _config = config,
         super(key: key);
 
-  
   SwiperPluginConfig _config;
 
   @override
   Widget build(BuildContext context) {
-    
     return Container(
       padding: const EdgeInsets.only(bottom: 15),
       alignment: Alignment.bottomCenter,
