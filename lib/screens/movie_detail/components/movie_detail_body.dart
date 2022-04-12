@@ -28,7 +28,6 @@ class _MovieDetailBodyState extends State<MovieDetailBody> {
       context,
     ).findById(widget.id);
 
-    print(loadedMovie.title);
 
     Size size = MediaQuery.of(context).size;
 

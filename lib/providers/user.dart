@@ -26,8 +26,8 @@ class User with ChangeNotifier {
       nickName: 'Lexxxy',
       email: 'lex.halikov@gmail.com',
       name: 'Alex Halikov',
-      favourites:
-          List.from(Movies().favouriteMovies.map((e) => e.id.toString())),
+      favourites: ['1'],
+      //List.from(Movies().favouriteMovies.map((e) => e.id.toString())),
       loved: ['1'],
       disliked: ['1'],
     );

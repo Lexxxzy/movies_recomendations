@@ -5,6 +5,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:movies_recomendations/components/trending_favourite_movie.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import '../../../providers/trending_movies_provider.dart';
 import '../../movie_detail/movie_detail.dart';
 import '../../../constants.dart';
 import 'package:provider/provider.dart';
@@ -20,8 +21,8 @@ class TrendingList extends StatefulWidget {
 class _TrendingListState extends State<TrendingList> {
   @override
   Widget build(BuildContext context) {
-    final moviesData = Provider.of<Movies>(context);
-    final movies = moviesData.movies;
+    final moviesData = Provider.of<TrendingMovies>(context, listen: false);
+    final movies = moviesData.trendingMoviesTop;
     return SafeArea(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,

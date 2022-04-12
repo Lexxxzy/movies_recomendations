@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:movies_recomendations/constants.dart';
+import 'package:provider/provider.dart';
 import '../../../blocs/swipe_block.dart';
 import '../../../blocs/swipe_state.dart';
 import '../../../providers/movies_provider.dart';
@@ -29,6 +30,7 @@ class _RecomendationsBodyState extends State<RecomendationsBody> {
 
   @override
   Widget build(BuildContext context) {
+    final movies = Provider.of<Movies>(context).movies;
     return BlocBuilder<SwipeBloc, SwipeState>(
       builder: (context, state) {
         if (state is SwipeLoading) {
@@ -44,7 +46,7 @@ class _RecomendationsBodyState extends State<RecomendationsBody> {
                       feedback: MovieCardRecomendations(movie: state.movies[0]),
                       //TODO: В API сделать отдельный route с recomendations, который возвращает 15 рекомендаций и у которых есть параментр listID от 0 до 14
                       childWhenDragging: state.movies[0].id !=
-                              Movies().movies.length
+                              movies.length
                           ? MovieCardRecomendations(movie: state.movies[1])
                           : Container(
                               height: MediaQuery.of(context).size.height / 1.6),

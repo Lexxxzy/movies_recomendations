@@ -65,13 +65,13 @@ class _FavouriteMovieState extends State<FavouriteMovie> {
                                   : kWarningColor),
                         ),
                         Text(
-                          ' | ${MediaQuery.of(context).size.width < 380 ? movieData.countries.take(2).join(", ") : movieData.countries.take(3).join(", ")}',
-                          style: const TextStyle(
-                            fontFamily: 'SFProText',
-                            fontSize: 12,
-                            color: kTextLightColor,
+                            ' | ${MediaQuery.of(context).size.width < 380 ? movieData.countries.take(2).join(", ") : movieData.countries.take(2).join(", ")}',
+                            style: const TextStyle(
+                              fontFamily: 'SFProText',
+                              fontSize: 12,
+                              color: kTextLightColor,
+                            ),
                           ),
-                        ),
                       ],
                     ),
                     const SizedBox(

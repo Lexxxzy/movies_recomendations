@@ -2,7 +2,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:movies_recomendations/providers/trending_movies_provider.dart';
 import '/components/splash_screen.dart';
 import '/providers/auth.dart';
 import 'providers/movies_provider.dart';
@@ -11,7 +11,6 @@ import '/screens/genres/genres_screen.dart';
 import '/screens/home/home_screen.dart';
 import '/screens/welcome/welcome_screen.dart';
 import 'package:provider/provider.dart';
-import 'blocs/swipe_block.dart';
 import 'screens/authentication/sign_in/sign_in_screen.dart';
 import 'screens/authentication/sign_up/sign_up_screen.dart';
 import 'screens/movie_detail/movie_detail.dart';
@@ -30,13 +29,16 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
         providers: [
           ChangeNotifierProvider.value(
-            value: Movies(),
+            value: Auth(),
+          ),
+          ChangeNotifierProxyProvider<Auth, Movies>(
+            update:(ctx,auth, previousMovies) => Movies(auth.token,previousMovies == null ? [] : previousMovies.movies),
           ),
           ChangeNotifierProvider.value(
             value: User(),
           ),
           ChangeNotifierProvider.value(
-            value: Auth(),
+            value: TrendingMovies(),
           ),
         ],
         child: Consumer<Auth>(

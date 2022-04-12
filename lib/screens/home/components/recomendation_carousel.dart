@@ -243,11 +243,12 @@ class buildSliderIndicator extends StatelessWidget {
   })  : _config = config,
         super(key: key);
 
-  final movies = Movies().movies;
+  
   SwiperPluginConfig _config;
 
   @override
   Widget build(BuildContext context) {
+    
     return Container(
       padding: const EdgeInsets.only(bottom: 15),
       alignment: Alignment.bottomCenter,

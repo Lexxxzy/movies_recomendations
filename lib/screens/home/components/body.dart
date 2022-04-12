@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:movies_recomendations/components/splash_screen.dart';
 import 'package:movies_recomendations/constants.dart';
+import 'package:movies_recomendations/providers/trending_movies_provider.dart';
 import 'package:movies_recomendations/screens/genres/genres_screen.dart';
 import 'package:provider/provider.dart';
 import '../../../providers/movies_provider.dart';
@@ -45,11 +46,21 @@ class _MainScreenWidgetsState extends State<MainScreenWidgets> {
       setState(() {
         _isLoading = true;
       });
-      Provider.of<Movies>(context).fetchAndSetMovies().then((_) {
-        setState(() {
-          _isLoading = false;
-        });
-      });
+      Provider.of<Movies>(context).fetchAndSetMovies().then(
+        (_) {
+          Provider.of<TrendingMovies>(context, listen: false)
+              .fetchAndSetTrending()
+              .then(
+            (_) {
+              setState(
+                () {
+                  _isLoading = false;
+                },
+              );
+            },
+          );
+        },
+      );
     }
     _isInit = false;
     super.didChangeDependencies();
