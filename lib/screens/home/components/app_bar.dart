@@ -44,7 +44,7 @@ AppBar buildAppBar(BuildContext context) {
           );
         },
         icon: CircleAvatar(
-          backgroundImage: NetworkImage(userData.avatar),
+          backgroundImage: NetworkImage(userData!.avatar!),
           backgroundColor: kTextGreyColor,
         ),
       ),

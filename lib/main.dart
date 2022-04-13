@@ -36,8 +36,22 @@ class MyApp extends StatelessWidget {
           update: (ctx, auth, previousMovies) => Movies(
               auth.token, previousMovies == null ? [] : previousMovies.movies),
         ),
-        ChangeNotifierProvider.value(
-          value: User(),
+        ChangeNotifierProxyProvider<Auth, User>(
+          update: (ctx, auth, previousUser) => User(
+              authToken: auth.token,
+              user: previousUser == null
+                  ? User(
+                      avatar:
+                          'https://images.unsplash.com/photo-1488161628813-04466f872be2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=764&q=80',
+                      nickName: 'Lexxxy',
+                      email: 'lex.halikov@gmail.com',
+                      name: 'Alex Halikov',
+                      favourites: 1,
+                      //List.from(Movies().favouriteMovies.map((e) => e.id.toString())),
+                      loved: 1,
+                      disliked: 1,
+                    )
+                  : previousUser.user),
         ),
         ChangeNotifierProvider.value(
           value: TrendingMovies(),

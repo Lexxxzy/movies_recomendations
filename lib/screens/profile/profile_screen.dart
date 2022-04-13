@@ -48,9 +48,7 @@ class _bodyProfileState extends State<bodyProfile> {
   @override
   Widget build(BuildContext context) {
     final moviesData = Provider.of<Movies>(context);
-    final User userData = Provider.of<User>(context).user;
-    userData.favourites =
-        List.from(moviesData.favouriteMovies.map((e) => e.id.toString()));
+    final User userData = Provider.of<User>(context).user!;
 
     return SafeArea(
       child: SingleChildScrollView(
@@ -87,14 +85,15 @@ class _bodyProfileState extends State<bodyProfile> {
             },
             child: CircleAvatar(
               backgroundImage: selectedImage == null
-                  ? NetworkImage(userData.avatar)
+                  ? NetworkImage(userData.avatar!)
                   : AssetImage(selectedImage!.path) as ImageProvider,
               radius: 100,
+              backgroundColor: Colors.transparent,
             ),
           ),
           const SizedBox(height: kDefaultPadding),
           Text(
-            userData.name,
+            userData.name!,
             style: const TextStyle(
               color: kTextColor,
               fontFamily: 'SFProDispay',
@@ -106,7 +105,7 @@ class _bodyProfileState extends State<bodyProfile> {
             height: 5,
           ),
           Text(
-            userData.nickName,
+            userData.nickName!,
             style: const TextStyle(
               color: kTextLightColor,
               fontFamily: 'SFProDispay',
@@ -131,7 +130,7 @@ class _bodyProfileState extends State<bodyProfile> {
                 height: kDefaultPadding - 15,
               ),
               Text(
-                userData.email,
+                userData.email!,
                 style: const TextStyle(
                   color: kTextColor,
                   fontFamily: 'SFProText',
@@ -142,19 +141,19 @@ class _bodyProfileState extends State<bodyProfile> {
                 height: kDefaultPadding,
               ),
               buildUserCategory(
-                amount: userData.favourites.length.toString(),
+                amount: userData.favourites!.toString(),
                 content: 'Favourites',
                 asset: 'assets/icons/boockmark.svg',
                 height: 14,
               ),
               buildUserCategory(
-                amount: userData.loved.length.toString(),
+                amount: userData.loved!.toString(),
                 content: 'Loved',
                 asset: 'assets/icons/Heart.svg',
                 height: 11,
               ),
               buildUserCategory(
-                amount: userData.disliked.length.toString(),
+                amount: userData.disliked!.toString(),
                 content: 'Disliked',
                 asset: 'assets/icons/redCross.svg',
                 height: 11,
@@ -166,7 +165,7 @@ class _bodyProfileState extends State<bodyProfile> {
             child: greyButton(
               content: 'EDIT PROFILE',
               onPress: () {
-                uploadImage();
+                userData.uploadImage(selectedImage,context);
               },
               fontSize: 14,
               height: 16,
@@ -296,27 +295,4 @@ class _bodyProfileState extends State<bodyProfile> {
     }
   }
 
-  Future uploadImage() async {
-    try {
-      final request = http.MultipartRequest(
-          "POST", Uri.parse('http://192.168.1.142:5000/api/v1/auth/setavatar'));
-      
-      final header = {'Content-type': 'multipart/form-data'};
-      
-      request.files.add(
-        http.MultipartFile('image', selectedImage!.readAsBytes().asStream(),
-            selectedImage!.lengthSync(),
-            filename: selectedImage!.path.split('/').last),
-      );
-      
-      request.headers.addAll(header);
-      final response = await request.send();
-      
-      http.Response res = await http.Response.fromStream(response);
-    } on Exception catch (e) {
-            ScaffoldMessenger.of(context).showSnackBar(
-          const mySnackBar(message: 'Something went wrong', isError: true)
-              .build(context));
-    }
-  }
 }

@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:movies_recomendations/components/button.dart';
+import 'package:movies_recomendations/components/splash_screen.dart';
 import 'package:movies_recomendations/constants.dart';
 import 'package:movies_recomendations/providers/single_movie_provider.dart';
 import 'package:provider/provider.dart';
@@ -29,7 +30,30 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    
     _opacity = 0;
+  }
+
+  var _isInit = true;
+  var _isLoading = false;
+  @override
+  void didChangeDependencies() {
+    if (_isInit) {
+      setState(() {
+        _isLoading = true;
+      });
+      Provider.of<Movies>(context).fetchAndSetMovies().then(
+        (_) {
+          setState(
+            () {
+              _isLoading = false;
+            },
+          );
+        },
+      );
+    }
+    _isInit = false;
+    super.didChangeDependencies();
   }
 
   @override
@@ -38,34 +62,37 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
     final movies = moviesData.favouriteMovies;
     int numOfFavs = movies.length;
     return SafeArea(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: <Widget>[
-          SingleChildScrollView(
-            physics: const ScrollPhysics(),
-            child: Padding(
-              padding: const EdgeInsets.only(bottom: 40),
-              child: Column(
-                children: <Widget>[
-                  ListView.builder(
-                    physics: const NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    itemCount: movies.length,
-                    itemBuilder: (context, index) {
-                      return ChangeNotifierProvider.value(
-                          value: movies[index],
-                          child: buildFavouriteCards(movies, index, numOfFavs));
-                    },
+      child: _isLoading
+          ? SplashScreen()
+          : Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                SingleChildScrollView(
+                  physics: const ScrollPhysics(),
+                  child: Padding(
+                    padding: const EdgeInsets.only(bottom: 40),
+                    child: Column(
+                      children: <Widget>[
+                        ListView.builder(
+                          physics: const NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          itemCount: movies.length,
+                          itemBuilder: (context, index) {
+                            return ChangeNotifierProvider.value(
+                                value: movies[index],
+                                child: buildFavouriteCards(
+                                    movies, index, numOfFavs));
+                          },
+                        ),
+                        isAllRemoved || movies.isEmpty
+                            ? buildNoFavouritesScreen(context)
+                            : Container()
+                      ],
+                    ),
                   ),
-                  isAllRemoved || movies.isEmpty
-                      ? buildNoFavouritesScreen(context)
-                      : Container()
-                ],
-              ),
+                ),
+              ],
             ),
-          ),
-        ],
-      ),
     );
   }
 
@@ -148,7 +175,7 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
           color: kErrorColor,
         ),
         child: const Padding(
-          padding:  EdgeInsets.only(right: kDefaultPadding),
+          padding: EdgeInsets.only(right: kDefaultPadding),
           child: Icon(
             CupertinoIcons.delete,
             color: kTextColor,
