@@ -49,7 +49,7 @@ class User with ChangeNotifier {
         disliked: extractedData['dislikes'],
         loved: extractedData['likes'],
         email: extractedData['email'],
-        name: 'No name',
+        name: 'No Name',
       );
       user = loadedUser;
       notifyListeners();

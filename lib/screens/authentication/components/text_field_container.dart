@@ -3,9 +3,11 @@ import 'package:movies_recomendations/constants.dart';
 
 class TextFieldContainer extends StatelessWidget {
   final Widget child;
+  final Color color;
   const TextFieldContainer({
     Key? key,
     required this.child,
+    this.color = kBackgroundColor,
   }) : super(key: key);
 
   @override
@@ -16,7 +18,7 @@ class TextFieldContainer extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
       //width: size.width * 0.8,
       decoration: BoxDecoration(
-        color: kBackgroundColor,
+        color: color,
         borderRadius: BorderRadius.circular(16),
       ),
       child: child,

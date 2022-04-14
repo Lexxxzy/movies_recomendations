@@ -4,27 +4,25 @@ import 'package:http/http.dart' as http;
 
 import './single_movie_provider.dart';
 
-class TrendingMovies with ChangeNotifier {
-  final String authToken;
+class UpcomingMovies with ChangeNotifier {
+  String plotText = "";
 
-  TrendingMovies(this.authToken, this._trendingMovies);
+  List<Movie> _upcomingMovies = [];
 
-  List<Movie> _trendingMovies = [];
-
-  List<Movie> get trendingMovies {
-    return <Movie>[..._trendingMovies];
+  List<Movie> get upcomingMovies {
+    return <Movie>[..._upcomingMovies];
   }
 
-  List<Movie> get trendingMoviesTop {
-    return <Movie>[..._trendingMovies.take(5)];
+  List<Movie> get upcomingMoviesTop {
+    return <Movie>[..._upcomingMovies.take(3)];
   }
 
   Movie findById(int id) {
-    return _trendingMovies.firstWhere((element) => element.id == id);
+    return _upcomingMovies.firstWhere((element) => element.id == id);
   }
 
-  Future<void> fetchAndSetTrending() async {
-    const url = 'http://192.168.1.131:5000/WTW/topfilm';
+  Future<void> fetchAndSetUpcoming() async {
+    const url = 'http://192.168.1.142:5000/api/v1/trending/';
 
     try {
       var response = await http
@@ -39,25 +37,25 @@ class TrendingMovies with ChangeNotifier {
       extractedData.forEach(
         ((movieInfo) => {
               loadedMovies.add(Movie(
-                authToken: authToken,
                 id: movieInfo['id'],
                 age: movieInfo['age'],
-                countries: List<String>.from(movieInfo['country']),
+                countries: movieInfo['country'],
                 description: movieInfo['description'],
                 frames: movieInfo['frames'],
                 genre: movieInfo['genre'],
                 poster: movieInfo['poster'],
                 premiereWorld: movieInfo['date'].toString(),
-                ratingIMDb: movieInfo['ratingIMDb'] ?? 0.0,
-                ratingKinopoisk: movieInfo['ratingKinopoisk'] ?? 0.0,
+                ratingIMDb: 0.0,
+                ratingKinopoisk: 0.0,
                 title: movieInfo['title'][0],
-                ifSeries: movieInfo['ifSeries'],
-                dateTo: movieInfo['dateTo'].toString(),
-                seasons: movieInfo['seasons'],
+                ifSeries: movieInfo['ifSeries'] == 'true' ? true : false,
+                dateTo: '',
+                isFavourite: false,
+                seasons: 0,
               )),
             }),
       );
-      _trendingMovies = loadedMovies;
+      _upcomingMovies = loadedMovies;
       notifyListeners();
     } on Exception catch (e) {}
   }

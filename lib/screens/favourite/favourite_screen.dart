@@ -189,7 +189,7 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
       ),
       direction: DismissDirection.endToStart,
       onDismissed: (direction) {
-        movies[index].removeFavourite();
+        movies[index].removeFavourite(context);
         setState(() {
           numOfFavs -= 1;
         });

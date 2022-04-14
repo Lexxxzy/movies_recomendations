@@ -9,7 +9,7 @@ import 'package:provider/provider.dart';
 import '../../../components/button.dart';
 import '../../../providers/movies_provider.dart';
 import '../../../providers/single_movie_provider.dart';
-import '../../../providers/trending_movies_provider.dart';
+import '../../../providers/upcoming_movies_provider.dart';
 import 'poster_rating.dart';
 
 class MovieDetailBody extends StatefulWidget {
@@ -309,7 +309,7 @@ class _MovieDetailBodyState extends State<MovieDetailBody> {
           GestureDetector(
             onTap: () {
               setState(() {
-                loadedMovie.toggleFavourite();
+                loadedMovie.toggleFavourite(context);
               });
             },
             child: Container(

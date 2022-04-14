@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:movies_recomendations/components/trending_favourite_movie.dart';
-import '../../../providers/trending_movies_provider.dart';
+import '../../../providers/upcoming_movies_provider.dart';
 import '../../../constants.dart';
 import 'package:provider/provider.dart';
 
@@ -15,8 +15,8 @@ class UpcomingsBody extends StatefulWidget {
 class _UpcomingsBodyState extends State<UpcomingsBody> {
   @override
   Widget build(BuildContext context) {
-    final moviesData = Provider.of<TrendingMovies>(context, listen: false);
-    final movies = moviesData.trendingMovies;
+    final moviesData = Provider.of<UpcomingMovies>(context, listen: false);
+    final movies = moviesData.upcomingMovies;
     return SafeArea(
       child: SingleChildScrollView(
         child: Column(

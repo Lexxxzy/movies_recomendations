@@ -122,7 +122,7 @@ class _FavouriteMovieState extends State<FavouriteMovie> {
                 child: GestureDetector(
                   onTap: () {
                     setState(() {
-                      movieData.toggleFavourite();
+                      movieData.toggleFavourite(context);
                     });
                     final snackBar = movieData.isFavourite == true
                         ? buildAddToFavouriteSnackBox()
@@ -179,7 +179,7 @@ class _FavouriteMovieState extends State<FavouriteMovie> {
         label: 'Undo',
         textColor: Color.fromARGB(255, 255, 153, 85),
         onPressed: () {
-          movieData.toggleFavourite();
+          movieData.toggleFavourite(context);
         },
       ),
       margin: const EdgeInsets.only(

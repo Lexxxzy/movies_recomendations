@@ -2,9 +2,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:movies_recomendations/providers/trending_movies_provider.dart';
 import 'package:provider/provider.dart';
 import '../../providers/movies_provider.dart';
-import '../../providers/trending_movies_provider.dart';
+import '../../providers/upcoming_movies_provider.dart';
 import '../../providers/user.dart';
 import 'components/body.dart';
 import 'package:movies_recomendations/constants.dart';
@@ -30,8 +31,8 @@ class _HomeScreenState extends State<HomeScreen> {
       });
       Provider.of<TrendingMovies>(context).fetchAndSetTrending().then(
         (_) {
-          Provider.of<TrendingMovies>(context, listen: false)
-              .fetchAndSetTrending()
+          Provider.of<UpcomingMovies>(context, listen: false)
+              .fetchAndSetUpcoming()
               .then((_) {
             Provider.of<User>(context, listen: false).fetchAndSetUser().then(
               (_) {

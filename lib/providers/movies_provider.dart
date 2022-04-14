@@ -40,8 +40,8 @@ class Movies with ChangeNotifier {
   }
 
   Future<void> fetchAndSetMovies() async {
-    //const url = 'http://192.168.1.142:5000/api/v1/favourites/';
-    const url = 'http://192.168.1.142:9000/Desktop/favourites.json';
+    const url = 'http://192.168.1.142:5000/api/v1/favourites/';
+    //const url = 'http://192.168.1.142:9000/Desktop/favourites.json';
     try {
       var response = await http.get(Uri.parse(url), headers: {
         'Authorization': 'Bearer $authToken',
@@ -52,30 +52,36 @@ class Movies with ChangeNotifier {
 
       final extractedData =
           List<Map<String, dynamic>>.from(json.decode(source)['favourites']);
+
       final List<Movie> loadedMovies = [];
-      extractedData.forEach(
-        ((movieInfo) => {
-              loadedMovies.add(Movie(
-                id: movieInfo['id'],
-                age: movieInfo['age'],
-                countries: List<String>.from(movieInfo['country']),
-                description: movieInfo['description'],
-                frames: movieInfo['frames'],
-                genre: movieInfo['genre'],
-                poster: movieInfo['poster'],
-                premiereWorld: movieInfo['date'].toString(),
-                ratingIMDb: movieInfo['ratingIMDb'],
-                ratingKinopoisk: movieInfo['ratingKinopoisk'],
-                title: movieInfo['title'][0],
-                ifSeries: movieInfo['ifSeries'],
-                dateTo: movieInfo['dateTo'].toString(),
-                isFavourite: true,
-                seasons: movieInfo['seasons'],
-              )),
-            }),
-      );
-      _movies = loadedMovies;
-      notifyListeners();
-    } on Exception catch (e) {}
+      if (extractedData[0]['error'] != 'Not found') {
+        extractedData.forEach(
+          ((movieInfo) => {
+                loadedMovies.add(Movie(authToken: authToken,
+                  id: movieInfo['id'],
+                  age: movieInfo['age'],
+                  countries: List<String>.from(movieInfo['country']),
+                  description: movieInfo['description'],
+                  frames: movieInfo['frames'],
+                  genre: movieInfo['genre'],
+                  poster: movieInfo['poster'],
+                  premiereWorld: movieInfo['date'].toString(),
+                  ratingIMDb: movieInfo['ratingIMDb'],
+                  ratingKinopoisk: movieInfo['ratingKinopoisk'],
+                  title: movieInfo['title'][0],
+                  ifSeries: movieInfo['ifSeries'],
+                  dateTo: movieInfo['dateTo'].toString(),
+                  isFavourite: true,
+                  seasons: movieInfo['seasons'],
+                )),
+              }),
+        );
+
+        _movies = loadedMovies;
+        notifyListeners();
+      }
+    } on Exception catch (e) {
+      _movies = [];
+    }
   }
 }

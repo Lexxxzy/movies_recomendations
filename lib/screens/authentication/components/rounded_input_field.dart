@@ -8,6 +8,7 @@ class RoundedInputField extends StatefulWidget {
   final IconData icon;
   final ValueChanged<String> onChanged;
   final Function(String) validFunc;
+  final Color color;
   BuildContext ctx;
   RoundedInputField({
     Key? key,
@@ -16,6 +17,7 @@ class RoundedInputField extends StatefulWidget {
     required this.onChanged,
     required this.ctx,
     required this.validFunc,
+    this.color = kBackgroundColor,
   }) : super(key: key);
 
   @override
@@ -26,7 +28,7 @@ class _RoundedInputFieldState extends State<RoundedInputField> {
   bool isFocused = false;
   @override
   Widget build(ctx) {
-    return TextFieldContainer(
+    return TextFieldContainer(color: widget.color,
       child: TextFormField(
         keyboardType: widget.hintText.contains('E-mail')
             ? TextInputType.emailAddress

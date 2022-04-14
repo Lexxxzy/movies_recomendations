@@ -2,7 +2,10 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:movies_recomendations/providers/single_movie_provider.dart';
 import 'package:movies_recomendations/providers/trending_movies_provider.dart';
+import 'package:movies_recomendations/providers/upcoming_movies_provider.dart';
+import 'package:movies_recomendations/screens/edit_profile/edit_profile_screen.dart';
 import 'package:movies_recomendations/screens/upcomings/upcomings.dart';
 import '/components/splash_screen.dart';
 import '/providers/auth.dart';
@@ -42,19 +45,22 @@ class MyApp extends StatelessWidget {
               user: previousUser == null
                   ? User(
                       avatar:
-                          'https://images.unsplash.com/photo-1488161628813-04466f872be2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=764&q=80',
-                      nickName: 'Lexxxy',
-                      email: 'lex.halikov@gmail.com',
-                      name: 'Alex Halikov',
-                      favourites: 1,
-                      //List.from(Movies().favouriteMovies.map((e) => e.id.toString())),
-                      loved: 1,
-                      disliked: 1,
+                          'http://192.168.1.142:5000/api/v1/auth/files/default-avatar.png',
+                      nickName: 'nonickname',
+                      email: 'example@gmail.com',
+                      name: 'No Name',
+                      favourites: 0,
+                      loved: 0,
+                      disliked: 0,
                     )
                   : previousUser.user),
         ),
+        ChangeNotifierProxyProvider<Auth, TrendingMovies>(
+          update: (ctx, auth, previousMovies) => TrendingMovies(auth.token,
+              previousMovies == null ? [] : previousMovies.trendingMovies),
+        ),
         ChangeNotifierProvider.value(
-          value: TrendingMovies(),
+          value: UpcomingMovies(),
         ),
       ],
       child: Consumer<Auth>(
@@ -90,6 +96,7 @@ class MyApp extends StatelessWidget {
             SignInScreen.routeName: (ctx) => SignInScreen(),
             SignUpScreen.routeName: (ctx) => SignUpScreen(),
             Upcomings.routeName: (ctx) => Upcomings(),
+            EditProfile.routeName: (ctx) => EditProfile(),
           },
         ),
       ),

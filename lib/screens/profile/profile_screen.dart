@@ -9,6 +9,7 @@ import 'package:movies_recomendations/components/button.dart';
 import 'package:movies_recomendations/components/redButton.dart';
 import 'package:movies_recomendations/screens/authentication/components/my_snack_bar.dart';
 import 'package:movies_recomendations/screens/authentication/sign_in/sign_in_screen.dart';
+import 'package:movies_recomendations/screens/edit_profile/edit_profile_screen.dart';
 import 'package:movies_recomendations/screens/home/components/body.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
@@ -21,9 +22,32 @@ import '../../providers/user.dart';
 import 'components/user_categories_stat.dart';
 import 'package:image_picker/image_picker.dart';
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
   static const routeName = '/profile';
+
+  @override
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
+  var _isInit = true;
+
+  @override
+  void didChangeDependencies() {
+    if (_isInit) {
+      Provider.of<User>(context, listen: false)
+          .fetchAndSetUser()
+          .then((value) => setState(
+                () {
+                  _isInit = false;
+                },
+              ));
+
+      super.didChangeDependencies();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -60,7 +84,8 @@ class _bodyProfileState extends State<bodyProfile> {
               Padding(
                 padding: const EdgeInsets.all(kDefaultPadding),
                 child: backButton(
-                  buttonForm: buttonForms.circle,
+                  buttonForm: buttonForms.square,
+                  size: 40,
                 ),
               ),
               buildProfileBody(context, userData),
@@ -79,17 +104,12 @@ class _bodyProfileState extends State<bodyProfile> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          GestureDetector(
-            onTap: () {
-              getImage();
-            },
-            child: CircleAvatar(
-              backgroundImage: selectedImage == null
-                  ? NetworkImage(userData.avatar!)
-                  : AssetImage(selectedImage!.path) as ImageProvider,
-              radius: 100,
-              backgroundColor: Colors.transparent,
-            ),
+          CircleAvatar(
+            backgroundImage: selectedImage == null
+                ? NetworkImage(userData.avatar!)
+                : AssetImage(selectedImage!.path) as ImageProvider,
+            radius: 100,
+            backgroundColor: Colors.transparent,
           ),
           const SizedBox(height: kDefaultPadding),
           Text(
@@ -97,7 +117,7 @@ class _bodyProfileState extends State<bodyProfile> {
             style: const TextStyle(
               color: kTextColor,
               fontFamily: 'SFProDispay',
-              fontSize: 20,
+              fontSize: 25,
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -165,7 +185,8 @@ class _bodyProfileState extends State<bodyProfile> {
             child: greyButton(
               content: 'EDIT PROFILE',
               onPress: () {
-                userData.uploadImage(selectedImage,context);
+                // userData.uploadImage(selectedImage, context);
+                Navigator.of(context).pushNamed(EditProfile.routeName);
               },
               fontSize: 14,
               height: 16,
@@ -279,20 +300,4 @@ class _bodyProfileState extends State<bodyProfile> {
       },
     );
   }
-
-  Future getImage() async {
-    try {
-      final pickedImage =
-          await ImagePicker().pickImage(source: ImageSource.gallery);
-
-      setState(() {
-        selectedImage = File(pickedImage!.path);
-      });
-    } on Exception catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-          const mySnackBar(message: 'Something went wrong', isError: true)
-              .build(context));
-    }
-  }
-
 }

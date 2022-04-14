@@ -5,9 +5,10 @@ import 'package:movies_recomendations/constants.dart';
 class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: kBackgroundColor,
-      body: Center(
+    return Container(
+      color: kBackgroundColor,
+      height: 100,
+      child: Center(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
