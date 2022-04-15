@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:movies_recomendations/components/splash_screen.dart';
 import 'package:movies_recomendations/screens/recomendations/recomendations.dart';
 
 import '../constants.dart';
@@ -8,6 +9,8 @@ import '../screens/favourite/favourite_screen.dart';
 import '../screens/home/components/body.dart';
 
 class CategotiesMenu extends StatefulWidget {
+  bool isLoading;
+  CategotiesMenu({required this.isLoading});
   @override
   State<CategotiesMenu> createState() => _CategotiesMenuState();
 }
@@ -95,7 +98,9 @@ class _CategotiesMenuState extends State<CategotiesMenu>
             child: TabBarView(
               controller: _tabController,
               children: [
-                MainScreenWidgets(_tabController),
+                widget.isLoading
+                    ? Container(child: SplashScreen())
+                    : MainScreenWidgets(_tabController),
                 Container(
                   height: MediaQuery.of(context).size.height,
                   child: RecomendationsScreen(),

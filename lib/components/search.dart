@@ -10,7 +10,8 @@ class Search extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return Material(
+      color: Colors.transparent,
       child: Stack(
         // ignore: prefer_const_literals_to_create_immutables
         children: [

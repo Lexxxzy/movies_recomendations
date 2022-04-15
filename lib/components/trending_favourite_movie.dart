@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:like_button/like_button.dart';
 import 'package:provider/provider.dart';
 
 import '../constants.dart';
@@ -93,7 +94,7 @@ class _FavouriteMovieState extends State<FavouriteMovie> {
                     ),
                     Text(
                       movieData.title.length > 20
-                          ? '${movieData.title.substring(0, 20)}...'
+                          ? '${movieData.title.substring(0, 18)}...'
                           : movieData.title,
                       style: const TextStyle(
                         fontFamily: 'SFProDisplay',
@@ -119,25 +120,37 @@ class _FavouriteMovieState extends State<FavouriteMovie> {
               const Spacer(),
               Padding(
                 padding: const EdgeInsets.only(bottom: 80),
-                child: GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      movieData.toggleFavourite(context);
-                    });
-                    final snackBar = movieData.isFavourite == true
+                child: LikeButton(
+                  size: 23,
+                  circleColor: CircleColor(
+                    start: kMainColor,
+                    end: kMainColor,
+                  ),
+                  isLiked: movieData.isFavourite,
+                  onTap: (bool) {
+                    final snackBar = movieData.isFavourite == false
                         ? buildAddToFavouriteSnackBox()
                         : buildRemovedFromFavouriteSnackBox(movieData);
                     ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                    return movieData.toggleFavourite(context);
                   },
-                  child: SvgPicture.asset(
-                    movieData.isFavourite == false
-                        ? 'assets/icons/HeartOutlined.svg'
-                        : 'assets/icons/Heart.svg',
-                    height: 20,
-                    alignment: Alignment.topRight,
-                  ),
+                  likeBuilder: (isTapped) {
+                    return SvgPicture.asset(
+                      'assets/icons/Heart.svg',
+                      height: 20,
+                      color: isTapped ? kMainColor : kTextGreyColor,
+                      alignment: Alignment.topRight,
+                    );
+                  },
                 ),
               ),
+              // SvgPicture.asset(
+              //   movieData.isFavourite == false
+              //       ? 'assets/icons/HeartOutlined.svg'
+              //       : 'assets/icons/Heart.svg',
+              //   height: 20,
+              //   alignment: Alignment.topRight,
+              // ),
             ],
           ),
         ),

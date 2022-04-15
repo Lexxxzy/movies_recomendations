@@ -46,8 +46,7 @@ class Movie with ChangeNotifier {
         'Authorization': 'Bearer $authToken',
       });
 
-      this.isFavourite =
-          json.decode(response.body)['isFavourite'];
+      this.isFavourite = json.decode(response.body)['isFavourite'];
     }
   }
 
@@ -59,7 +58,7 @@ class Movie with ChangeNotifier {
     });
   }
 
-  void toggleFavourite(context) {
+  Future<bool?> toggleFavourite(context) async {
     try {
       httpToggleFavourite();
       this.isFavourite = !this.isFavourite;
@@ -70,6 +69,7 @@ class Movie with ChangeNotifier {
           const mySnackBar(message: 'Something went wrong', isError: true)
               .build(context));
     }
+    return this.isFavourite;
   }
 
   void removeFavourite(context) {

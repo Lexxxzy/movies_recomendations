@@ -45,8 +45,8 @@ class MovieCardDescription extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            movie.title.length > 19
-                                ? '${movie.title.substring(0, 19)}...'
+                            movie.title.length > 18
+                                ? '${movie.title.substring(0, 18)}...'
                                 : movie.title,
                             style: const TextStyle(
                               fontFamily: 'SFProDisplay',

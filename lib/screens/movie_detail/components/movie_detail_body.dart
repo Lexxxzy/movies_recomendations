@@ -46,7 +46,8 @@ class _MovieDetailBodyState extends State<MovieDetailBody> {
               loadedMovie: loadedMovie,
             ),
             buildMovieInfo(loadedMovie),
-            buildFrames(loadedMovie),
+            loadedMovie.frames.length != 0
+              ? buildFrames(loadedMovie) : Container(),
             buildDescrition(loadedMovie),
             buildFooter(loadedMovie)
           ],
@@ -205,19 +206,19 @@ class _MovieDetailBodyState extends State<MovieDetailBody> {
             height: 15,
           ),
           SizedBox(
-            height: 110,
-            child: Swiper(
-              itemCount: loadedMovie.frames.length,
-              itemWidth: 170,
-              viewportFraction: 0.50,
-              scale: 0.6,
-              itemHeight: 100,
-              index: 0,
-              fade: 0.2,
-              itemBuilder: (context, index) {
-                return InkWell(
-                  onTap: () {
-                    /*Navigator.push(
+                  height: 110,
+                  child: Swiper(
+                    itemCount: loadedMovie.frames.length,
+                    itemWidth: 170,
+                    viewportFraction: 0.50,
+                    scale: 0.6,
+                    itemHeight: 100,
+                    index: 0,
+                    fade: 0.2,
+                    itemBuilder: (context, index) {
+                      return InkWell(
+                        onTap: () {
+                          /*Navigator.push(
                         context,
                         PageRouteBuilder(
                           pageBuilder: (context, a, b) => DetailPage(
@@ -225,12 +226,12 @@ class _MovieDetailBodyState extends State<MovieDetailBody> {
                           ),
                         ),
                       );*/
-                  },
-                  child: buildFrameCard(index, loadedMovie),
-                );
-              },
-            ),
-          ),
+                        },
+                        child: buildFrameCard(index, loadedMovie),
+                      );
+                    },
+                  ),
+                )
         ],
       ),
     );
@@ -344,7 +345,7 @@ Color ratingColor(Movie movie) {
   } else if (rating < 7.1 && rating >= 5) {
     return kWarningColor;
   } else if (rating == 0.0) {
-    return kTextGreyColor;
+    return kTextLightColor;
   } else {
     return kErrorColor;
   }

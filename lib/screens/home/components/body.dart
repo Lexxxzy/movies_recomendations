@@ -22,8 +22,7 @@ class Body extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: <Widget>[
-        isLoading ? SplashScreen() : CategotiesMenu(),
+      children: <Widget>[ CategotiesMenu(isLoading: isLoading),
       ],
     );
   }
@@ -93,7 +92,7 @@ class _MainScreenWidgetsState extends State<MainScreenWidgets> {
               ),
             ),
           ),
-          ComingMovies(),
+          ComingMovies() ,
           RecomendedMovieCarousel(widget.tabController),
           Padding(
             padding: const EdgeInsets.only(bottom: kDefaultPadding * 2),

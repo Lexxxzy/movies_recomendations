@@ -1,16 +1,10 @@
 // ignore_for_file: import_of_legacy_library_into_null_safe
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:movies_recomendations/components/trending_favourite_movie.dart';
 import 'package:movies_recomendations/providers/trending_movies_provider.dart';
-import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import '../../../providers/upcoming_movies_provider.dart';
-import '../../movie_detail/movie_detail.dart';
 import '../../../constants.dart';
 import 'package:provider/provider.dart';
-import '/providers/movies_provider.dart';
 
 class TrendingList extends StatefulWidget {
   const TrendingList({Key? key}) : super(key: key);

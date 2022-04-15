@@ -57,7 +57,8 @@ class Movies with ChangeNotifier {
       if (extractedData[0]['error'] != 'Not found') {
         extractedData.forEach(
           ((movieInfo) => {
-                loadedMovies.add(Movie(authToken: authToken,
+                loadedMovies.add(Movie(
+                  authToken: authToken,
                   id: movieInfo['id'],
                   age: movieInfo['age'],
                   countries: List<String>.from(movieInfo['country']),
@@ -66,8 +67,8 @@ class Movies with ChangeNotifier {
                   genre: movieInfo['genre'],
                   poster: movieInfo['poster'],
                   premiereWorld: movieInfo['date'].toString(),
-                  ratingIMDb: movieInfo['ratingIMDb'],
-                  ratingKinopoisk: movieInfo['ratingKinopoisk'],
+                  ratingIMDb: movieInfo['ratingIMDb'] ?? 0.0,
+                  ratingKinopoisk: movieInfo['ratingKinopoisk'] ?? 0.0,
                   title: movieInfo['title'][0],
                   ifSeries: movieInfo['ifSeries'],
                   dateTo: movieInfo['dateTo'].toString(),

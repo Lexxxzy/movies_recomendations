@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:movies_recomendations/components/button.dart';
 import 'package:movies_recomendations/components/splash_screen.dart';
+import 'package:movies_recomendations/components/splash_screen_favourite.dart';
 import 'package:movies_recomendations/constants.dart';
 import 'package:movies_recomendations/providers/single_movie_provider.dart';
 import 'package:provider/provider.dart';
@@ -30,7 +31,7 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    
+
     _opacity = 0;
   }
 
@@ -63,7 +64,7 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
     int numOfFavs = movies.length;
     return SafeArea(
       child: _isLoading
-          ? SplashScreen()
+          ? SplashScreenFavourite()
           : Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[

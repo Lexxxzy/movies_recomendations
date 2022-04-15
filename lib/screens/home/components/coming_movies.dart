@@ -4,6 +4,7 @@ import 'package:movies_recomendations/screens/upcomings/upcomings.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class ComingMovies extends StatelessWidget {
+  
   ComingMovies({Key? key}) : super(key: key);
 
   final List<Map> upcomings = [
