@@ -59,8 +59,9 @@ class MyApp extends StatelessWidget {
           update: (ctx, auth, previousMovies) => TrendingMovies(auth.token,
               previousMovies == null ? [] : previousMovies.trendingMovies),
         ),
-        ChangeNotifierProvider.value(
-          value: UpcomingMovies(),
+        ChangeNotifierProxyProvider<Auth, UpcomingMovies>(
+          update: (ctx, auth, previousMovies) => UpcomingMovies(auth.token,
+              previousMovies == null ? [] : previousMovies.upcomingMovies),
         ),
       ],
       child: Consumer<Auth>(

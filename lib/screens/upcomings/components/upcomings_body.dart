@@ -22,7 +22,7 @@ class _UpcomingsBodyState extends State<UpcomingsBody> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            buildRecomendationsHeader(),
+            buildUpcomingsHeader(),
             SingleChildScrollView(
               physics: const ScrollPhysics(),
               child: Padding(
@@ -50,7 +50,7 @@ class _UpcomingsBodyState extends State<UpcomingsBody> {
     );
   }
 
-  Padding buildRecomendationsHeader() {
+  Padding buildUpcomingsHeader() {
     return Padding(
       padding: const EdgeInsets.all(kDefaultPadding),
       child: Row(

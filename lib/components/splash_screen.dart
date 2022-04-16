@@ -24,7 +24,7 @@ class SplashScreen extends StatelessWidget {
               right: kDefaultPadding,
             ),
             child: Search(
-              isEnabled: false,
+              isEnabled: false,onSubmit: (str) {}, onSearchFocused: () {},
             ),
           ),
           Padding(

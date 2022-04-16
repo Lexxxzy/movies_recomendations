@@ -24,18 +24,26 @@ class _RecomendationsScreenState extends State<RecomendationsScreen> {
   var _isLoading = false;
   @override
   void didChangeDependencies() {
-    if (_isInit) {
+    if (_isInit && mounted) {
       setState(() {
         _isLoading = true;
       });
       Provider.of<Movies>(context).fetchAndSetMovies().then((_) {
-        setState(() {
-          _isLoading = false;
-        });
+        if (mounted) {
+          setState(() {
+            _isLoading = false;
+          });
+        }
       });
     }
     _isInit = false;
     super.didChangeDependencies();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
   }
 
   @override

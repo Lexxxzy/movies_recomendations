@@ -1,10 +1,7 @@
-
-
 import 'package:flutter/material.dart';
 
 import '../../../constants.dart';
 import '../../../providers/single_movie_provider.dart';
-
 
 class MovieCardPoster extends StatelessWidget {
   const MovieCardPoster({
@@ -17,7 +14,7 @@ class MovieCardPoster extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Hero(
-      tag: 'poster_image',
+      tag: movie.poster,
       child: Container(
         decoration: BoxDecoration(
           color: Color.fromARGB(90, 182, 182, 182),
@@ -27,11 +24,8 @@ class MovieCardPoster extends StatelessWidget {
           ),
           borderRadius: BorderRadius.circular(38),
           boxShadow: [kDefaultShadow],
-          gradient:const LinearGradient(
-            colors: [
-              Color.fromARGB(136, 0, 0, 0),
-              Colors.transparent
-            ],
+          gradient: const LinearGradient(
+            colors: [Color.fromARGB(136, 0, 0, 0), Colors.transparent],
             begin: Alignment.bottomCenter,
             end: Alignment.center,
           ),
@@ -40,11 +34,8 @@ class MovieCardPoster extends StatelessWidget {
           decoration: BoxDecoration(
             backgroundBlendMode: BlendMode.darken,
             borderRadius: BorderRadius.circular(32),
-            gradient:const LinearGradient(
-              colors: [
-                Color.fromARGB(143, 0, 0, 0),
-                Colors.transparent
-              ],
+            gradient: const LinearGradient(
+              colors: [Color.fromARGB(143, 0, 0, 0), Colors.transparent],
               begin: Alignment.bottomCenter,
               end: Alignment.topCenter,
             ),

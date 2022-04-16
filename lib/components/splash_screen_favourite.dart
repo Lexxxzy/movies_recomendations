@@ -12,7 +12,7 @@ class SplashScreenFavourite extends StatelessWidget {
     return SingleChildScrollView(
       physics: const ScrollPhysics(),
       child: SizedBox(
-        height: MediaQuery.of(context).size.height * 0.8,
+        height: MediaQuery.of(context).size.height * 0.72,
         child: Padding(
           padding: const EdgeInsets.only(bottom: 40),
           child: ListView.builder(

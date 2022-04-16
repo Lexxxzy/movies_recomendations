@@ -46,8 +46,9 @@ class _MovieDetailBodyState extends State<MovieDetailBody> {
               loadedMovie: loadedMovie,
             ),
             buildMovieInfo(loadedMovie),
-            loadedMovie.frames.length != 0
-              ? buildFrames(loadedMovie) : Container(),
+            loadedMovie.frames.isNotEmpty
+                ? buildFrames(loadedMovie)
+                : Container(),
             buildDescrition(loadedMovie),
             buildFooter(loadedMovie)
           ],
@@ -206,19 +207,19 @@ class _MovieDetailBodyState extends State<MovieDetailBody> {
             height: 15,
           ),
           SizedBox(
-                  height: 110,
-                  child: Swiper(
-                    itemCount: loadedMovie.frames.length,
-                    itemWidth: 170,
-                    viewportFraction: 0.50,
-                    scale: 0.6,
-                    itemHeight: 100,
-                    index: 0,
-                    fade: 0.2,
-                    itemBuilder: (context, index) {
-                      return InkWell(
-                        onTap: () {
-                          /*Navigator.push(
+            height: 110,
+            child: Swiper(
+              itemCount: loadedMovie.frames.length,
+              itemWidth: 170,
+              viewportFraction: 0.50,
+              scale: 0.6,
+              itemHeight: 100,
+              index: 0,
+              fade: 0.2,
+              itemBuilder: (context, index) {
+                return InkWell(
+                  onTap: () {
+                    /*Navigator.push(
                         context,
                         PageRouteBuilder(
                           pageBuilder: (context, a, b) => DetailPage(
@@ -226,12 +227,12 @@ class _MovieDetailBodyState extends State<MovieDetailBody> {
                           ),
                         ),
                       );*/
-                        },
-                        child: buildFrameCard(index, loadedMovie),
-                      );
-                    },
-                  ),
-                )
+                  },
+                  child: buildFrameCard(index, loadedMovie),
+                );
+              },
+            ),
+          )
         ],
       ),
     );
@@ -285,19 +286,24 @@ class _MovieDetailBodyState extends State<MovieDetailBody> {
                       right: kDefaultPadding / 4,
                       bottom: kDefaultPadding / 2,
                       top: kDefaultPadding / 2),
-                  child: Text(
-                    loadedMovie.title,
-                    style: TextStyle(
-                        fontFamily: 'SFProDisplay',
-                        fontSize: 32,
-                        fontWeight: FontWeight.w900,
-                        color: Colors.white,
-                        height: 1),
+                  child: Hero(
+                    tag: loadedMovie.title,
+                    child: DefaultTextStyle(
+                      style: TextStyle(
+                          fontFamily: 'SFProDisplay',
+                          fontSize: 32,
+                          fontWeight: FontWeight.w900,
+                          color: Colors.white,
+                          height: 1),
+                      child: Text(
+                        loadedMovie.title,
+                      ),
+                    ),
                   ),
                 ),
                 SizedBox(height: 6),
                 Text(
-                  '${loadedMovie.premiereWorld} | ${loadedMovie.age}+${ifSerial(loadedMovie)} | ${loadedMovie.genre.join(', ')}',
+                  '${loadedMovie.premiereWorld} ${ifAgeNull(loadedMovie)}${ifSerial(loadedMovie)} | ${loadedMovie.genre.join(', ')}',
                   style: TextStyle(
                     fontFamily: 'SFProText',
                     fontSize: 14,
@@ -353,4 +359,8 @@ Color ratingColor(Movie movie) {
 
 String ifSerial(Movie movie) {
   return movie.ifSeries == true ? ' | ${movie.seasons} seasons' : '';
+}
+
+String ifAgeNull(Movie movie) {
+  return movie.age != null ? ' | ${movie.age}+' : '';
 }

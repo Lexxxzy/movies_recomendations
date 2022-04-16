@@ -17,16 +17,19 @@ class PosterAndRating extends StatelessWidget {
       height: size.height * 0.45,
       child: Stack(
         children: [
-          Container(
-            height: size.height * 0.45 - 20,
-            decoration: BoxDecoration(
-              borderRadius: const BorderRadius.only(
-                bottomLeft: Radius.circular(30),
-                bottomRight: Radius.circular(30),
-              ),
-              image: DecorationImage(
-                fit: BoxFit.cover,
-                image: NetworkImage(loadedMovie.poster),
+          Hero(
+            tag: loadedMovie.poster,
+            child: Container(
+              height: size.height * 0.45 - 20,
+              decoration: BoxDecoration(
+                borderRadius: const BorderRadius.only(
+                  bottomLeft: Radius.circular(30),
+                  bottomRight: Radius.circular(30),
+                ),
+                image: DecorationImage(
+                  fit: BoxFit.cover,
+                  image: NetworkImage(loadedMovie.poster),
+                ),
               ),
             ),
           ),

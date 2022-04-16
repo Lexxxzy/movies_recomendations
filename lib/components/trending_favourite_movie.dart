@@ -52,12 +52,15 @@ class _FavouriteMovieState extends State<FavouriteMovie> {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              SizedBox(
-                height: 100,
-                width: 111,
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(15),
-                  child: Image.network(movieData.poster, fit: BoxFit.cover),
+              Hero(
+                tag: movieData.poster,
+                child: SizedBox(
+                  height: 100,
+                  width: 111,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(15),
+                    child: Image.network(movieData.poster, fit: BoxFit.cover),
+                  ),
                 ),
               ),
               const SizedBox(
@@ -68,39 +71,31 @@ class _FavouriteMovieState extends State<FavouriteMovie> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Row(
-                      children: [
-                        // Text(
-                        //   '0.0',
-                        //   style: TextStyle(
-                        //     fontFamily: 'SFProDisplay',
-                        //     fontSize: 12,
-                        //     fontWeight: FontWeight.w600,
-                        //     color: ratingColor(movieData),
-                        //   ),
-                        // ),
-                        Text(
-                          '${MediaQuery.of(context).size.width < 380 ? movieData.countries.take(2).join(", ") : movieData.countries.take(2).join(", ")}',
-                          style: const TextStyle(
-                            fontFamily: 'SFProText',
-                            fontSize: 12,
-                            color: kTextLightColor,
-                          ),
-                        ),
-                      ],
+                    Text(
+                      '${MediaQuery.of(context).size.width < 380 ? movieData.countries.take(2).join(", ") : movieData.countries.take(2).join(", ")}',
+                      style: const TextStyle(
+                        fontFamily: 'SFProText',
+                        fontSize: 12,
+                        color: kTextLightColor,
+                      ),
                     ),
                     const SizedBox(
                       height: 5,
                     ),
-                    Text(
-                      movieData.title.length > 20
-                          ? '${movieData.title.substring(0, 18)}...'
-                          : movieData.title,
-                      style: const TextStyle(
-                        fontFamily: 'SFProDisplay',
-                        fontSize: 18,
-                        fontWeight: FontWeight.w700,
-                        color: kTextColor,
+                    Hero(
+                      tag: movieData.title,
+                      child: DefaultTextStyle(
+                        style: TextStyle(
+                          fontFamily: 'SFProDisplay',
+                          fontSize: 18,
+                          fontWeight: FontWeight.w700,
+                          color: kTextColor,
+                        ),
+                        child: Text(
+                          movieData.title.length > 20
+                              ? '${movieData.title.substring(0, 18)}...'
+                              : movieData.title,
+                        ),
                       ),
                     ),
                     const SizedBox(

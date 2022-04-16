@@ -6,6 +6,9 @@ import './single_movie_provider.dart';
 
 class UpcomingMovies with ChangeNotifier {
   String plotText = "";
+  final String authToken;
+
+  UpcomingMovies(this.authToken, this._upcomingMovies);
 
   List<Movie> _upcomingMovies = [];
 
@@ -22,7 +25,7 @@ class UpcomingMovies with ChangeNotifier {
   }
 
   Future<void> fetchAndSetUpcoming() async {
-    const url = 'http://192.168.1.142:5000/api/v1/trending/';
+    const url = 'http://192.168.1.142:5000/api/v1/suggestions/upcoming';
 
     try {
       var response = await http
@@ -37,6 +40,7 @@ class UpcomingMovies with ChangeNotifier {
       extractedData.forEach(
         ((movieInfo) => {
               loadedMovies.add(Movie(
+                authToken: authToken,
                 id: movieInfo['id'],
                 age: movieInfo['age'],
                 countries: movieInfo['country'],

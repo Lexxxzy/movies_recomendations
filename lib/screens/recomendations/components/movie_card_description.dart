@@ -33,7 +33,7 @@ class MovieCardDescription extends StatelessWidget {
                 sigmaY: 7,
               ),
               child: Container(
-                color: Color.fromARGB(96, 255, 255, 255),
+                color: const Color.fromARGB(96, 255, 255, 255),
                 child: Padding(
                   padding: const EdgeInsets.symmetric(
                       horizontal: kDefaultPadding - 5),
@@ -44,42 +44,48 @@ class MovieCardDescription extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text(
-                            movie.title.length > 18
-                                ? '${movie.title.substring(0, 18)}...'
-                                : movie.title,
+                          DefaultTextStyle(
                             style: const TextStyle(
                               fontFamily: 'SFProDisplay',
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
                               fontSize: 20,
                             ),
+                            child: Text(
+                              movie.title.length > 18
+                                  ? '${movie.title.substring(0, 18)}...'
+                                  : movie.title,
+                            ),
                           ),
-                          SizedBox(height: 5),
+                          const SizedBox(height: 5),
                           Row(
                             children: [
-                              Text(
-                                movie.ratingKinopoisk.toString(),
+                              DefaultTextStyle(
                                 style: TextStyle(
                                   fontFamily: 'SFProDisplay',
                                   color: ratingColor(movie),
                                   fontWeight: FontWeight.w600,
                                   fontSize: 15,
                                 ),
+                                child: Text(
+                                  movie.ratingKinopoisk.toString(),
+                                ),
                               ),
-                              Text(
-                                ' | ${movie.premiereWorld}',
-                                style: TextStyle(
+                              DefaultTextStyle(
+                                style: const TextStyle(
                                   fontFamily: 'SFProText',
                                   color: kTextLightColor,
                                   fontSize: 15,
+                                ),
+                                child: Text(
+                                  ' | ${movie.premiereWorld}',
                                 ),
                               ),
                             ],
                           ),
                         ],
                       ),
-                      Spacer(),
+                      const Spacer(),
                       Stack(
                         alignment: Alignment.center,
                         children: [
@@ -91,7 +97,7 @@ class MovieCardDescription extends StatelessWidget {
                           Container(
                             height: MediaQuery.of(context).size.height / 18,
                             width: MediaQuery.of(context).size.height / 18,
-                            decoration: BoxDecoration(
+                            decoration: const BoxDecoration(
                               color: Color.fromARGB(117, 247, 247, 247),
                               shape: BoxShape.circle,
                             ),

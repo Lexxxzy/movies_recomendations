@@ -13,7 +13,8 @@ class MovieDetailScreen extends StatelessWidget {
     final movie = ModalRoute.of(context)?.settings.arguments as Movie;
     return Scaffold(
       backgroundColor: kBackgroundColor,
-      body: SingleChildScrollView(child: MovieDetailBody(movie)),
+      body: SingleChildScrollView(
+          child: MovieDetailBody(movie)),
     );
   }
 }

@@ -1,6 +1,7 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:movies_recomendations/components/button.dart';
 import 'package:movies_recomendations/components/splash_screen.dart';
@@ -65,34 +66,29 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
     return SafeArea(
       child: _isLoading
           ? SplashScreenFavourite()
-          : Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                SingleChildScrollView(
-                  physics: const ScrollPhysics(),
-                  child: Padding(
-                    padding: const EdgeInsets.only(bottom: 40),
-                    child: Column(
-                      children: <Widget>[
-                        ListView.builder(
-                          physics: const NeverScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          itemCount: movies.length,
-                          itemBuilder: (context, index) {
-                            return ChangeNotifierProvider.value(
-                                value: movies[index],
-                                child: buildFavouriteCards(
-                                    movies, index, numOfFavs));
-                          },
-                        ),
-                        isAllRemoved || movies.isEmpty
-                            ? buildNoFavouritesScreen(context)
-                            : Container()
-                      ],
+          : SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.only(bottom: 40),
+                child: Column(
+                  children: <Widget>[
+                    ListView.builder(
+                      physics: NeverScrollableScrollPhysics(),
+                      scrollDirection: Axis.vertical,
+                      shrinkWrap: true,
+                      itemCount: movies.length,
+                      itemBuilder: (context, index) {
+                        return ChangeNotifierProvider.value(
+                            value: movies[index],
+                            child:
+                                buildFavouriteCards(movies, index, numOfFavs));
+                      },
                     ),
-                  ),
+                    isAllRemoved || movies.isEmpty
+                        ? buildNoFavouritesScreen(context)
+                        : Container()
+                  ],
                 ),
-              ],
+              ),
             ),
     );
   }

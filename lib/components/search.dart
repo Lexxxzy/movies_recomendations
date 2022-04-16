@@ -6,7 +6,14 @@ import 'package:movies_recomendations/constants.dart';
 
 class Search extends StatelessWidget {
   bool isEnabled;
-  Search({Key? key, required this.isEnabled}) : super(key: key);
+  Function(String value) onSubmit;
+  Function onSearchFocused;
+  Search({
+    Key? key,
+    required this.isEnabled,
+    required this.onSubmit,
+    required this.onSearchFocused,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -16,6 +23,8 @@ class Search extends StatelessWidget {
         // ignore: prefer_const_literals_to_create_immutables
         children: [
           TextField(
+            onTap: () => onSearchFocused(),
+            onSubmitted: onSubmit,
             enabled: isEnabled,
             cursorColor: kTextLightColor,
             style: TextStyle(

@@ -21,10 +21,7 @@ class Body extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[ CategotiesMenu(isLoading: isLoading),
-      ],
-    );
+    return CategotiesMenu(isLoading: isLoading);
   }
 }
 
@@ -87,12 +84,13 @@ class _MainScreenWidgetsState extends State<MainScreenWidgets> {
                 left: kDefaultPadding,
                 right: kDefaultPadding,
               ),
-              child: Search(
+              child: Search(onSearchFocused: () {},
+                onSubmit: (str) {},
                 isEnabled: false,
               ),
             ),
           ),
-          ComingMovies() ,
+          ComingMovies(),
           RecomendedMovieCarousel(widget.tabController),
           Padding(
             padding: const EdgeInsets.only(bottom: kDefaultPadding * 2),
