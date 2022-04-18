@@ -53,9 +53,9 @@ class UpcomingMovies with ChangeNotifier {
                 ratingKinopoisk: movieInfo['ratingKinopoisk'] ?? 0.0,
                 title: movieInfo['title'][0],
                 ifSeries: movieInfo['ifSeries'] == 'true' ? true : false,
-                dateTo: '',
+                dateTo: movieInfo['dateTo'],
                 isFavourite: false,
-                seasons: 0,
+                seasons: movieInfo['seasons'] ?? 0,
               )),
             }),
       );

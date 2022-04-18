@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:movies_recomendations/providers/single_movie_provider.dart';
 import 'package:movies_recomendations/providers/trending_movies_provider.dart';
 import 'package:movies_recomendations/providers/upcoming_movies_provider.dart';
+import 'package:movies_recomendations/screens/authentication/verification/verification.dart';
 import 'package:movies_recomendations/screens/edit_profile/edit_profile_screen.dart';
 import 'package:movies_recomendations/screens/upcomings/upcomings.dart';
 import '/components/splash_screen.dart';
@@ -98,6 +99,7 @@ class MyApp extends StatelessWidget {
             SignUpScreen.routeName: (ctx) => SignUpScreen(),
             Upcomings.routeName: (ctx) => Upcomings(),
             EditProfile.routeName: (ctx) => EditProfile(),
+            Verification.routeName: (ctx) => Verification(),
           },
         ),
       ),

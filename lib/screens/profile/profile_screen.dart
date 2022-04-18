@@ -182,7 +182,7 @@ class _bodyProfileState extends State<bodyProfile> {
           ),
           Padding(
             padding: const EdgeInsets.only(top: kDefaultPadding),
-            child: greyButton(
+            child: myCustomButton(
               content: 'EDIT PROFILE',
               onPress: () {
                 // userData.uploadImage(selectedImage, context);

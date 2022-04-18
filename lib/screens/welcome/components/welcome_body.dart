@@ -59,7 +59,7 @@ class WelcomeBody extends StatelessWidget {
             padding: const EdgeInsets.only(
               top: kDefaultPadding * 2,
             ),
-            child: greyButton(
+            child: myCustomButton(
               content: 'Get Started',
               onPress: () {
                 Navigator.of(context)

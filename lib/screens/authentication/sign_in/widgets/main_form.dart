@@ -125,7 +125,7 @@ class _MainFormState extends State<MainForm> {
         Padding(
           padding: const EdgeInsets.only(top: kDefaultPadding),
           child: _isloading == false
-              ? greyButton(
+              ? myCustomButton(
                   content: 'Log In',
                   onPress: () {
                     submitLogIn(context);

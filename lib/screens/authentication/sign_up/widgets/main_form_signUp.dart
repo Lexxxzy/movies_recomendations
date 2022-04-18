@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -11,6 +13,8 @@ import '../../../../providers/auth.dart';
 import '../../components/my_snack_bar.dart';
 import '../../components/rounded_input_field.dart';
 import '../../components/rounded_password_filed.dart';
+import '../../verification/verification.dart';
+import 'package:http/http.dart' as http;
 
 class MainForm extends StatefulWidget {
   const MainForm({
@@ -137,7 +141,7 @@ class _MainFormState extends State<MainForm> {
       child: Column(
         children: [
           _isloading == false
-              ? greyButton(
+              ? myCustomButton(
                   content: 'Create account',
                   onPress: () {
                     onSubmitSignUp(context);
@@ -169,12 +173,24 @@ class _MainFormState extends State<MainForm> {
     try {
       // if all are valid then go to success screen
 
-      print('e-mail: $email\npassword: $password\n $nickName');
-
       await Provider.of<Auth>(context, listen: false)
           .signUp(email!, password!, nickName!);
 
-      Navigator.of(context).maybePop();
+      await http.post(
+        Uri.parse('http://192.168.1.142:5000/api/v1/verification/verify'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8'
+        },
+        body: jsonEncode(
+          <String, String>{
+            'email': email!,
+          },
+        ),
+      );
+
+      Navigator.of(context)
+          .pushNamed(Verification.routeName, arguments: {'email': email});
+      //Navigator.of(context).maybePop();
 
       ScaffoldMessenger.of(context).showSnackBar(
           const mySnackBar(message: 'Successful registration!', isError: false)

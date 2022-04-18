@@ -14,13 +14,13 @@ class PosterAndRating extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: size.height * 0.45,
+      height: size.height * 0.50,
       child: Stack(
         children: [
           Hero(
             tag: loadedMovie.poster,
             child: Container(
-              height: size.height * 0.45 - 20,
+              height: size.height * 0.50 - 20,
               decoration: BoxDecoration(
                 borderRadius: const BorderRadius.only(
                   bottomLeft: Radius.circular(30),

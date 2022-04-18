@@ -146,7 +146,7 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
             child: Padding(
               padding: EdgeInsets.only(
                   top: kDefaultPadding / 2, bottom: kDefaultPadding * 2 - 10),
-              child: greyButton(
+              child: myCustomButton(
                 content: 'Explore new movies',
                 onPress: () => {
                   widget.tabController

@@ -4,9 +4,9 @@ import 'package:flutter_svg/svg.dart';
 
 import '../../../constants.dart';
 import '../components/create_login_hint.dart';
+import '../verification/verification.dart';
 import 'widgets/main_form_signUp.dart';
 import '../sign_in/sign_in_screen.dart';
-
 
 class SignUpScreen extends StatefulWidget {
   static String routeName = '/sign_up';

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:movies_recomendations/constants.dart';
 
-class greyButton extends StatelessWidget {
+class myCustomButton extends StatelessWidget {
   late String content;
   late Function onPress;
   late double fontSize;
@@ -9,7 +9,7 @@ class greyButton extends StatelessWidget {
   late double height;
   late Color mainColor;
 
-  greyButton(
+  myCustomButton(
       {required String content,
       required Function onPress,
       double fontSize = 12,

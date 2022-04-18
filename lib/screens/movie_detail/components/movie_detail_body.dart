@@ -112,8 +112,8 @@ class _MovieDetailBodyState extends State<MovieDetailBody> {
     );
   }
 
-  greyButton buildButton(String content) {
-    return greyButton(content: content, onPress: () => {});
+  myCustomButton buildButton(String content) {
+    return myCustomButton(content: content, onPress: () => {});
   }
 
   Container buildRatingBox({

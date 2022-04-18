@@ -209,7 +209,7 @@ class _EditProfileState extends State<EditProfile> {
           padding: const EdgeInsets.only(top: kDefaultPadding),
           child: Row(
             children: [
-              greyButton(
+              myCustomButton(
                 content: 'Cancel',
                 onPress: () {
                   Navigator.of(context).maybePop();
@@ -222,7 +222,7 @@ class _EditProfileState extends State<EditProfile> {
                 width: kDefaultPadding,
               ),
               _isloading == false
-                  ? greyButton(
+                  ? myCustomButton(
                       content: 'Update',
                       onPress: () {
                         try {
