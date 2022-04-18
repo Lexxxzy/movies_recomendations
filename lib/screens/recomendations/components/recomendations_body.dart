@@ -23,7 +23,6 @@ class _RecomendationsBodyState extends State<RecomendationsBody> {
   double _opacity = 0.0;
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _opacity = 0;
   }

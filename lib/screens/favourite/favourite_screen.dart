@@ -69,28 +69,32 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
           : SingleChildScrollView(
               child: Padding(
                 padding: const EdgeInsets.only(bottom: 40),
-                child: Column(
-                  children: <Widget>[
-                    ListView.builder(
-                      physics: NeverScrollableScrollPhysics(),
-                      scrollDirection: Axis.vertical,
-                      shrinkWrap: true,
-                      itemCount: movies.length,
-                      itemBuilder: (context, index) {
-                        return ChangeNotifierProvider.value(
-                            value: movies[index],
-                            child:
-                                buildFavouriteCards(movies, index, numOfFavs));
-                      },
-                    ),
-                    isAllRemoved || movies.isEmpty
-                        ? buildNoFavouritesScreen(context)
-                        : Container()
-                  ],
-                ),
+                child: buildFavouritesBody(movies, numOfFavs, context),
               ),
             ),
     );
+  }
+
+  Column buildFavouritesBody(List<Movie> movies, int numOfFavs, BuildContext context) {
+    return Column(
+                children: <Widget>[
+                  ListView.builder(
+                    physics: NeverScrollableScrollPhysics(),
+                    scrollDirection: Axis.vertical,
+                    shrinkWrap: true,
+                    itemCount: movies.length,
+                    itemBuilder: (context, index) {
+                      return ChangeNotifierProvider.value(
+                          value: movies[index],
+                          child:
+                              buildFavouriteCards(movies, index, numOfFavs));
+                    },
+                  ),
+                  isAllRemoved || movies.isEmpty
+                      ? buildNoFavouritesScreen(context)
+                      : Container()
+                ],
+              );
   }
 
   Container buildNoFavouritesScreen(BuildContext context) {

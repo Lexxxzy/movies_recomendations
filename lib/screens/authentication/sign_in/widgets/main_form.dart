@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'package:movies_recomendations/components/button.dart';
 import 'package:movies_recomendations/screens/authentication/components/form_error.dart';
+import 'package:movies_recomendations/screens/authentication/verification/verification.dart';
 import 'package:movies_recomendations/screens/home/home_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -56,66 +57,70 @@ class _MainFormState extends State<MainForm> {
         left: kDefaultPadding,
         right: kDefaultPadding,
       ),
-      child: Stack(
-        children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(16),
-            child: Container(
-              height: errors.isEmpty
-                  ? MediaQuery.of(context).size.height / 1.9
-                  : MediaQuery.of(context).size.height / 1.81,
-              decoration: const BoxDecoration(
-                color: kThirdColor,
-              ),
+      child: buildFormBody(context),
+    );
+  }
+
+  Stack buildFormBody(BuildContext context) {
+    return Stack(
+      children: [
+        ClipRRect(
+          borderRadius: BorderRadius.circular(16),
+          child: Container(
+            height: errors.isEmpty
+                ? MediaQuery.of(context).size.height / 1.9
+                : MediaQuery.of(context).size.height / 1.81,
+            decoration: const BoxDecoration(
+              color: kThirdColor,
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.all(kDefaultPadding),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text(
-                  'Sign in \nto continue',
-                  style: TextStyle(
-                    fontFamily: 'SFProDisplay',
-                    fontSize: 32,
-                    height: 1.3,
-                    color: kTextColor,
-                    fontWeight: FontWeight.w600,
-                  ),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(kDefaultPadding),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text(
+                'Sign in \nto continue',
+                style: TextStyle(
+                  fontFamily: 'SFProDisplay',
+                  fontSize: 32,
+                  height: 1.3,
+                  color: kTextColor,
+                  fontWeight: FontWeight.w600,
                 ),
-                const SizedBox(
-                  height: kDefaultPadding,
-                ),
-                Form(
-                  key: widget._formKey,
-                  child: Column(
-                    children: <Widget>[
-                      buildEmailTextField(context),
-                      buildPasswordTextField(context),
-                      Align(
-                        alignment: Alignment.centerRight,
-                        child: TextButton(
-                          onPressed: () {},
-                          child: const Text(
-                            'Forgot Password?',
-                            style: TextStyle(
-                              fontSize: 11,
-                              fontFamily: 'SFProText',
-                              color: kMainColor,
-                            ),
+              ),
+              const SizedBox(
+                height: kDefaultPadding,
+              ),
+              Form(
+                key: widget._formKey,
+                child: Column(
+                  children: <Widget>[
+                    buildEmailTextField(context),
+                    buildPasswordTextField(context),
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: TextButton(
+                        onPressed: () {},
+                        child: const Text(
+                          'Forgot Password?',
+                          style: TextStyle(
+                            fontSize: 11,
+                            fontFamily: 'SFProText',
+                            color: kMainColor,
                           ),
                         ),
                       ),
-                      buildLoginButtonAndErrors(context)
-                    ],
-                  ),
+                    ),
+                    buildLoginButtonAndErrors(context)
+                  ],
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 
@@ -176,6 +181,10 @@ class _MainFormState extends State<MainForm> {
         errorMesage = 'Email is not found.';
       } else if (err.toString().contains('INVALID_PASSWORD')) {
         errorMesage = 'Invalid password.';
+      } else if (err.toString().contains('You account is not activated!')) {
+        errorMesage = 'You account is not activated!';
+        Navigator.of(context)
+            .pushNamed(Verification.routeName, arguments: {'email': email});
       }
       ScaffoldMessenger.of(context).showSnackBar(
           mySnackBar(message: errorMesage, isError: true).build(context));

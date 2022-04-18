@@ -4,17 +4,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:movies_recomendations/components/button.dart';
-import 'package:movies_recomendations/components/redButton.dart';
 import 'package:movies_recomendations/screens/authentication/components/my_snack_bar.dart';
-import 'package:movies_recomendations/screens/authentication/sign_in/sign_in_screen.dart';
-import 'package:movies_recomendations/screens/home/components/body.dart';
 import 'package:provider/provider.dart';
-import 'package:http/http.dart' as http;
-
 import '../../components/backButton.dart';
 import '../../constants.dart';
-import '../../providers/auth.dart';
-import '../../providers/movies_provider.dart';
 import '../../providers/user.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -36,7 +29,7 @@ class _EditProfileState extends State<EditProfile> {
   List<String?> errors = [];
   String? nickname;
   String? realname;
-  bool _isloading = false;
+  final bool _isloading = false;
 
   GlobalKey formkey = GlobalKey<FormState>();
 
@@ -67,40 +60,44 @@ class _EditProfileState extends State<EditProfile> {
             child: SingleChildScrollView(
               child: SizedBox(
                 height: MediaQuery.of(context).size.height,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(kDefaultPadding),
-                      child: Row(
-                        children: [
-                          backButton(
-                            buttonForm: buttonForms.square,
-                            iconSize: 15,
-                            size: 30,
-                          ),
-                          SizedBox(
-                            width: kDefaultPadding / 2,
-                          ),
-                          const Text(
-                            'Edit profile',
-                            style: TextStyle(
-                              color: kTextColor,
-                              fontFamily: 'SFProDisplay',
-                              fontSize: 22,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                    buildProfileBody(context, userData),
-                  ],
-                ),
+                child: buildEditProfileBody(context, userData),
               ),
             ),
           ),
         ));
+  }
+
+  Column buildEditProfileBody(BuildContext context, User userData) {
+    return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(kDefaultPadding),
+                    child: Row(
+                      children: [
+                        backButton(
+                          buttonForm: buttonForms.square,
+                          iconSize: 15,
+                          size: 30,
+                        ),
+                        SizedBox(
+                          width: kDefaultPadding / 2,
+                        ),
+                        const Text(
+                          'Edit profile',
+                          style: TextStyle(
+                            color: kTextColor,
+                            fontFamily: 'SFProDisplay',
+                            fontSize: 22,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                  buildProfileBody(context, userData),
+                ],
+              );
   }
 
   Container buildProfileBody(BuildContext context, User userData) {
@@ -226,14 +223,13 @@ class _EditProfileState extends State<EditProfile> {
                       content: 'Update',
                       onPress: () {
                         try {
-                          userData.uploadImage(selectedImage, context);
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const mySnackBar(
-                                    message:
-                                        'Your profile was updated successfully!',
-                                    isError: false)
-                                .build(context),
-                          );
+                          userData.updateNameAndNick(
+                              realname, nickname, context);
+                          if (selectedImage != null) {
+                            userData.uploadImage(selectedImage, context);
+                          }
+
+                        
                         } on Exception catch (e) {
                           ScaffoldMessenger.of(context).showSnackBar(
                             const mySnackBar(

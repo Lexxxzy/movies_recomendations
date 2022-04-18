@@ -3,13 +3,13 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../constants.dart';
 
-class buildUserCategory extends StatelessWidget {
+class UserCategory extends StatelessWidget {
   String content;
   String asset;
   String amount;
   double height;
 
-  buildUserCategory({
+  UserCategory({
     required this.content,
     required this.asset,
     required this.amount,

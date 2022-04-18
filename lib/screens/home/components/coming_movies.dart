@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:movies_recomendations/constants.dart';
-import 'package:movies_recomendations/screens/upcomings/upcomings.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import '../../suggestionsSliderPages/upcomings.dart';
+
 
 class ComingMovies extends StatelessWidget {
   
@@ -12,26 +13,26 @@ class ComingMovies extends StatelessWidget {
       'image': 'assets/images/slider1.png',
       'headerText': 'Upcoming movies',
       'plainText': 'See whats coming next...',
-      'route': Upcomings.routeName
+      'sugestionURL' : 'upcoming'
     },
-    {
-      'image': 'assets/images/slider2.png',
-      'headerText': 'Top 10 series',
-      'plainText': 'Series appreciated by audiences',
-      'route': Upcomings.routeName
-    },
+    // {
+    //   'image': 'assets/images/slider2.png',
+    //   'headerText': 'Top 10 series',
+    //   'plainText': 'Series appreciated by audiences',
+    //   'sugestionURL' : 'upcoming'
+    // },
     {
       'image': 'assets/images/slider3.png',
       'headerText': 'Top 10 from Netflix',
       'plainText': 'Top NETFLIX movies appreciated by audiences',
-      'route': Upcomings.routeName
+      'sugestionURL' : 'netflix'
     },
     {
       'image': 'assets/images/slider4.png',
       'headerText': 'Top MARVEL movies',
       'plainText':
           'The best movies based on Marvel comics are full of action.\n But which one is the best?..',
-      'route': Upcomings.routeName
+      'sugestionURL' : 'marvel'
     },
   ];
 
@@ -64,7 +65,10 @@ class ComingMovies extends StatelessWidget {
             (slide) => GestureDetector(
               onTap: () {
                 Navigator.of(context).pushNamed(
-                  slide['route'],
+                  Upcomings.routeName,
+                  arguments: {
+                    'sugestionURL' : slide['sugestionURL'],
+                  }
                 );
               },
               child: Stack(

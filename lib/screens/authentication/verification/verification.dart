@@ -33,130 +33,134 @@ class _VerificationState extends State<Verification> {
           child: Padding(
             padding: const EdgeInsets.symmetric(
                 vertical: kDefaultPadding, horizontal: kDefaultPadding),
-            child: Column(
-              children: [
-                Align(
-                  alignment: Alignment.topLeft,
-                  child: GestureDetector(
-                    onTap: () => Navigator.pop(context),
-                    child: backButton(buttonForm: buttonForms.square),
-                  ),
-                ),
-                const SizedBox(
-                  height: 18,
-                ),
-                // Container(
-                //   width: 200,
-                //   height: 200,
-                //   decoration: BoxDecoration(
-                //     color: Color.fromARGB(0, 220, 124, 89),
-                //     shape: BoxShape.circle,
-                //   ),
-                //   child: SvgPicture.asset('assets/images/verification.svg'),
-                // ),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    const SizedBox(
-                      height: 24,
-                    ),
-                    const Text(
-                      'Verification',
-                      style: TextStyle(
-                        fontFamily: 'SFProDisplay',
-                        fontSize: 22,
-                        color: kTextColor,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    const Text(
-                      "We sent you email with activation code",
-                      style: const TextStyle(
-                        fontFamily: 'SFProDisplay',
-                        fontSize: 14,
-                        fontWeight: FontWeight.w500,
-                        color: kTextLightColor,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                    const SizedBox(
-                      height: 28,
-                    ),
-                    Container(
-                      padding: const EdgeInsets.all(28),
-                      decoration: BoxDecoration(
-                        color: kThirdColor,
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: Column(
-                        children: [
-                          const SizedBox(
-                            height: kDefaultPadding,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              _textFieldOTP(first: true, last: false),
-                              _textFieldOTP(first: false, last: false),
-                              _textFieldOTP(first: false, last: false),
-                              _textFieldOTP(
-                                  first: false,
-                                  last: true,
-                                  email: email['email']),
-                            ],
-                          ),
-                          const SizedBox(
-                            height: kDefaultPadding,
-                          ),
-                          SizedBox(
-                              width: double.infinity,
-                              height: 50,
-                              child: myCustomButton(
-                                content: 'Verify',
-                                onPress: () {},
-                                fontSize: 16,
-                                mainColor: kThirdColor,
-                              ))
-                        ],
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 18,
-                    ),
-                    const Text(
-                      "Didn't you receive any code? Look in spam folder",
-                      style: TextStyle(
-                        fontFamily: 'SFProDisplay',
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                        color: kTextLightColor,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                    const SizedBox(
-                      height: 18,
-                    ),
-                    const Text(
-                      "Resend New Code",
-                      style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                        color: kMainColor,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                  ],
-                ),
-              ],
-            ),
+            child: buildValidationBody(context, email),
           ),
         ),
       ),
     );
+  }
+
+  Column buildValidationBody(BuildContext context, Map<dynamic, dynamic> email) {
+    return Column(
+            children: [
+              Align(
+                alignment: Alignment.topLeft,
+                child: GestureDetector(
+                  onTap: () => Navigator.pop(context),
+                  child: backButton(buttonForm: buttonForms.square),
+                ),
+              ),
+              const SizedBox(
+                height: 18,
+              ),
+              // Container(
+              //   width: 200,
+              //   height: 200,
+              //   decoration: BoxDecoration(
+              //     color: Color.fromARGB(0, 220, 124, 89),
+              //     shape: BoxShape.circle,
+              //   ),
+              //   child: SvgPicture.asset('assets/images/verification.svg'),
+              // ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const SizedBox(
+                    height: 24,
+                  ),
+                  const Text(
+                    'Verification',
+                    style: TextStyle(
+                      fontFamily: 'SFProDisplay',
+                      fontSize: 22,
+                      color: kTextColor,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  const Text(
+                    "We sent you email with activation code",
+                    style: const TextStyle(
+                      fontFamily: 'SFProDisplay',
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500,
+                      color: kTextLightColor,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(
+                    height: 28,
+                  ),
+                  Container(
+                    padding: const EdgeInsets.all(28),
+                    decoration: BoxDecoration(
+                      color: kThirdColor,
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Column(
+                      children: [
+                        const SizedBox(
+                          height: kDefaultPadding,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            _textFieldOTP(first: true, last: false),
+                            _textFieldOTP(first: false, last: false),
+                            _textFieldOTP(first: false, last: false),
+                            _textFieldOTP(
+                                first: false,
+                                last: true,
+                                email: email['email']),
+                          ],
+                        ),
+                        const SizedBox(
+                          height: kDefaultPadding,
+                        ),
+                        SizedBox(
+                            width: double.infinity,
+                            height: 50,
+                            child: myCustomButton(
+                              content: 'Verify',
+                              onPress: () {},
+                              fontSize: 16,
+                              mainColor: kThirdColor,
+                            ))
+                      ],
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 18,
+                  ),
+                  const Text(
+                    "Didn't you receive any code? Look in spam folder",
+                    style: TextStyle(
+                      fontFamily: 'SFProDisplay',
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                      color: kTextLightColor,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(
+                    height: 18,
+                  ),
+                  const Text(
+                    "Resend New Code",
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                      color: kMainColor,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ],
+              ),
+            ],
+          );
   }
 
   Future<void> _sendOTP(email) async {

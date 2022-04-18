@@ -7,7 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import '../../../constants.dart';
 import '../../../providers/single_movie_provider.dart';
-import '../../../providers/upcoming_movies_provider.dart';
+import '../../../providers/suggestions_movies_provider.dart';
 import '../../movie_detail/movie_detail.dart';
 import '/providers/movies_provider.dart';
 
@@ -26,7 +26,7 @@ class RecomendedMovieCarousel extends StatefulWidget {
 class _RecomendedMovieCarouselState extends State<RecomendedMovieCarousel> {
   @override
   Widget build(BuildContext context) {
-    final movies = Provider.of<UpcomingMovies>(context).upcomingMoviesTop;
+    final movies = Provider.of<SuggestedMovies>(context).upcomingMoviesTop;
     return SafeArea(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,

@@ -58,7 +58,7 @@ class _GenresScreenState extends State<GenresScreen> {
     },
   ];
 
-  Future<void> fetchAndSetSearch(searchVal, authToken) async {
+  Future<void> fetchAndSetSearchedMovies(searchVal, authToken) async {
     final url = 'http://192.168.1.142:5000/api/v1/search?filmname=$searchVal';
 
     try {
@@ -130,119 +130,135 @@ class _GenresScreenState extends State<GenresScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Padding(
-              padding: const EdgeInsets.all(kDefaultPadding),
-              child: Column(
-                children: [
-                  Row(
-                    children: [
-                      backButton(
-                        buttonForm: buttonForms.square,
-                        iconSize: 15,
-                        size: 35,
-                      ),
-                      const SizedBox(
-                        width: 15,
-                      ),
-                      const Text(
-                        'Search',
-                        style: TextStyle(
-                          color: kTextColor,
-                          fontFamily: 'SFProDispay',
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ],
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: kDefaultPadding),
-                    child: Search(
-                      onSearchFocused: () => setState(() {
-                        isSearchFocused = true;
-                      }),
-                      onSubmit: (searchValue) {
-                        fetchAndSetSearch(
-                            searchValue,
-                            Provider.of<User>(context, listen: false)
-                                .authToken);
-                      },
-                      isEnabled: true,
-                    ),
-                  ),
-                ],
-              ),
-            ),
+            buildPageHeader(context),
             isSearchFocused == false
-                ? Padding(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: kDefaultPadding),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Padding(
-                          padding: EdgeInsets.only(top: kDefaultPadding),
-                          child: Text(
-                            'Browse film genres',
-                            textAlign: TextAlign.start,
-                            style: TextStyle(
-                              color: kTextColor,
-                              fontFamily: 'SFProDispay',
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                        Container(
-                          padding: const EdgeInsets.only(
-                            top: kDefaultPadding,
-                          ),
-                          height: MediaQuery.of(context).size.height / 1.5,
-                          child: GridView.builder(
-                            gridDelegate:
-                                const SliverGridDelegateWithFixedCrossAxisCount(
-                                    crossAxisCount: 2,
-                                    crossAxisSpacing: kDefaultPadding,
-                                    childAspectRatio: 1.4),
-                            itemBuilder: (_, index) =>
-                                (buildGenreCard(context, index)),
-                            itemCount: genres.length,
-                          ),
-                        ),
-                      ],
-                    ),
-                  )
+                ? buildGenresCards(context)
                 : isLoading
-                    ? Padding(
-                        padding:
-                            const EdgeInsets.only(top: kDefaultPadding / 4),
-                        child: SplashScreenFavourite(),
-                      )
-                    : SingleChildScrollView(
-                        physics: const ScrollPhysics(),
-                        child: Padding(
-                          padding:
-                              const EdgeInsets.only(top: kDefaultPadding / 4),
-                          child: Column(
-                            children: <Widget>[
-                              ListView.builder(
-                                shrinkWrap: true,
-                                itemCount: _searchMovies.length,
-                                itemBuilder: (context, index) {
-                                  return ChangeNotifierProvider.value(
-                                    value: _searchMovies[index],
-                                    child: FavouriteMovie(),
-                                  );
-                                },
-                              )
-                            ],
-                          ),
-                        ),
-                      ),
+                    ? buildSplashScreen()
+                    : buildSearchedMovies(),
           ],
         ),
       ),
     );
+  }
+
+  Padding buildPageHeader(context) {
+    return Padding(
+            padding: const EdgeInsets.all(kDefaultPadding),
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    backButton(
+                      buttonForm: buttonForms.square,
+                      iconSize: 15,
+                      size: 35,
+                    ),
+                    const SizedBox(
+                      width: 15,
+                    ),
+                    const Text(
+                      'Search',
+                      style: TextStyle(
+                        color: kTextColor,
+                        fontFamily: 'SFProDispay',
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: kDefaultPadding),
+                  child: Search(
+                    onSearchFocused: () => setState(() {
+                      isSearchFocused = true;
+                    }),
+                    onSubmit: (searchValue) {
+                      fetchAndSetSearchedMovies(
+                          searchValue,
+                          Provider.of<User>(context, listen: false)
+                              .authToken);
+                    },
+                    isEnabled: true,
+                  ),
+                ),
+              ],
+            ),
+          );
+  }
+
+  Padding buildGenresCards(context) {
+    return Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: kDefaultPadding),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Padding(
+                        padding: EdgeInsets.only(top: kDefaultPadding),
+                        child: Text(
+                          'Browse film genres',
+                          textAlign: TextAlign.start,
+                          style: TextStyle(
+                            color: kTextColor,
+                            fontFamily: 'SFProDispay',
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                      Container(
+                        padding: const EdgeInsets.only(
+                          top: kDefaultPadding,
+                        ),
+                        height: MediaQuery.of(context).size.height / 1.5,
+                        child: GridView.builder(
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 2,
+                                  crossAxisSpacing: kDefaultPadding,
+                                  childAspectRatio: 1.4),
+                          itemBuilder: (_, index) =>
+                              (buildGenreCard(context, index)),
+                          itemCount: genres.length,
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+  }
+
+  Padding buildSplashScreen() {
+    return const Padding(
+                      padding:
+                          EdgeInsets.only(top: kDefaultPadding / 4),
+                      child: SplashScreenFavourite(),
+                    );
+  }
+
+  SingleChildScrollView buildSearchedMovies() {
+    return SingleChildScrollView(
+                      physics: const ScrollPhysics(),
+                      child: Padding(
+                        padding:
+                            const EdgeInsets.only(top: kDefaultPadding / 4),
+                        child: Column(
+                          children: <Widget>[
+                            ListView.builder(
+                              shrinkWrap: true,
+                              itemCount: _searchMovies.length,
+                              itemBuilder: (context, index) {
+                                return ChangeNotifierProvider.value(
+                                  value: _searchMovies[index],
+                                  child: FavouriteMovie(),
+                                );
+                              },
+                            )
+                          ],
+                        ),
+                      ),
+                    );
   }
 
   Stack buildGenreCard(context, int index) {

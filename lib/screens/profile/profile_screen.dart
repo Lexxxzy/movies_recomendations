@@ -160,19 +160,19 @@ class _bodyProfileState extends State<bodyProfile> {
               const SizedBox(
                 height: kDefaultPadding,
               ),
-              buildUserCategory(
+              UserCategory(
                 amount: userData.favourites!.toString(),
                 content: 'Favourites',
                 asset: 'assets/icons/boockmark.svg',
                 height: 14,
               ),
-              buildUserCategory(
+              UserCategory(
                 amount: userData.loved!.toString(),
                 content: 'Loved',
                 asset: 'assets/icons/Heart.svg',
                 height: 11,
               ),
-              buildUserCategory(
+              UserCategory(
                 amount: userData.disliked!.toString(),
                 content: 'Disliked',
                 asset: 'assets/icons/redCross.svg',
@@ -238,9 +238,9 @@ class _bodyProfileState extends State<bodyProfile> {
                   ),
                 ),
                 onPressed: () {
-                  Navigator.of(context).pop();
-                  Navigator.of(context).pushReplacementNamed('/');
                   Provider.of<Auth>(context, listen: false).logout();
+                  Navigator.of(context).pushReplacementNamed('/');
+                  //Provider.of<Auth>(context, listen: false).logout();
 
                   // Navigator.of(context).pushNamed(SignInScreen.routeName);
                 }),

@@ -4,10 +4,9 @@
 import 'package:flutter/material.dart';
 import 'package:movies_recomendations/providers/single_movie_provider.dart';
 import 'package:movies_recomendations/providers/trending_movies_provider.dart';
-import 'package:movies_recomendations/providers/upcoming_movies_provider.dart';
+import 'package:movies_recomendations/providers/suggestions_movies_provider.dart';
 import 'package:movies_recomendations/screens/authentication/verification/verification.dart';
 import 'package:movies_recomendations/screens/edit_profile/edit_profile_screen.dart';
-import 'package:movies_recomendations/screens/upcomings/upcomings.dart';
 import '/components/splash_screen.dart';
 import '/providers/auth.dart';
 import 'providers/movies_provider.dart';
@@ -21,6 +20,7 @@ import 'screens/authentication/sign_up/sign_up_screen.dart';
 import 'screens/movie_detail/movie_detail.dart';
 import 'screens/profile/profile_screen.dart';
 import 'screens/recomendations/recomendations.dart';
+import 'screens/suggestionsSliderPages/upcomings.dart';
 
 void main() {
   runApp(const MyApp());
@@ -60,8 +60,8 @@ class MyApp extends StatelessWidget {
           update: (ctx, auth, previousMovies) => TrendingMovies(auth.token,
               previousMovies == null ? [] : previousMovies.trendingMovies),
         ),
-        ChangeNotifierProxyProvider<Auth, UpcomingMovies>(
-          update: (ctx, auth, previousMovies) => UpcomingMovies(auth.token,
+        ChangeNotifierProxyProvider<Auth, SuggestedMovies>(
+          update: (ctx, auth, previousMovies) => SuggestedMovies(auth.token,
               previousMovies == null ? [] : previousMovies.upcomingMovies),
         ),
       ],

@@ -24,7 +24,7 @@ class TrendingMovies with ChangeNotifier {
   }
 
   Future<void> fetchAndSetTrending() async {
-    const url = 'http://192.168.1.142:5000/api/v1/top-films';
+    const url = 'http://192.168.1.142:5000/api/v1/suggestions/top-films';
 
     try {
       var response = await http

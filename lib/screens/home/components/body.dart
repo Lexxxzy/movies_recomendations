@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:movies_recomendations/components/splash_screen.dart';
 import 'package:movies_recomendations/constants.dart';
-import 'package:movies_recomendations/providers/upcoming_movies_provider.dart';
+import 'package:movies_recomendations/providers/suggestions_movies_provider.dart';
 import 'package:movies_recomendations/screens/genres/genres_screen.dart';
 import 'package:provider/provider.dart';
 import '../../../providers/movies_provider.dart';

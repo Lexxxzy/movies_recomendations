@@ -1,12 +1,9 @@
 import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 import 'package:movies_recomendations/components/button.dart';
 import 'package:movies_recomendations/screens/authentication/components/form_error.dart';
 import 'package:provider/provider.dart';
-
 import '../../../../../constants.dart';
 import '../../../../models/http_exception.dart';
 import '../../../../providers/auth.dart';
@@ -38,17 +35,19 @@ class _MainFormState extends State<MainForm> {
   bool _isloading = false;
 
   void addError({String? error}) {
-    if (!errors.contains(error))
+    if (!errors.contains(error)) {
       setState(() {
         errors.add(error);
       });
+    }
   }
 
   void removeError({String? error}) {
-    if (errors.contains(error))
+    if (errors.contains(error)) {
       setState(() {
         errors.remove(error);
       });
+    }
   }
 
   @override
@@ -59,54 +58,58 @@ class _MainFormState extends State<MainForm> {
         left: kDefaultPadding,
         right: kDefaultPadding,
       ),
-      child: Stack(
-        children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(16),
-            child: Container(
-              height: errors.isEmpty
-                  ? MediaQuery.of(context).size.height / 1.6
-                  : MediaQuery.of(context).size.height / 1.45,
-              decoration: const BoxDecoration(
-                color: kThirdColor,
+      child: buildFormBody(context),
+    );
+  }
+
+  Stack buildFormBody(BuildContext context) {
+    return Stack(
+      children: [
+        ClipRRect(
+          borderRadius: BorderRadius.circular(16),
+          child: Container(
+            height: errors.isEmpty
+                ? MediaQuery.of(context).size.height / 1.6
+                : MediaQuery.of(context).size.height / 1.45,
+            decoration: const BoxDecoration(
+              color: kThirdColor,
+            ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(kDefaultPadding),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text(
+                'Create new \nAccount',
+                style: TextStyle(
+                  fontFamily: 'SFProDisplay',
+                  fontSize: 32,
+                  height: 1.3,
+                  color: kTextColor,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
-            ),
+              const SizedBox(
+                height: kDefaultPadding,
+              ),
+              Form(
+                key: widget._formKey,
+                child: Column(
+                  children: <Widget>[
+                    buildNameFormField(context),
+                    buidEmailFormField(context),
+                    buildPasswordField(context),
+                    buildConfirmPasswordField(context),
+                    buildSubmitButtomAndErrors(context)
+                  ],
+                ),
+              ),
+            ],
           ),
-          Padding(
-            padding: const EdgeInsets.all(kDefaultPadding),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text(
-                  'Create new \nAccount',
-                  style: TextStyle(
-                    fontFamily: 'SFProDisplay',
-                    fontSize: 32,
-                    height: 1.3,
-                    color: kTextColor,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                const SizedBox(
-                  height: kDefaultPadding,
-                ),
-                Form(
-                  key: widget._formKey,
-                  child: Column(
-                    children: <Widget>[
-                      buildNameFormField(context),
-                      buidEmailFormField(context),
-                      buildPasswordField(context),
-                      buildConfirmPasswordField(context),
-                      buildSubmitButtomAndErrors(context)
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 
