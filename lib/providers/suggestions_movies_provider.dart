@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
+import '../constants.dart';
 import './single_movie_provider.dart';
 
 class SuggestedMovies with ChangeNotifier {
@@ -26,7 +27,7 @@ class SuggestedMovies with ChangeNotifier {
 
   Future<void> fetchAndSetSuggestions(sugestionTypeURL) async {
     final url =
-        'http://192.168.1.142:5000/api/v1/suggestions/$sugestionTypeURL';
+        '$apiLink/suggestions/$sugestionTypeURL';
 
     try {
       var response = await http

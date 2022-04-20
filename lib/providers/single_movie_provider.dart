@@ -5,6 +5,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
+import '../constants.dart';
 import '../screens/authentication/components/my_snack_bar.dart';
 
 class Movie with ChangeNotifier {
@@ -40,7 +41,7 @@ class Movie with ChangeNotifier {
   Future<void> checkIsFavourite() async {
     if (authToken != '') {
       final url =
-          'http://192.168.1.142:5000/api/v1/favourites/is-favourite/${this.id}';
+          '$apiLink/favourites/is-favourite/${this.id}';
       var response = await http.get(Uri.parse(url), headers: {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer $authToken',
@@ -51,7 +52,7 @@ class Movie with ChangeNotifier {
   }
 
   void httpToggleFavourite() {
-    final url = 'http://192.168.1.142:5000/api/v1/favourites/${this.id}';
+    final url = '$apiLink/favourites/${this.id}';
     http.put(Uri.parse(url), headers: {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer $authToken',

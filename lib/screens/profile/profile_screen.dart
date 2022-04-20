@@ -1,26 +1,17 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables
-
 import 'dart:io';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:movies_recomendations/components/button.dart';
 import 'package:movies_recomendations/components/redButton.dart';
-import 'package:movies_recomendations/screens/authentication/components/my_snack_bar.dart';
-import 'package:movies_recomendations/screens/authentication/sign_in/sign_in_screen.dart';
 import 'package:movies_recomendations/screens/edit_profile/edit_profile_screen.dart';
-import 'package:movies_recomendations/screens/home/components/body.dart';
 import 'package:provider/provider.dart';
-import 'package:http/http.dart' as http;
-
 import '../../components/backButton.dart';
 import '../../constants.dart';
 import '../../providers/auth.dart';
 import '../../providers/movies_provider.dart';
 import '../../providers/user.dart';
 import 'components/user_categories_stat.dart';
-import 'package:image_picker/image_picker.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);

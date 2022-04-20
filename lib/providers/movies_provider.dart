@@ -40,8 +40,7 @@ class Movies with ChangeNotifier {
   }
 
   Future<void> fetchAndSetMovies() async {
-    const url = 'http://192.168.1.142:5000/api/v1/favourites/';
-    //const url = 'http://192.168.1.142:9000/Desktop/favourites.json';
+    const url = '$apiLink/favourites/';
     try {
       var response = await http.get(Uri.parse(url), headers: {
         'Authorization': 'Bearer $authToken',

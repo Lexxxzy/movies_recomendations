@@ -166,7 +166,7 @@ class _VerificationState extends State<Verification> {
   Future<void> _sendOTP(email) async {
     try {
       final response = await http.post(
-        Uri.parse('http://192.168.1.142:5000/api/v1/verification/validate'),
+        Uri.parse('$apiLink/verification/validate'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8'
         },

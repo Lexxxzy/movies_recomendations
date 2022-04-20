@@ -180,7 +180,7 @@ class _MainFormState extends State<MainForm> {
           .signUp(email!, password!, nickName!);
 
       await http.post(
-        Uri.parse('http://192.168.1.142:5000/api/v1/verification/verify'),
+        Uri.parse('$apiLink/verification/verify'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8'
         },

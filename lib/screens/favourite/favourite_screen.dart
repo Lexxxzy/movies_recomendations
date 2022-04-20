@@ -1,19 +1,14 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:movies_recomendations/components/button.dart';
-import 'package:movies_recomendations/components/splash_screen.dart';
 import 'package:movies_recomendations/components/splash_screen_favourite.dart';
 import 'package:movies_recomendations/constants.dart';
 import 'package:movies_recomendations/providers/single_movie_provider.dart';
 import 'package:provider/provider.dart';
-
 import '../../components/trending_favourite_movie.dart';
 import '../../providers/movies_provider.dart';
-
-import '/components/categories_menu.dart';
 
 class FavouritesScreen extends StatefulWidget {
   late TabController tabController;

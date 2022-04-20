@@ -1,10 +1,7 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
+import '../constants.dart';
 import '../screens/authentication/components/my_snack_bar.dart';
-import 'movies_provider.dart';
 import 'package:http/http.dart' as http;
 
 class User with ChangeNotifier {
@@ -30,7 +27,7 @@ class User with ChangeNotifier {
   User? user;
 
   Future<void> fetchAndSetUser() async {
-    const url = 'http://192.168.1.142:5000/api/v1/auth/user';
+    const url = '$apiLink/auth/user';
     try {
       var response = await http.get(Uri.parse(url), headers: {
         'Authorization': 'Bearer $authToken',
@@ -44,8 +41,8 @@ class User with ChangeNotifier {
         authToken: authToken,
         nickName: extractedData['username'],
         avatar: extractedData['avatar'] == null
-            ? 'http://192.168.1.142:5000/api/v1/auth/files/default-avatar.png'
-            : 'http://192.168.1.142:5000/api/v1/auth/files/${extractedData['avatar']}',
+            ? '$apiLink/auth/files/default-avatar.png'
+            : '$apiLink/auth/files/${extractedData['avatar']}',
         favourites: extractedData['favourites'],
         disliked: extractedData['dislikes'],
         loved: extractedData['likes'],
@@ -60,7 +57,7 @@ class User with ChangeNotifier {
   Future uploadImage(selectedImage, context) async {
     try {
       final request = http.MultipartRequest(
-          "POST", Uri.parse('http://192.168.1.142:5000/api/v1/auth/setavatar'));
+          "POST", Uri.parse('$apiLink/auth/setavatar'));
 
       final header = {
         'Content-type': 'multipart/form-data',
@@ -93,21 +90,12 @@ class User with ChangeNotifier {
   Future updateNameAndNick(realname, nickname, context) async {
     try {
       final response = await http.post(
-        Uri.parse('http://192.168.1.142:5000/api/v1/auth/update'),
+        Uri.parse('$apiLink/auth/update'),
         headers: {
           'Content-type': 'application/json',
           'Authorization': 'Bearer $authToken',
         },
         body: jsonEncode(
-          {
-            'realname': realname,
-            'nickname': nickname,
-          },
-        ),
-      );
-
-      print(
-        jsonEncode(
           {
             'realname': realname,
             'nickname': nickname,

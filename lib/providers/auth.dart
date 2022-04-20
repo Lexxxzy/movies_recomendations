@@ -6,6 +6,8 @@ import 'package:movies_recomendations/models/http_exception.dart';
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../constants.dart';
+
 class Auth with ChangeNotifier {
   String? _token;
   DateTime? _expiryDate;
@@ -31,7 +33,7 @@ class Auth with ChangeNotifier {
     String? username,
     String urlSigment,
   ) async {
-    final url = 'http://192.168.1.142:5000/api/v1/auth/$urlSigment';
+    final url = '$apiLink/auth/$urlSigment';
     try {
       final response = await http.post(
         Uri.parse(url),

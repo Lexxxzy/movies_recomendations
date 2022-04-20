@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
+import '../constants.dart';
 import './single_movie_provider.dart';
 
 class TrendingMovies with ChangeNotifier {
@@ -24,7 +25,7 @@ class TrendingMovies with ChangeNotifier {
   }
 
   Future<void> fetchAndSetTrending() async {
-    const url = 'http://192.168.1.142:5000/api/v1/suggestions/top-films';
+    const url = '$apiLink/suggestions/top-films';
 
     try {
       var response = await http

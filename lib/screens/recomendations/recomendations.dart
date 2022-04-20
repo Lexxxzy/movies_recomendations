@@ -1,12 +1,9 @@
 // ignore_for_file: prefer_const_constructors
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import '../../blocs/swipe_block.dart';
 import '../../providers/movies_provider.dart';
-import '../home/components/app_bar.dart';
 import 'package:movies_recomendations/constants.dart';
 
 import 'components/recomendations_body.dart';

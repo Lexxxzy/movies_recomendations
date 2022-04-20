@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-// Colos that use in our app
+// Colos that use in app
 const kMainColor = Color(0xFFDC7C59);
 const kMainColorWithOpacity = Color.fromARGB(45, 238, 136, 108);
 const kTextColor = Color(0xFFFFFDFA);
@@ -28,8 +28,8 @@ const kDefaultShadow = BoxShadow(
   color: Color.fromRGBO(18, 33, 61, 0.58),
 );
 
-final RegExp emailValidatorRegExp =
-    RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
+final RegExp emailValidatorRegExp = RegExp(
+    r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
 const String kEmailNullError = "Please Enter your email";
 const String kInvalidEmailError = "Please Enter Valid Email";
 const String kPassNullError = "Please Enter your password";
@@ -39,3 +39,6 @@ const String kMatchPassError = "Passwords don't match";
 const String kNamelNullError = "Please Enter your name";
 const String kAddressNullError = "Please Enter your address";
 const String kLongNameError = "Name is too long";
+
+//link to api
+const apiLink = 'http://192.168.1.142:5000/api/v1';
