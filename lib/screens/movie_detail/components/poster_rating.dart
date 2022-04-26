@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:movies_recomendations/constants.dart';
+import 'package:movies_recomendations/screens/movie_detail/components/video_player_widget.dart';
 
 import '../../../providers/single_movie_provider.dart';
 import 'movie_detail_body.dart';
@@ -17,21 +18,8 @@ class PosterAndRating extends StatelessWidget {
       height: size.height * 0.50,
       child: Stack(
         children: [
-          Hero(
-            tag: loadedMovie.poster,
-            child: Container(
-              height: size.height * 0.50 - 20,
-              decoration: BoxDecoration(
-                borderRadius: const BorderRadius.only(
-                  bottomLeft: Radius.circular(30),
-                  bottomRight: Radius.circular(30),
-                ),
-                image: DecorationImage(
-                  fit: BoxFit.cover,
-                  image: NetworkImage(loadedMovie.poster),
-                ),
-              ),
-            ),
+          VideoPoster(
+            loadedMovie: loadedMovie,
           ),
           //RatingBox
           Positioned(

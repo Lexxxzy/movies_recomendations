@@ -326,7 +326,7 @@ class _MovieDetailBodyState extends State<MovieDetailBody> {
                 borderRadius: BorderRadius.all(
                   Radius.circular(8),
                 ),
-                color: Colors.white24,
+                color: Color.fromARGB(29, 255, 255, 255),
               ),
               child: Padding(
                 padding: const EdgeInsets.all(6),

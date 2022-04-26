@@ -8,7 +8,12 @@ const kTextLightColor = Color(0xFFD2D5D9);
 const kTextGreyColor = Color(0xFF4D525E);
 const kFillStarColor = Color(0xFFFCC419);
 //const kBackgroundColor = Color(0xFF202C42); main first background
-const kBackgroundColor = Color(0xFF10141b);
+
+
+const kBackgroundColor = Color(0xFF10141b); //MAIN
+
+
+
 //const kSecondaryColor = Color(0xFF26334A);
 const kSecondaryColor = Color.fromARGB(20, 255, 255, 255);
 

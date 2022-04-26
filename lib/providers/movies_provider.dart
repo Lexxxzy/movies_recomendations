@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:movies_recomendations/constants.dart';
 import 'package:http/http.dart' as http;
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 import './single_movie_provider.dart';
 
@@ -57,23 +58,23 @@ class Movies with ChangeNotifier {
         extractedData.forEach(
           ((movieInfo) => {
                 loadedMovies.add(Movie(
-                  authToken: authToken,
-                  id: movieInfo['id'],
-                  age: movieInfo['age'],
-                  countries: List<String>.from(movieInfo['country']),
-                  description: movieInfo['description'],
-                  frames: movieInfo['frames'],
-                  genre: movieInfo['genre'],
-                  poster: movieInfo['poster'],
-                  premiereWorld: movieInfo['date'].toString(),
-                  ratingIMDb: movieInfo['ratingIMDb'] ?? 0.0,
-                  ratingKinopoisk: movieInfo['ratingKinopoisk'] ?? 0.0,
-                  title: movieInfo['title'][0],
-                  ifSeries: movieInfo['ifSeries'],
-                  dateTo: movieInfo['dateTo'].toString(),
-                  isFavourite: true,
-                  seasons: movieInfo['seasons'],
-                )),
+                    authToken: authToken,
+                    id: movieInfo['id'],
+                    age: movieInfo['age'],
+                    countries: List<String>.from(movieInfo['country']),
+                    description: movieInfo['description'],
+                    frames: movieInfo['frames'],
+                    genre: movieInfo['genre'],
+                    poster: movieInfo['poster'],
+                    premiereWorld: movieInfo['date'].toString(),
+                    ratingIMDb: movieInfo['ratingIMDb'] ?? 0.0,
+                    ratingKinopoisk: movieInfo['ratingKinopoisk'] ?? 0.0,
+                    title: movieInfo['title'][0],
+                    ifSeries: movieInfo['ifSeries'],
+                    dateTo: movieInfo['dateTo'].toString(),
+                    isFavourite: true,
+                    seasons: movieInfo['seasons'],
+                    videoURL: '')),
               }),
         );
 

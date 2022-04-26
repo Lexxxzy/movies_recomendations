@@ -7,14 +7,13 @@ import 'components/movie_detail_body.dart';
 
 class MovieDetailScreen extends StatelessWidget {
   static const routeName = '/movie-detail';
-
+  
   @override
   Widget build(BuildContext context) {
     final movie = ModalRoute.of(context)?.settings.arguments as Movie;
     return Scaffold(
-      backgroundColor: kBackgroundColor,
-      body: SingleChildScrollView(
-          child: MovieDetailBody(movie)),
+      backgroundColor: Color.fromARGB(255, 3, 3, 3),
+      body: SingleChildScrollView(child: MovieDetailBody(movie)),
     );
   }
 }

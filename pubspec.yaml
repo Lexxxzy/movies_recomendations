@@ -48,6 +48,7 @@ dependencies:
   shimmer: ^2.0.0
   like_button: ^2.0.4
   liquid_pull_to_refresh: ^3.0.1
+  youtube_player_flutter: ^8.0.0
 
 dev_dependencies:
   flutter_test:

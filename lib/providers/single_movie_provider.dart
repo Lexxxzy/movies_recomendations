@@ -4,6 +4,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 import '../constants.dart';
 import '../screens/authentication/components/my_snack_bar.dart';
@@ -13,6 +14,7 @@ class Movie with ChangeNotifier {
   final double ratingKinopoisk, ratingIMDb;
   final List<dynamic> genre, countries, frames;
   final String description, title, poster, premiereWorld, dateTo;
+  String videoURL;
   final bool ifSeries;
   bool isFavourite;
   final String authToken;
@@ -34,14 +36,14 @@ class Movie with ChangeNotifier {
     this.dateTo = "",
     required this.frames,
     this.isFavourite = false,
+    required this.videoURL,
   }) {
     checkIsFavourite();
   }
 
   Future<void> checkIsFavourite() async {
     if (authToken != '') {
-      final url =
-          '$apiLink/favourites/is-favourite/${this.id}';
+      final url = '$apiLink/favourites/is-favourite/${this.id}';
       var response = await http.get(Uri.parse(url), headers: {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer $authToken',
@@ -72,6 +74,7 @@ class Movie with ChangeNotifier {
     }
     return this.isFavourite;
   }
+
 
   void removeFavourite(context) {
     try {
