@@ -2,6 +2,8 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:movies_recomendations/constants.dart';
+import 'package:movies_recomendations/providers/recomendation_movies_provide.dart';
 import 'package:movies_recomendations/providers/single_movie_provider.dart';
 import 'package:movies_recomendations/providers/trending_movies_provider.dart';
 import 'package:movies_recomendations/providers/suggestions_movies_provider.dart';
@@ -46,7 +48,7 @@ class MyApp extends StatelessWidget {
               user: previousUser == null
                   ? User(
                       avatar:
-                          'http://192.168.1.142:5000/api/v1/auth/files/default-avatar.png',
+                          '$apiLink/auth/files/default-avatar.png',
                       nickName: 'nonickname',
                       email: 'example@gmail.com',
                       name: 'No Name',
@@ -63,6 +65,10 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProxyProvider<Auth, SuggestedMovies>(
           update: (ctx, auth, previousMovies) => SuggestedMovies(auth.token,
               previousMovies == null ? [] : previousMovies.upcomingMovies),
+        ),
+        ChangeNotifierProxyProvider<Auth, RecomendedMovies>(
+          update: (ctx, auth, previousMovies) => RecomendedMovies(auth.token,
+              previousMovies == null ? [] : previousMovies.recomendedMovies),
         ),
       ],
       child: Consumer<Auth>(

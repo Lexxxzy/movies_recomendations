@@ -46,4 +46,4 @@ const String kAddressNullError = "Please Enter your address";
 const String kLongNameError = "Name is too long";
 
 //link to api
-const apiLink = 'http://192.168.1.142:5000/api/v1';
+const apiLink = 'http://92.255.104.126:5000/api/v1';

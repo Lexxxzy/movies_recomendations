@@ -42,6 +42,7 @@ class Movies with ChangeNotifier {
 
   Future<void> fetchAndSetMovies() async {
     const url = '$apiLink/favourites/';
+    
     try {
       var response = await http.get(Uri.parse(url), headers: {
         'Authorization': 'Bearer $authToken',
@@ -73,8 +74,7 @@ class Movies with ChangeNotifier {
                     ifSeries: movieInfo['ifSeries'],
                     dateTo: movieInfo['dateTo'].toString(),
                     isFavourite: true,
-                    seasons: movieInfo['seasons'],
-                    videoURL: '')),
+                    seasons: movieInfo['seasons'])),
               }),
         );
 

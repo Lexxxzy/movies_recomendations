@@ -37,15 +37,13 @@ class _RecomendationsBodyState extends State<RecomendationsBody> {
             child: CircularProgressIndicator(),
           );
         } else if (state is SwipeLoaded) {
-          return state.movies.length >= 1
+          return state.movies.isNotEmpty
               ? Column(
                   children: [
                     Draggable(
                       child: MovieCardRecomendations(movie: state.movies[0]),
                       feedback: MovieCardRecomendations(movie: state.movies[0]),
-                      //TODO: В API сделать отдельный route с recomendations, который возвращает 15 рекомендаций и у которых есть параментр listID от 0 до 14
-                      childWhenDragging: state.movies[0].id !=
-                              movies.length
+                      childWhenDragging: state.movies.length >= 2
                           ? MovieCardRecomendations(movie: state.movies[1])
                           : Container(
                               height: MediaQuery.of(context).size.height / 1.6),
@@ -53,13 +51,16 @@ class _RecomendationsBodyState extends State<RecomendationsBody> {
                         if (drag.velocity.pixelsPerSecond.dx <
                             -200) //if drag to the left
                         {
+                          state.movies[0].toggleDislike(context);
+                          state.movies[0].removeRecomendation(context);
                           context.read<SwipeBloc>().add(
                                 SwipeLeftEvent(movie: state.movies[0]),
                               );
-                          print(state.movies.length);
                         } else if (drag.velocity.pixelsPerSecond.dx >
                             200) //if drag to the right
                         {
+                          state.movies[0].toggleLike(context);
+                          state.movies[0].removeRecomendation(context);
                           context.read<SwipeBloc>().add(
                                 SwipeRightEvent(
                                   movie: state.movies[0],

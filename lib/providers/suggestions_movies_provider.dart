@@ -59,7 +59,6 @@ class SuggestedMovies with ChangeNotifier {
                   dateTo: movieInfo['dateTo'].toString(),
                   isFavourite: false,
                   seasons: movieInfo['seasons'] ?? 0,
-                  videoURL: '',
                 ),
               ),
             }),

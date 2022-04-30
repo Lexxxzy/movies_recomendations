@@ -55,7 +55,7 @@ class TrendingMovies with ChangeNotifier {
                 ifSeries: movieInfo['ifSeries'],
                 dateTo: movieInfo['dateTo'].toString(),
                 seasons: movieInfo['seasons'],
-                videoURL: '',
+                
               )),
             }),
       );

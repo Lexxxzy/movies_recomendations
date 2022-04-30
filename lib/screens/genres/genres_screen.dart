@@ -60,7 +60,7 @@ class _GenresScreenState extends State<GenresScreen> {
   ];
 
   Future<void> fetchAndSetSearchedMovies(searchVal, authToken) async {
-    final url = 'http://192.168.1.142:5000/api/v1/search?filmname=$searchVal';
+    final url = '$apiLink/search?filmname=$searchVal';
 
     try {
       setState(() {
@@ -99,7 +99,6 @@ class _GenresScreenState extends State<GenresScreen> {
                         dateTo: movieInfo['dateTo'].toString(),
                         isFavourite: false,
                         seasons: movieInfo['seasons'] ?? 0,
-                        videoURL:  ''
                         ),
                   ),
                 }

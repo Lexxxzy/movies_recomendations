@@ -1,8 +1,10 @@
 // ignore_for_file: prefer_const_constructors
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:movies_recomendations/providers/recomendation_movies_provide.dart';
 import 'package:provider/provider.dart';
 import '../../blocs/swipe_block.dart';
+import '../../components/splash_screen_recomendations.dart';
 import '../../providers/movies_provider.dart';
 import 'package:movies_recomendations/constants.dart';
 
@@ -25,7 +27,7 @@ class _RecomendationsScreenState extends State<RecomendationsScreen> {
       setState(() {
         _isLoading = true;
       });
-      Provider.of<Movies>(context).fetchAndSetMovies().then((_) {
+      Provider.of<RecomendedMovies>(context).fetchAndSetRecomendations().then((_) {
         if (mounted) {
           setState(() {
             _isLoading = false;
@@ -45,7 +47,7 @@ class _RecomendationsScreenState extends State<RecomendationsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final movies = Provider.of<Movies>(context).movies;
+    final movies = Provider.of<RecomendedMovies>(context).recomendedMovies;
     return Scaffold(
       backgroundColor: kBackgroundColor,
       body: BlocProvider(
@@ -55,7 +57,7 @@ class _RecomendationsScreenState extends State<RecomendationsScreen> {
               movies: movies,
             ),
           ),
-        child: RecomendationsBody(),
+        child:_isLoading ? SplashScreenRecomendations() : RecomendationsBody(),
       ),
     );
   }

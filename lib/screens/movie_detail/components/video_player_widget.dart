@@ -16,14 +16,15 @@ class VideoPoster extends StatefulWidget {
 }
 
 class _VideoPosterState extends State<VideoPoster> {
-  late YoutubePlayerController _controller;
+  YoutubePlayerController _controller =
+      YoutubePlayerController(initialVideoId: '');
   late bool _isLoading;
   late bool _isNull;
   late bool _isMuted = true;
   String videoURL = '';
 
   Future<void> setVideo(filmId) async {
-    final url = 'http://192.168.1.142:5000/api/v1/search/video?id=$filmId';
+    final url = '$apiLink/search/video?id=$filmId';
 
     try {
       setState(() {
@@ -44,7 +45,6 @@ class _VideoPosterState extends State<VideoPoster> {
       YoutubePlayer.convertUrlToId(video) == null
           ? setState(() {
               _isNull = true;
-              dispose();
             })
           : _controller = YoutubePlayerController(
               initialVideoId: YoutubePlayer.convertUrlToId(video)!,
@@ -65,21 +65,24 @@ class _VideoPosterState extends State<VideoPoster> {
       });
     } on Exception catch (e) {
       setState(() {
-        widget.loadedMovie.videoURL = '';
         _isLoading = false;
       });
     }
   }
 
   @override
-  void initState() {
-    super.initState();
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
     setVideo(widget.loadedMovie.id);
   }
 
   @override
   void dispose() {
-    _controller.dispose();
+    if (_controller.hasListeners) {
+      _controller.dispose();
+    }
+
     super.dispose();
   }
 

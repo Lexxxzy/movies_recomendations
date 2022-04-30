@@ -13,31 +13,31 @@ class Movie with ChangeNotifier {
   final int id, seasons, age;
   final double ratingKinopoisk, ratingIMDb;
   final List<dynamic> genre, countries, frames;
-  final String description, title, poster, premiereWorld, dateTo;
-  String videoURL;
+  final String description, title, poster, premiereWorld, dateTo, filmNameDB;
+  int recId;
   final bool ifSeries;
   bool isFavourite;
   final String authToken;
 
-  Movie({
-    this.authToken = '',
-    required this.poster,
-    required this.title,
-    required this.id,
-    required this.premiereWorld,
-    required this.ratingKinopoisk,
-    required this.ratingIMDb,
-    required this.genre,
-    required this.description,
-    required this.countries,
-    required this.age,
-    required this.ifSeries,
-    this.seasons = 0,
-    this.dateTo = "",
-    required this.frames,
-    this.isFavourite = false,
-    required this.videoURL,
-  }) {
+  Movie(
+      {this.authToken = '',
+      required this.poster,
+      required this.title,
+      required this.id,
+      required this.premiereWorld,
+      required this.ratingKinopoisk,
+      required this.ratingIMDb,
+      required this.genre,
+      required this.description,
+      required this.countries,
+      required this.age,
+      required this.ifSeries,
+      this.seasons = 0,
+      this.dateTo = "",
+      required this.frames,
+      this.isFavourite = false,
+      this.recId = 0,
+      this.filmNameDB = ''}) {
     checkIsFavourite();
   }
 
@@ -75,6 +75,57 @@ class Movie with ChangeNotifier {
     return this.isFavourite;
   }
 
+  void httpToggleLike() {
+    final url = '$apiLink/likes/${this.id}';
+    http.put(Uri.parse(url), headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $authToken',
+    });
+  }
+
+  Future<bool?> toggleLike(context) async {
+    try {
+      httpToggleLike();
+      notifyListeners();
+    } on Exception catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+          const mySnackBar(message: 'Something went wrong', isError: true)
+              .build(context));
+    }
+    return this.isFavourite;
+  }
+
+    Future<bool?> toggleDislike(context) async {
+    try {
+      final url = '$apiLink/likes/dislikes/${this.id}';
+      http.put(Uri.parse(url), headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $authToken',
+      });
+      notifyListeners();
+    } on Exception catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+          const mySnackBar(message: 'Something went wrong', isError: true)
+              .build(context));
+    }
+    return this.isFavourite;
+  }
+
+  void removeRecomendation(context) {
+    try {
+      final url = '$apiLink/recomendations/${this.filmNameDB}';
+      http.put(Uri.parse(url), headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $authToken',
+      });
+
+      notifyListeners();
+    } on Exception catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+          const mySnackBar(message: 'Something went wrong', isError: true)
+              .build(context));
+    }
+  }
 
   void removeFavourite(context) {
     try {
