@@ -6,7 +6,7 @@ import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 import '../../../providers/single_movie_provider.dart';
 import 'package:http/http.dart' as http;
-
+//
 class VideoPoster extends StatefulWidget {
   Movie loadedMovie;
   VideoPoster({Key? key, required this.loadedMovie}) : super(key: key);
