@@ -42,28 +42,31 @@ class RecomendedMovies with ChangeNotifier {
       final List<Movie> loadedMovies = [];
       extractedData.forEach(
         ((movieInfo) => {
-              loadedMovies.add(
-                Movie(
-                  authToken: authToken,
-                  id: movieInfo['id'],
-                  age: movieInfo['age'],
-                  countries: movieInfo['country'],
-                  description: movieInfo['description'],
-                  frames: movieInfo['frames'],
-                  genre: movieInfo['genre'],
-                  poster: movieInfo['poster'],
-                  premiereWorld: movieInfo['date'].toString(),
-                  ratingIMDb: movieInfo['ratingIMDb'] ?? 0.0,
-                  ratingKinopoisk: movieInfo['ratingKinopoisk'] ?? 0.0,
-                  title: movieInfo['title'][0],
-                  ifSeries: movieInfo['ifSeries'] == 'true' ? true : false,
-                  dateTo: movieInfo['dateTo'].toString(),
-                  isFavourite: false,
-                  seasons: movieInfo['seasons'] ?? 0,
-                  recId: movieInfo['recsID'],
-                  filmNameDB: movieInfo['filmNameDB']
-                ),
-              ),
+              if (movieInfo['title'][0] != null)
+                {
+                  loadedMovies.add(
+                    Movie(
+                        authToken: authToken,
+                        id: movieInfo['id'],
+                        age: movieInfo['age'],
+                        countries: movieInfo['country'],
+                        description: movieInfo['description'],
+                        frames: movieInfo['frames'],
+                        genre: movieInfo['genre'],
+                        poster: movieInfo['poster'],
+                        premiereWorld: movieInfo['date'].toString(),
+                        ratingIMDb: movieInfo['ratingIMDb'] ?? 0.0,
+                        ratingKinopoisk: movieInfo['ratingKinopoisk'] ?? 0.0,
+                        title: movieInfo['title'][0],
+                        ifSeries:
+                            movieInfo['ifSeries'] == 'true' ? true : false,
+                        dateTo: movieInfo['dateTo'].toString(),
+                        isFavourite: false,
+                        seasons: movieInfo['seasons'] ?? 0,
+                        recId: movieInfo['recsID'],
+                        filmNameDB: movieInfo['filmNameDB']),
+                  ),
+                }
             }),
       );
       _recomendedMovies = loadedMovies;

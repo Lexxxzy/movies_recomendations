@@ -6,6 +6,7 @@ import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 import '../../../providers/single_movie_provider.dart';
 import 'package:http/http.dart' as http;
+
 //
 class VideoPoster extends StatefulWidget {
   Movie loadedMovie;
@@ -116,15 +117,15 @@ class _VideoPosterState extends State<VideoPoster> {
                   child: GestureDetector(
                     onTap: () {
                       if (_isMuted) {
-                        _controller.unMute();
                         setState(() {
                           _isMuted = false;
                         });
+                        _controller.unMute();
                       } else {
-                        _controller.mute();
                         setState(() {
                           _isMuted = true;
                         });
+                        _controller.mute();
                       }
                     },
                     child: YoutubePlayer(

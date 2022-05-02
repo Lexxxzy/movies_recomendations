@@ -52,8 +52,8 @@ class MovieCardDescription extends StatelessWidget {
                               fontSize: 20,
                             ),
                             child: Text(
-                              movie.title.length > 18
-                                  ? '${movie.title.substring(0, 18)}...'
+                              movie.title.length > 17
+                                  ? '${movie.title.substring(0, 17)}...'
                                   : movie.title,
                             ),
                           ),

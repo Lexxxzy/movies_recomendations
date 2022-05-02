@@ -9,10 +9,7 @@ const kTextGreyColor = Color(0xFF4D525E);
 const kFillStarColor = Color(0xFFFCC419);
 //const kBackgroundColor = Color(0xFF202C42); main first background
 
-
 const kBackgroundColor = Color(0xFF10141b); //MAIN
-
-
 
 //const kSecondaryColor = Color(0xFF26334A);
 const kSecondaryColor = Color.fromARGB(20, 255, 255, 255);
@@ -46,4 +43,6 @@ const String kAddressNullError = "Please Enter your address";
 const String kLongNameError = "Name is too long";
 
 //link to api
-const apiLink = 'http://92.255.104.126:5000/api/v1';
+//const apiLink = 'http://92.255.104.126:5000/api/v1';
+
+const apiLink = 'http://192.168.1.142:5000/api/v1';
